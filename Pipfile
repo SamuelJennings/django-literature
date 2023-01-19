@@ -1,0 +1,26 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django-sortedm2m = "*"
+django = "*"
+django-appconf = "*"
+django-taggit = "*"
+django-filer = "*"
+requests = "*"
+
+[dev-packages]
+model-bakery = "*"
+ipython = "*"
+coverage = "*"
+pycodestyle = "*"
+autopep8 = "*"
+habanero = "*"
+black = "*"
+isort = "*"
+pyscaffold = {extras = ["all"], version = "*"}
+
+[requires]
+python_version = ">3"
