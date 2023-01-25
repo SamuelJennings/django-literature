@@ -10,17 +10,22 @@ django-appconf = "*"
 django-taggit = "*"
 django-filer = "*"
 requests = "*"
+django-model-utils = "*"
+python-dateutil = "*"
 
 [dev-packages]
 model-bakery = "*"
+tox = "*"
 ipython = "*"
 coverage = "*"
 pycodestyle = "*"
 autopep8 = "*"
-habanero = "*"
 black = "*"
 isort = "*"
 pyscaffold = {extras = ["all"], version = "*"}
+flake8 = "*"
+invoke = "*"
+furo = "*"
 
 [requires]
-python_version = ">3"
+python_version = "3.9"

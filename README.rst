@@ -1,69 +1,86 @@
-.. These are examples of badges you might want to add to your README:
-   please update the URLs accordingly
+=============================
+Django Literature
+=============================
 
-.. image:: https://api.cirrus-ci.com/github/ssjenny90/django-litman.svg?branch=main
-    :alt: Built Status
-    :target: https://cirrus-ci.com/github/ssjenny90/django-litman
-.. image:: https://readthedocs.org/projects/django-litman/badge/?version=latest
-    :alt: ReadTheDocs
-    :target: https://django-litman.readthedocs.io/en/stable/
-.. image:: https://img.shields.io/coveralls/github/ssjenny90/django-litman/main.svg
-    :alt: Coveralls
-    :target: https://coveralls.io/r/ssjenny90/django-litman
-.. image:: https://img.shields.io/pypi/v/django-litman.svg
-    :alt: PyPI-Server
-    :target: https://pypi.org/project/django-litman/
-.. image:: https://img.shields.io/conda/vn/conda-forge/django-litman.svg
-    :alt: Conda-Forge
-    :target: https://anaconda.org/conda-forge/django-litman
-.. image:: https://pepy.tech/badge/django-litman/month
-    :alt: Monthly Downloads
-    :target: https://pepy.tech/project/django-litman
-.. image:: https://img.shields.io/twitter/url/http/shields.io.svg?style=social&label=Twitter
-    :alt: Twitter
-    :target: https://twitter.com/django-litman
+.. image:: https://badge.fury.io/py/django-literature.svg
+    :target: https://badge.fury.io/py/django-literature
 
-.. image:: https://img.shields.io/badge/-PyScaffold-005CA0?logo=pyscaffold
-    :alt: Project generated with PyScaffold
-    :target: https://pyscaffold.org/
+.. image:: https://travis-ci.org/SSJenny90/django-literature.svg?branch=master
+    :target: https://travis-ci.org/SSJenny90/django-literature
 
-|
+.. image:: https://codecov.io/gh/SSJenny90/django-literature/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/SSJenny90/django-literature
 
-=============
-django-litman
-=============
+A scientific literature management app for Django
 
-    A research literature management application for Django
+Documentation
+-------------
+
+The full documentation is at https://django-literature.readthedocs.io.
+
+Quickstart
+----------
+
+Install Django Literature::
+
+    pip install django-literature
+
+Add it to your `INSTALLED_APPS`:
+
+.. code-block:: python
+
+    INSTALLED_APPS = (
+        ...
+        'literature.apps.LiteratureConfig',
+        ...
+    )
+
+Add Django Literature's URL patterns:
+
+.. code-block:: python
+
+    from literature import urls as literature_urls
 
 
-A longer description of your project goes here...
-
+    urlpatterns = [
+        ...
+        url(r'^', include(literature_urls)),
+        ...
+    ]
 
 Features
-========
+--------
 
-- Flexible API
-- Easily create entries from DOIs
-- Custom manager for easily retrieving a DOI from a remote source
+* TODO
 
+Running Tests
+-------------
 
+Does the code actually work?
 
-Usage
-========
+::
 
-Fetch a DOI from the appropriate registrar if it does not already exist in the database.
-
-obj, created = Work.objects.get_or_resolve(doi)
-
-Update a database entry for a given doi
-
-obj, created = Work.objects.resolve_and_update(doi)
+    source <YOURVIRTUALENV>/bin/activate
+    (myenv) $ pip install tox
+    (myenv) $ tox
 
 
-.. _pyscaffold-notes:
+Development commands
+---------------------
 
-Note
-====
+::
 
-This project has been set up using PyScaffold 4.3.1. For details and usage
-information on PyScaffold see https://pyscaffold.org/.
+    pip install -r requirements_dev.txt
+    invoke -l
+
+
+Credits
+-------
+
+Tools used in rendering this package:
+
+*  Cookiecutter_
+*  `cookiecutter-djangopackage`_
+
+.. _Cookiecutter: https://github.com/audreyr/cookiecutter
+.. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
