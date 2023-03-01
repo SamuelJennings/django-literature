@@ -12,6 +12,7 @@ django-filer = "*"
 requests = "*"
 django-model-utils = "*"
 python-dateutil = "*"
+django-utils2 = "*"
 
 [dev-packages]
 model-bakery = "*"

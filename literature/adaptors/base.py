@@ -1,87 +1,92 @@
-import json
-
 import requests
 from django.apps import apps
-from django.forms import ModelForm
+from django.forms import ModelForm, ModelMultipleChoiceField
+from django.utils.translation import gettext as _
 
+from ..exceptions import AdaptorError, RemoteAdaptorError
+from ..models import Author
 from ..utils import DataDict, clean_doi
 
 
-class AdaptorError(Exception):
-    """The requested model field does not exist"""
+class AuthorField(ModelMultipleChoiceField):
+    def prepare_value(self, value):
+        """Convert a list of author dicts to model instances.
 
-    pass
+        Args:
+            value (list): A list of dicts containing form data
 
+        Raises:
+            ValidationError: If the form fails to validate
 
-class RemoteAdaptorError(Exception):
-    """The requested model field does not exist"""
+        Returns:
+            list: A list of ids of the saved entries
+        """
+        if not value:
+            return
 
-    pass
+        model = self.queryset.model
+        fields = [
+            "given",
+            "family",
+            "ORCID",
+        ]
+        obj_ids = []
+        for obj in value:
+            data = {f: obj[f] for f in fields if obj.get(f)}
+
+            instance, _ = model.objects.update_or_create(
+                given=data.pop("given"),
+                family=data.pop("family"),
+                defaults=data,
+            )
+            obj_ids.append(instance.id)
+        return obj_ids
 
 
 class BaseAdaptor(ModelForm):
-    source = ""
-    map = {}
+    BASE_URL = None
+    EXTRACT_KEY = ""
+    SOURCE = ""
+    MAP = {}
+    AUTHOR_MAP = {}
+
+    authors = AuthorField(queryset=Author.objects.all())
 
     class Meta:
-        model = apps.get_model("literature.Work")
-        fields = "__all__"
+        model = apps.get_model("literature.Literature")
+        # fields = "__all__"
+        exclude = ["label"]
 
-    def __init__(self, data, *args, **kwargs):
-        data = self.get_data(data, **kwargs)
+    def __init__(self, data=None, *args, **kwargs):
+        if kwargs.get("doi"):
+            data = self.resolve_doi(kwargs.pop("doi"))
+        data = self.premodify_data(data)
         super().__init__(data, *args, **kwargs)
 
+    @property
+    def is_remote(self):
+        return self.BASE_URL is not None
+
+    def premodify_data(self, data):
+        return DataDict(data, keymap=self.MAP)
+
     def full_clean(self):
-        self.data["data"] = json.dumps(self.data, default=dict)
-
         self.data["authors"] = self.modify_authors()
-
         return super().full_clean()
 
     def modify_authors(self):
         authors = self.data["authors"]
         return authors
 
-    def clean_doi(self, val):
+    def clean_doi(self):
         doi = self.cleaned_data["doi"]
         return clean_doi(doi)
 
-    def get_data(self, data):
-        return DataDict(data, keymap=self.map)
+    def get_data(self):
+        self.is_valid()
+        return self.cleaned_data, self.errors
 
-
-class RemoteAdaptor(BaseAdaptor):
-    BASE_URL = None
-    extract_key = ""
-
-    class Meta(BaseAdaptor.Meta):
-        pass
-
-    def __init__(self, data=None, doi=None, *args, **kwargs):
-        data = self.get_data(data, doi)
-        super().__init__(data, *args, **kwargs)
-
-    def get_data(self, data=None, doi=None):
-        if doi:
-            data = self.resolve(doi)
-        return super().get_data(data)
-
-    def extract(self, response):
-        """Extract the data object from the reolved DOI response.
-
-        Args:
-            response (_type_): _description_
-
-        Returns:
-            data: The data object from the resource
-        """
-        data = response.json()
-        if self.extract_key:
-            for attr in self.extract_key.split("."):
-                data = data[attr]
-        return data
-
-    def resolve(self, doi):
+    def resolve_doi(self, doi):
         """Resolve a doi at the specified BASE_URL
 
         Args:
@@ -90,8 +95,16 @@ class RemoteAdaptor(BaseAdaptor):
         Returns:
             response (object): a `requests` response object
         """
+        if not self.is_remote:
+            raise AdaptorError(_(f"{self} cannot resolve remote sources."))
         response = requests.get(self.BASE_URL.format(doi=doi))
-        return self.extract(response)
+        if not response.status_code == 200:
+            raise RemoteAdaptorError(response.text)
+        data = response.json()
+        if self.EXTRACT_KEY:
+            for attr in self.EXTRACT_KEY.split("."):
+                data = data[attr]
+        return data
 
 
 # class FileAdaptor(RemoteAdaptor):

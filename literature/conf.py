@@ -6,7 +6,7 @@ __all__ = ("settings", "LiteratureConf")
 
 
 class LiteratureConf(AppConf):
-    """Settings for Django Litman"""
+    """Settings for Django Literature"""
 
     MODELS = {}
     """Point the application to the working models. Required when extending
@@ -22,7 +22,14 @@ class LiteratureConf(AppConf):
 
     HYPERLINK = True
 
-    PDF_RENAMER = "literature.utils.simple_title_renamer"
+    PDF_RENAMER = "literature.utils.simple_file_renamer"
+
+    AUTOLABEL = "literature.utils.simple_autolabeler"
+
+    ADAPTORS = [
+        "literature.adaptors.crossref.Crossref",
+        "literature.adaptors.datacite.Datacite",
+    ]
 
     class Meta:
         """Prefix for all Django Literature settings."""

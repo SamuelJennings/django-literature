@@ -18,6 +18,10 @@ class SupplementaryInline(admin.TabularInline):
     model = SupplementaryMaterial
 
 
+class AuthorInline(admin.TabularInline):
+    model = Author.literature.through
+
+
 @admin.register(Literature)
 class LiteratureAdmin(admin.ModelAdmin):
     """Django Admin setup for the `literature.Work` model."""
@@ -49,17 +53,24 @@ class LiteratureAdmin(admin.ModelAdmin):
         "last_synced",
     ]
 
-    inlines = [SupplementaryInline]
+    inlines = [SupplementaryInline, AuthorInline]
     fieldsets = [
         (
-            _("Required"),
+            _("Basic"),
             {
                 "fields": [
-                    "pdf",
+                    "label",
+                    # "pdf",
                     "type",
                     "title",
                     "year",
-                    "author_str",
+                    "language",
+                    "source",
+                    "created",
+                    "modified",
+                    "last_synced",
+                    # "authors",
+                    # "author_str",
                 ]
             },
         ),
@@ -91,19 +102,26 @@ class LiteratureAdmin(admin.ModelAdmin):
             },
         ),
         (
-            _("Administrative"),
+            _("Comment"),
             {
                 "fields": [
-                    "label",
-                    "language",
-                    "source",
                     "comment",
-                    "created",
-                    "modified",
-                    "last_synced",
                 ]
             },
         ),
+        # (
+        #     _("Administrative"),
+        #     {
+        #         "fields": [
+        #             "language",
+        #             "source",
+        #             "comment",
+        #             "created",
+        #             "modified",
+        #             "last_synced",
+        #         ]
+        #     },
+        # ),
     ]
 
     formfield_overrides = {

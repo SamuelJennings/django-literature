@@ -1,6 +1,11 @@
 from datetime import date
 
-from django.core.validators import FileExtensionValidator, RegexValidator
+from django.core.validators import (
+    FileExtensionValidator,
+    MaxValueValidator,
+    MinValueValidator,
+    RegexValidator,
+)
 from django.db import models
 from django.urls import reverse
 from django.utils.encoding import force_str
@@ -11,16 +16,16 @@ from sortedm2m.fields import SortedManyToManyField
 from taggit.managers import TaggableManager
 
 from .choices import MonthChoices
-from .querysets import AuthorQuerySet
-from .utils import pdf_file_renamer
+from .managers import AuthorManager, LiteratureManager
+from .utils import get_current_year, pdf_file_renamer
 
 
-class WorkAuthor(models.Model):
+class LiteratureAuthor(models.Model):
     """An intermediate table for the Work-Author m2m relationship.
     `SortedManyToManyField` automatically creates this table, however, there is no access via querysets. Defining here instead allows us to have access to the intermediate table in order to query author position.
     """
 
-    work = models.ForeignKey("literature.Literature", on_delete=models.CASCADE)
+    literature = models.ForeignKey("literature.Literature", on_delete=models.CASCADE)
     author = models.ForeignKey(
         "literature.Author", related_name="position", on_delete=models.CASCADE
     )
@@ -33,7 +38,8 @@ class WorkAuthor(models.Model):
 
 
 class Author(TimeStampedModel):
-    objects = AuthorQuerySet.as_manager()
+    objects = AuthorManager()
+
     given = models.CharField(_("given name"), max_length=255, blank=True, null=True)
     family = models.CharField(_("family name"), max_length=255, blank=True)
     ORCID = models.CharField(
@@ -43,6 +49,15 @@ class Author(TimeStampedModel):
         blank=True,
         null=True,
     )
+
+    # literature = SortedManyToManyField(
+    #     to="literature.Literature",
+    #     verbose_name=_("literature"),
+    #     related_name="authors",
+    #     through=LiteratureAuthor,
+    #     sort_value_field_name="position",
+    #     blank=True,
+    # )
 
     class Meta:
         verbose_name = _("author")
@@ -74,20 +89,22 @@ class Author(TimeStampedModel):
         """Returns "J. Smith" """
         return f"{self.given[0]}. {self.family}"
 
-    def f_given(self):
+    def family_g(self):
         """Returns "Smith, J." """
-        return f"{self.family[0]}, {self.given}."
+        return f"{self.family}, {self.given[0]}."
 
 
 class Literature(TimeStampedModel):
     """Model for storing literature data"""
 
+    objects = LiteratureManager()
+
     abstract = models.TextField(_("abstract"), blank=True, null=True)
     authors = SortedManyToManyField(
         to="literature.Author",
         verbose_name=_("authors"),
-        related_name="works",
-        through=WorkAuthor,
+        related_name="literature",
+        through=LiteratureAuthor,
         sort_value_field_name="number",
         blank=True,
     )
@@ -153,6 +170,7 @@ class Literature(TimeStampedModel):
         ),
         max_length=255,
         blank=True,
+        # null=True,
         unique=True,
     )
     language = models.CharField(_("language"), max_length=2, blank=True, null=True)
@@ -163,7 +181,6 @@ class Literature(TimeStampedModel):
         blank=True,
         null=True,
     )
-
     pages = models.CharField(
         _("pages"),
         help_text=_(
@@ -175,11 +192,16 @@ class Literature(TimeStampedModel):
         blank=True,
     )
     pdf = models.FileField(
-        "PDF", upload_to=pdf_file_renamer, validators=[FileExtensionValidator(["pdf"])]
+        "PDF",
+        upload_to=pdf_file_renamer,
+        validators=[FileExtensionValidator(["pdf"])],
+        null=True,
+        blank=True,
     )
     published = models.DateField(
         _("date published"),
         max_length=255,
+        validators=[MaxValueValidator(date.today)],
     )
     publisher = models.CharField(
         _("publisher"),
@@ -205,7 +227,9 @@ class Literature(TimeStampedModel):
     )
     volume = models.IntegerField(_("volume"), blank=True, null=True)
     year = models.PositiveSmallIntegerField(
-        _("year"), help_text=_("The year of publication.")
+        _("year"),
+        help_text=_("The year of publication."),
+        validators=[MinValueValidator(1900), MaxValueValidator(get_current_year)],
     )
 
     last_synced = models.DateTimeField(
@@ -229,8 +253,8 @@ class Literature(TimeStampedModel):
 
     def save(self, *args, **kwargs):
         # not implemented
-        # if self.tracker.has_changed("doi"):
-        # self.objects.resolve(self.doi, self.source)
+        if self.tracker.has_changed("doi"):
+            self.objects.resolve(self.doi, self.source)
 
         if self.tracker.has_changed("year"):
             self.published = date(year=self.year, month=self.month or 1, day=1)
@@ -240,7 +264,7 @@ class Literature(TimeStampedModel):
     def autocomplete_search_fields():
         return (
             "title__icontains",
-            "author__family__icontains",
+            "authors__family__icontains",
             "label__icontains",
         )
 

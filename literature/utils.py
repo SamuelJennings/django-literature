@@ -1,5 +1,6 @@
+import copy
 from collections import UserDict
-from urllib.parse import urlparse
+from datetime import datetime
 
 from django.utils.module_loading import import_string
 
@@ -13,9 +14,9 @@ class DataDict(UserDict):
         UserDict (_type_): _description_
     """
 
-    def __init__(self, dict=None, /, **kwargs):
-        self.keymap = kwargs.pop("keymap")
-        return super().__init__(dict, **kwargs)
+    def __init__(self, dict=None, keymap={}):
+        self.keymap = keymap
+        return super().__init__(dict)
 
     def __getitem__(self, key):
         if key in self.keymap.keys():
@@ -38,10 +39,15 @@ def clean_doi(doi):
     Returns:
         doi: A cleaned DOI string
     """
-    return urlparse(doi).path.strip("/").lower()
+    # NOTE: This only works for strings starting with http://. This will not
+    # correctly for strings like doi.org/... or www.doi,org/...
+    # swith to tldextract??
+
+    return doi.split("doi.org/")[-1].strip("/").lower()
+    # return urlparse(doi).path.strip("/").lower()
 
 
-def autolabel_strategy(obj):
+def simple_autolabeler(obj):
     """The strategy used to create unique labels for literature items in the
     database.
 
@@ -50,23 +56,27 @@ def autolabel_strategy(obj):
     Args:
         obj (literature.models.Literature): A Literature instance.
     """
-    label = obj.label
-
+    label = f"{obj.authors.first().family}{obj.year}"
     # We don't want label clashes so find how many labels already
     # in the database start with our new label then append the
     # appropriate letter.
     letters = "abcdefghijklmopqrstuvwzy"
     count = obj._meta.model.objects.filter(label__startswith=label).count()
+
     if count:
-        label += letters[count + 1]
+        label += letters[count]
 
-    return
-
-
-def simple_title_renamer(instance, fname):
-    return f"literature/{instance.title[:50]}.pdf"
+    return label
 
 
-def pdf_file_renamer(instance, fname):
+def simple_file_renamer(instance, fname):
+    return f"literature/{instance.title[:50].strip()}.pdf"
+
+
+def pdf_file_renamer(instance, fname=None):
     func = import_string(settings.LITERATURE_PDF_RENAMER)
     return func(instance, fname)
+
+
+def get_current_year():
+    return datetime.now().year

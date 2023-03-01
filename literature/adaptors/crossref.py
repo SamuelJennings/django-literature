@@ -1,11 +1,12 @@
 from datetime import date
+from pprint import pprint
 
 from django import forms
 from django.forms.fields import JSONField
 
 from literature.conf import settings
 
-from .base import DataDict, RemoteAdaptor
+from .base import BaseAdaptor
 
 
 class ListConcatField(forms.CharField):
@@ -13,56 +14,49 @@ class ListConcatField(forms.CharField):
     items together using the specified `join_with` parameters.
     """
 
-    # default_validators = [validate_json, PythonTypeValidator(list)]
-
     def to_python(self, value):
         return super().to_python("".join(value))
 
 
-class Crossref(RemoteAdaptor):
+class Crossref(BaseAdaptor):
     MAILTO = getattr(settings, "DEFAULT_FROM_EMAIL")
     BASE_URL = "https://api.crossref.org/works/{doi}"
-    extract_key = "message"
-    author_map = {
-        "orcid": "ORCID",
-        "suffix": "suffix",
-        "givenName": "given",
-        "familyName": "family",
-        "name": "name",
-        "prefix": "prefix",
-    }
-    map = {
+    EXTRACT_KEY = "message"
+
+    MAP = {
         "container_title": "container-title",
         "doi": "DOI",
         "url": "URL",
-        "date_published": "published.date-parts",
+        "month": "published.date-parts",
+        "year": "published.date-parts",
+        "published": "published.date-parts",
         "authors": "author",
     }
 
-    class Meta(RemoteAdaptor.Meta):
+    # for whatever reason, overriding the year form field in Meta.field_classes won't work
+    year = forms.JSONField()
+    month = forms.JSONField()
+
+    class Meta(BaseAdaptor.Meta):
         field_classes = {
             "title": ListConcatField,
             "subtitle": ListConcatField,
             "container_title": ListConcatField,
-            "date_published": JSONField,
+            "published": JSONField,
         }
 
-    def modify_authors(self):
-        """Need to turn self.data['authors'] into a list of
-        author dictionaries
-        """
-        authors = [
-            DataDict(a, keymap=self.author_map) for a in super().modify_authors()
-        ]
+    def clean_year(self):
+        value = self.cleaned_data.get("year")
+        if value:
+            return value[0][0]
 
-        x = 8
-        return authors
+    def clean_month(self):
+        value = self.cleaned_data.get("month")
+        if value:
+            return value[0][1]
 
-    def author_to_instance(self, author):
-        return
-
-    def clean_date_published(self):
-        value = self.cleaned_data.get("date_published")
+    def clean_published(self):
+        value = self.cleaned_data.get("published")
         if not value:
             return None
 
@@ -71,16 +65,3 @@ class Crossref(RemoteAdaptor):
         while len(date_parts) < 3:
             date_parts.append(1)
         return date(*date_parts)
-
-    def clean_authors(self):
-        author_list = self.data.get("author")
-        return
-
-
-doi = "https://doi.org/10.1093/gji/ggz376"
-adaptor = Crossref(doi=doi)
-
-adaptor.is_valid()
-
-# pprint.pprint(adaptor.cleaned_data)
-# pprint.pprint(adaptor.get_defaults())

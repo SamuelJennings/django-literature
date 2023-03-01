@@ -8,5 +8,7 @@ class LiteratureConfig(AppConfig):
     verbose_name = _("Literature Manager")
 
     def ready(self) -> None:
-        # from literature.adaptors import crossref, datacite
+        # from literature.models import Literature
+
+        # data, errors = Literature.objects.resolve_doi("10.1093/gji/ggz376")
         return super().ready()
