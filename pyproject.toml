@@ -5,7 +5,7 @@ description = "A scientific literature management tool for Django"
 authors = ["Your Name <you@example.com>"]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "django_literature"}]
+packages = [{include = "literature"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
