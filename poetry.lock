@@ -551,6 +551,18 @@ files = [
 ]
 
 [[package]]
+name = "django-sortedm2m"
+version = "3.1.1"
+description = "Drop-in replacement for Django's many to many field with sorted relations."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-sortedm2m-3.1.1.tar.gz", hash = "sha256:136f3d4e0820b351608a7141d88ac3ba7fafcd37a9b8361ad00ffe616a790be5"},
+    {file = "django_sortedm2m-3.1.1-py2.py3-none-any.whl", hash = "sha256:c67ae0757e8e60ded15a9ba04d0862fe39fba3d5b865899c2472166ff0050f2c"},
+]
+
+[[package]]
 name = "django-stubs"
 version = "1.15.0"
 description = "Mypy stubs for Django"
@@ -2298,4 +2310,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "242e3a67a3c38b431cb9d92d3024f5806ad24555840b38a4aab1a69db9e16327"
+content-hash = "74ba47d41d11c67b311b5fefea76612f3cea8d5869a59c01048c40bb67fb009f"
