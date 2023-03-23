@@ -112,3 +112,8 @@ def release(c, bumpsize=""):
     )
     c.run("git push --tags")
     c.run("git push origin master")
+
+
+@task
+def publish(c):
+    c.run("python setup.py sdist bdist_wheel")
