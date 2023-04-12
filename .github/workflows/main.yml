@@ -23,7 +23,7 @@ jobs:
         uses: ./.github/actions/setup-poetry-env
 
       - name: Run checks
-        run: invoke check
+        run: poetry run invoke check
 
   tox:
     runs-on: ubuntu-latest
