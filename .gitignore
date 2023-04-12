@@ -1,5 +1,7 @@
 # Temporary and binary files
 *~
+*.ruff_cache
+*.mypy_cache
 *.py[cod]
 *.so
 *.cfg

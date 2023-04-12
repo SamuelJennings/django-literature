@@ -38,6 +38,29 @@ def build(c):
 
 
 @task
+def publish(c):
+    # check to make sure there are no surprises
+    print("🚀 Publishing: Dry run.")
+    c.run("poetry publish --dry-run")
+
+    # everything is in order so lets publish for real
+    print("🚀 Publishing to PyPI")
+    c.run("poetry publish")
+
+
+@task
+def build_and_publish(c, rule=""):
+    # 1. Bump the current version using the specified rule. (https://python-poetry.org/docs/cli/#version)
+    c.run(f"poetry version {rule}")
+
+    # 2. Build the source and wheels archive (https://python-poetry.org/docs/cli/#build)
+    build(c)
+
+    # 3. Publish the package, using the build files we just created (https://python-poetry.org/docs/cli/#publish)
+    c.run("poetry publish")
+
+
+@task
 def clean_build(c):
     print("🚀 Removing old build artifacts")
     c.run("rm -fr build/")
@@ -97,22 +120,6 @@ def clean(c):
     clean_pyc(c)
 
 
-@task
-def unittest(c):
-    """
-    Run unittests
-    """
-    c.run("python manage.py test")
-
-
-@task
-def lint(c):
-    """
-    Check style with flake8
-    """
-    c.run("flake8 django-literature tests")
-
-
 # @task(help={"bumpsize": 'Bump either for a "feature" or "breaking" change'})
 # def release(c, bumpsize=""):
 #     """
@@ -136,11 +143,6 @@ def lint(c):
 #     )
 #     c.run("git push --tags")
 #     c.run("git push origin master")
-
-
-@task
-def publish(c):
-    c.run("python setup.py sdist bdist_wheel")
 
 
 @task
