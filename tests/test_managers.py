@@ -1,8 +1,6 @@
-from pprint import pprint
-
 from django.test import TestCase
 
-from literature.models import Author, Literature
+from literature.models import Literature
 
 
 class TestLiteratureManager(TestCase):
@@ -15,7 +13,7 @@ class TestLiteratureManager(TestCase):
         data, errors = Literature.objects.resolve_doi(doi)
 
         # pprint(data)
-        self.assertTrue("doi" in data.keys())
+        self.assertTrue("doi" in data)
         self.assertFalse(errors)
         # self.assert
         # self.assertTrue("doi" in data.keys())

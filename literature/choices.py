@@ -3,7 +3,6 @@ from django.utils.translation import gettext_lazy as _
 
 
 class MonthChoices(models.IntegerChoices):
-
     JAN = (
         1,
         _("January"),

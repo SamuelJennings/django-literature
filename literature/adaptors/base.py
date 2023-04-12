@@ -44,11 +44,11 @@ class AuthorField(ModelMultipleChoiceField):
 
 
 class BaseAdaptor(ModelForm):
-    BASE_URL = None
+    BASE_URL = ""
     EXTRACT_KEY = ""
     SOURCE = ""
-    MAP = {}
-    AUTHOR_MAP = {}
+    MAP: dict = {}
+    AUTHOR_MAP: dict = {}
 
     authors = AuthorField(queryset=Author.objects.all())
 
@@ -65,7 +65,7 @@ class BaseAdaptor(ModelForm):
 
     @property
     def is_remote(self):
-        return self.BASE_URL is not None
+        return len(self.BASE_URL) > 0
 
     def premodify_data(self, data):
         return DataDict(data, keymap=self.MAP)
@@ -97,7 +97,7 @@ class BaseAdaptor(ModelForm):
         """
         if not self.is_remote:
             raise AdaptorError(_(f"{self} cannot resolve remote sources."))
-        response = requests.get(self.BASE_URL.format(doi=doi))
+        response = requests.get(self.BASE_URL.format(doi=doi), timeout=5)
         if not response.status_code == 200:
             raise RemoteAdaptorError(response.text)
         data = response.json()

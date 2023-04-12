@@ -1,6 +1,5 @@
 from datetime import date
 
-from ..conf import settings
 from .base import BaseAdaptor, DataDict
 
 

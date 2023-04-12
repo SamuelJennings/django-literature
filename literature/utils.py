@@ -1,4 +1,3 @@
-import copy
 from collections import UserDict
 from datetime import datetime
 
@@ -14,12 +13,14 @@ class DataDict(UserDict):
         UserDict (_type_): _description_
     """
 
-    def __init__(self, dict=None, keymap={}):
+    def __init__(self, input_dict=None, keymap=None):
+        if keymap is None:
+            self.keymap = {}
         self.keymap = keymap
-        return super().__init__(dict)
+        return super().__init__(input_dict)
 
     def __getitem__(self, key):
-        if key in self.keymap.keys():
+        if key in self.keymap:
             data = self.data
             for k in self.keymap[key].split("."):
                 data = data[k]

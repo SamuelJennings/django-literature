@@ -18,7 +18,7 @@ SECRET_KEY = "=bodvqgkt@)emfe2!($i#1zd(x27@u!9*9+)^$8bu#sqsmm^*n"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS: list = []
 
 # Application definition
 
@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     # they should be added here
     "taggit",
     "sortedm2m",
-    "easy_thumbnails",
+    # "easy_thumbnails",
 ]
 
 MIDDLEWARE = [

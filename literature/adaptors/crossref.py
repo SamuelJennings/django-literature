@@ -1,5 +1,4 @@
 from datetime import date
-from pprint import pprint
 
 from django import forms
 from django.forms.fields import JSONField
@@ -19,7 +18,7 @@ class ListConcatField(forms.CharField):
 
 
 class Crossref(BaseAdaptor):
-    MAILTO = getattr(settings, "DEFAULT_FROM_EMAIL")
+    MAILTO = settings.DEFAULT_FROM_EMAIL
     BASE_URL = "https://api.crossref.org/works/{doi}"
     EXTRACT_KEY = "message"
 

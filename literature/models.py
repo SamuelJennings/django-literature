@@ -26,9 +26,7 @@ class LiteratureAuthor(models.Model):
     """
 
     literature = models.ForeignKey("literature.Literature", on_delete=models.CASCADE)
-    author = models.ForeignKey(
-        "literature.Author", related_name="position", on_delete=models.CASCADE
-    )
+    author = models.ForeignKey("literature.Author", related_name="position", on_delete=models.CASCADE)
     position = models.IntegerField()
 
     _sort_field_name = "position"
@@ -45,7 +43,7 @@ class Author(TimeStampedModel):
     ORCID = models.CharField(
         "ORCID",
         max_length=64,
-        validators=[RegexValidator("^(?:\d{4}-){3}\d{3}[\d,x]")],
+        validators=[RegexValidator("^(?:\\d{4}-){3}\\d{3}[\\d,x]")],
         blank=True,
         null=True,
     )
@@ -113,7 +111,8 @@ class Literature(TimeStampedModel):
         null=True,
         blank=True,
         help_text=_(
-            'List of authors in the format "LastName, GivenName" separated by semi-colons. E.g Smith, John; Klose, Sarah;'
+            'List of authors in the format "LastName, GivenName" separated by semi-colons. E.g Smith, John; Klose,'
+            " Sarah;"
         ),
     )
     comment = models.TextField(
@@ -135,9 +134,7 @@ class Literature(TimeStampedModel):
         help_text=_("Add the entry to a collection."),
         blank=True,
     )
-    doi = models.CharField(
-        max_length=255, verbose_name="DOI", blank=True, null=True, unique=True
-    )
+    doi = models.CharField(max_length=255, verbose_name="DOI", blank=True, null=True, unique=True)
     institution = models.CharField(
         _("institution"),
         max_length=255,
@@ -165,9 +162,7 @@ class Literature(TimeStampedModel):
     )
     label = models.CharField(
         _("label"),
-        help_text=_(
-            "A human readable identifier. Whitespace and hyphens will be converted to underscores."
-        ),
+        help_text=_("A human readable identifier. Whitespace and hyphens will be converted to underscores."),
         max_length=255,
         blank=True,
         # null=True,
@@ -187,7 +182,7 @@ class Literature(TimeStampedModel):
             "Either a single digit indicating the page number or two hyphen-separated digits representing a range."
         ),
         max_length=32,
-        validators=[RegexValidator("^(\d+-{1,2}?\d+)$")],
+        validators=[RegexValidator("^(\\d+-{1,2}?\\d+)$")],
         null=True,
         blank=True,
     )
@@ -221,10 +216,8 @@ class Literature(TimeStampedModel):
         _("title"),
         max_length=512,
     )
-    type = models.CharField(_("entry type"), max_length=255)
-    url = models.URLField(
-        "URL", help_text=_("A link to the URL resource."), blank=True, null=True
-    )
+    type = models.CharField(_("entry type"), max_length=255)  # noqa: A003
+    url = models.URLField("URL", help_text=_("A link to the URL resource."), blank=True, null=True)
     volume = models.IntegerField(_("volume"), blank=True, null=True)
     year = models.PositiveSmallIntegerField(
         _("year"),

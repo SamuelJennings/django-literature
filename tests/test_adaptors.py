@@ -1,14 +1,13 @@
 from django.test import TestCase
 
-from literature.adaptors import BibtexAdaptor, Crossref, Datacite, RISAdaptor
+from literature.adaptors import Crossref, Datacite
 from literature.adaptors.bibtex import parse
 from literature.exceptions import RemoteAdaptorError
 
 
 class TestBibtex(TestCase):
     def setUp(self):
-
-        with open("tests/data/publication.bib", "r") as f:
+        with open("tests/data/publication.bib") as f:
             self.file = f.read()
 
         entry = parse(self.file)

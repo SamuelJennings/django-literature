@@ -8,7 +8,7 @@ __all__ = ("settings", "LiteratureConf")
 class LiteratureConf(AppConf):
     """Settings for Django Literature"""
 
-    MODELS = {}
+    MODELS: dict = {}
     """Point the application to the working models. Required when extending
     the default models."""
 

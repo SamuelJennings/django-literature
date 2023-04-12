@@ -1,4 +1,3 @@
-
 class AdaptorError(Exception):
     """The requested model field does not exist"""
 

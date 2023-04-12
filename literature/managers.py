@@ -1,14 +1,9 @@
 from datetime import date
 
-from asgiref.sync import sync_to_async
 from dateutil.relativedelta import relativedelta
-
-# from .adaptors.base import AdaptorError, RemoteAdaptorError
-from django.db import IntegrityError, transaction
 from django.db.models import Count, Max, Q
 from django.db.models.query import QuerySet
 from django.utils.module_loading import import_string
-from django.utils.translation import gettext as _
 
 from literature.conf import settings
 
@@ -51,9 +46,7 @@ class AuthorQuerySet(QuerySet):
         )
 
     def with_last_published(self):
-        return self.prefetch_related("works").annotate(
-            last_published=Max("works__published")
-        )
+        return self.prefetch_related("works").annotate(last_published=Max("works__published"))
 
     def is_active(self):
         cutoff = date.today() - relativedelta(years=settings.LITERATURE_INACTIVE_AFTER)
@@ -77,12 +70,7 @@ class LiteratureQuerySet(QuerySet):
         Returns:
             _type_: _description_
         """
-        if adaptor:
-            adaptors = [adaptor]
-        else:
-            adaptors = [
-                import_string(ac) for ac in getattr(settings, "LITERATURE_ADAPTORS")
-            ]
+        adaptors = [adaptor] if adaptor else [import_string(ac) for ac in settings.LITERATURE_ADAPTORS]
 
         for adaptor in adaptors:
             try:
@@ -103,7 +91,7 @@ class LiteratureQuerySet(QuerySet):
         try:
             return self.get(doi=doi), False
         except self.model.DoesNotExist:
-            for adaptor_class in getattr(settings, "LITERATURE_ADAPTORS"):
+            for adaptor_class in settings.LITERATURE_ADAPTORS:
                 if adaptor_class.is_remote:
                     obj, created = self.resolve_doi_for_adaptor(doi, adaptor_class)
 
@@ -118,8 +106,8 @@ class LiteratureQuerySet(QuerySet):
     #     # fetch data from the adaptor's API
     #     return adaptor(doi=doi).get_data()
 
-    async def aresolve_doi_for_adaptor(self, doi):
-        return await sync_to_async(self.resolve_doi_for_adaptor)(doi)
+    # async def aresolve_doi_for_adaptor(self, doi):
+    #     return await sync_to_async(self.resolve_doi_for_adaptor)(doi)
 
 
 LiteratureManager = LiteratureQuerySet.as_manager

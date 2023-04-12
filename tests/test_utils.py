@@ -1,7 +1,6 @@
 from datetime import datetime
 
-from django.test import SimpleTestCase, TestCase
-from django.urls import resolve, reverse
+from django.test import TestCase
 from model_bakery import baker
 
 from literature import utils
@@ -12,7 +11,10 @@ class TestUtils(TestCase):
         authors = baker.prepare("literature.Author", family="Jennings", _quantity=1)
         self.pub = baker.make(
             "literature.Literature",
-            title="This should be a really long title so we can test whether the uploaded pdf name is shortened properly using the simple_file_renamer",
+            title=(
+                "This should be a really long title so we can test whether the uploaded pdf name is shortened properly"
+                " using the simple_file_renamer"
+            ),
             authors=authors,
             year=2022,
         )
@@ -27,8 +29,8 @@ class TestUtils(TestCase):
                 "y": "y.z",
             },
         )
-        self.assertEquals(data["x"], 8)
-        self.assertEquals(data["x_original"], 8)
+        self.assertEqual(data["x"], 8)
+        self.assertEqual(data["x_original"], 8)
 
     def test_clean_doi(self):
         doi = "10.1093/gji/ggz376"
@@ -41,7 +43,7 @@ class TestUtils(TestCase):
 
     def test_simple_autolabeler(self):
         label = utils.simple_autolabeler(self.pub)
-        self.assertEquals(label, "Jennings2022")
+        self.assertEqual(label, "Jennings2022")
         self.pub.label = label
         self.pub.save()
         new_pub = baker.make(
@@ -51,7 +53,7 @@ class TestUtils(TestCase):
             year=2022,
         )
         label = utils.simple_autolabeler(new_pub)
-        self.assertEquals(label, "Jennings2022b")
+        self.assertEqual(label, "Jennings2022b")
 
     def test_get_current_year(self):
         year = utils.get_current_year()

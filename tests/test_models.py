@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 """
 test_django-literature
@@ -47,7 +46,10 @@ class TestLiterature(TestCase):
         authors = baker.prepare("literature.Author", family="Jennings", _quantity=1)
         self.pub = baker.make(
             "literature.Literature",
-            title="This should be a really long title so we can test whether the uploaded pdf name is shortened properly using the simple_file_renamer",
+            title=(
+                "This should be a really long title so we can test whether the uploaded pdf name is shortened properly"
+                " using the simple_file_renamer"
+            ),
             authors=authors,
             year=2022,
         )
