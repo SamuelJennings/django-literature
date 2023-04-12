@@ -140,6 +140,10 @@ ignore = [
 # "**/models.py" = ["A003",]
 # "docs/conf.py" = ["*"]
 
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "tests.settings"
+# -- recommended but optional:
+python_files = ["test_*.py", "*_test.py", "testing/python/*.py"]
 
 [tool.coverage.report]
 skip_empty = true
