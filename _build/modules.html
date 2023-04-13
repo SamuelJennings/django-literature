@@ -1,0 +1,686 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+<meta property="og:title" content="literature" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="modules.html" />
+<meta property="og:site_name" content="Django-Literature" />
+<meta property="og:description" content="literature package- Subpackages- literature.adaptors package- Submodules, literature.adaptors.base module, literature.adaptors.bibtex module, literature.adaptors.crossref module, literature.adaptor..." />
+<meta property="og:image" content="/_images/social_previews/summary_modules_b6f59cfe.png" />
+<meta property="og:image:alt" content="literature package- Subpackages- literature.adaptors package- Submodules, literature.adaptors.base module, literature.adaptors.bibtex module, literature.adap..." />
+<meta name="description" content="literature package- Subpackages- literature.adaptors package- Submodules, literature.adaptors.base module, literature.adaptors.bibtex module, literature.adaptors.crossref module, literature.adaptor..." />
+
+    <title>literature</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modules';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">None</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Django Literature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/SSJenny90/django-literature" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/SSJenny90/django-literature/edit/main/modules.rst" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/SSJenny90/django-literature/issues/new?title=Issue%20on%20page%20%2Fmodules.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/modules.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>literature</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="literature">
+<h1>literature<a class="headerlink" href="#literature" title="Permalink to this heading">#</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="literature.html">literature package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="literature.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="literature.adaptors.html">literature.adaptors package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="literature.adaptors.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.adaptors.html#module-literature.adaptors.base">literature.adaptors.base module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.adaptors.html#module-literature.adaptors.bibtex">literature.adaptors.bibtex module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.adaptors.html#module-literature.adaptors.crossref">literature.adaptors.crossref module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.adaptors.html#module-literature.adaptors.datacite">literature.adaptors.datacite module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.adaptors.html#module-literature.adaptors.ris">literature.adaptors.ris module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.adaptors.html#module-literature.adaptors">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="literature.migrations.html">literature.migrations package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="literature.migrations.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.migrations.html#module-literature.migrations.0001_initial">literature.migrations.0001_initial module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.migrations.html#literature-migrations-0002-alter-author-orcid-alter-author-family-and-more-module">literature.migrations.0002_alter_author_orcid_alter_author_family_and_more module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.migrations.html#module-literature.migrations">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="literature.test_utils.html">literature.test_utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="literature.test_utils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.test_utils.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="literature.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="literature.html#module-literature.admin">literature.admin module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="literature.html#literature.admin.AuthorAdmin"><code class="docutils literal notranslate"><span class="pre">AuthorAdmin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.admin.AuthorAdmin.list_display"><code class="docutils literal notranslate"><span class="pre">AuthorAdmin.list_display</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.admin.AuthorAdmin.media"><code class="docutils literal notranslate"><span class="pre">AuthorAdmin.media</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="literature.html#literature.admin.AuthorInline"><code class="docutils literal notranslate"><span class="pre">AuthorInline</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.admin.AuthorInline.media"><code class="docutils literal notranslate"><span class="pre">AuthorInline.media</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.admin.AuthorInline.model"><code class="docutils literal notranslate"><span class="pre">AuthorInline.model</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="literature.html#literature.admin.CollectionAdmin"><code class="docutils literal notranslate"><span class="pre">CollectionAdmin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.admin.CollectionAdmin.media"><code class="docutils literal notranslate"><span class="pre">CollectionAdmin.media</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="literature.html#literature.admin.LiteratureAdmin"><code class="docutils literal notranslate"><span class="pre">LiteratureAdmin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.admin.LiteratureAdmin.Media"><code class="docutils literal notranslate"><span class="pre">LiteratureAdmin.Media</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.admin.LiteratureAdmin.article"><code class="docutils literal notranslate"><span class="pre">LiteratureAdmin.article()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.admin.LiteratureAdmin.autocomplete_lookup_fields"><code class="docutils literal notranslate"><span class="pre">LiteratureAdmin.autocomplete_lookup_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.admin.LiteratureAdmin.date_hierarchy"><code class="docutils literal notranslate"><span class="pre">LiteratureAdmin.date_hierarchy</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.admin.LiteratureAdmin.fieldsets"><code class="docutils literal notranslate"><span class="pre">LiteratureAdmin.fieldsets</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.admin.LiteratureAdmin.file"><code class="docutils literal notranslate"><span class="pre">LiteratureAdmin.file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.admin.LiteratureAdmin.formfield_overrides"><code class="docutils literal notranslate"><span class="pre">LiteratureAdmin.formfield_overrides</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.admin.LiteratureAdmin.get_queryset"><code class="docutils literal notranslate"><span class="pre">LiteratureAdmin.get_queryset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.admin.LiteratureAdmin.import_errors"><code class="docutils literal notranslate"><span class="pre">LiteratureAdmin.import_errors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.admin.LiteratureAdmin.inlines"><code class="docutils literal notranslate"><span class="pre">LiteratureAdmin.inlines</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.admin.LiteratureAdmin.list_display"><code class="docutils literal notranslate"><span class="pre">LiteratureAdmin.list_display</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.admin.LiteratureAdmin.list_display_links"><code class="docutils literal notranslate"><span class="pre">LiteratureAdmin.list_display_links</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.admin.LiteratureAdmin.list_editable"><code class="docutils literal notranslate"><span class="pre">LiteratureAdmin.list_editable</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.admin.LiteratureAdmin.list_filter"><code class="docutils literal notranslate"><span class="pre">LiteratureAdmin.list_filter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.admin.LiteratureAdmin.media"><code class="docutils literal notranslate"><span class="pre">LiteratureAdmin.media</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.admin.LiteratureAdmin.raw_id_fields"><code class="docutils literal notranslate"><span class="pre">LiteratureAdmin.raw_id_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.admin.LiteratureAdmin.readonly_fields"><code class="docutils literal notranslate"><span class="pre">LiteratureAdmin.readonly_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.admin.LiteratureAdmin.search_fields"><code class="docutils literal notranslate"><span class="pre">LiteratureAdmin.search_fields</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="literature.html#literature.admin.SupplementaryInline"><code class="docutils literal notranslate"><span class="pre">SupplementaryInline</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.admin.SupplementaryInline.media"><code class="docutils literal notranslate"><span class="pre">SupplementaryInline.media</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.admin.SupplementaryInline.model"><code class="docutils literal notranslate"><span class="pre">SupplementaryInline.model</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="literature.html#module-literature.apps">literature.apps module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="literature.html#literature.apps.LiteratureConfig"><code class="docutils literal notranslate"><span class="pre">LiteratureConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.apps.LiteratureConfig.default_auto_field"><code class="docutils literal notranslate"><span class="pre">LiteratureConfig.default_auto_field</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.apps.LiteratureConfig.name"><code class="docutils literal notranslate"><span class="pre">LiteratureConfig.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.apps.LiteratureConfig.ready"><code class="docutils literal notranslate"><span class="pre">LiteratureConfig.ready()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.apps.LiteratureConfig.verbose_name"><code class="docutils literal notranslate"><span class="pre">LiteratureConfig.verbose_name</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="literature.html#module-literature.choices">literature.choices module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="literature.html#literature.choices.MonthChoices"><code class="docutils literal notranslate"><span class="pre">MonthChoices</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.choices.MonthChoices.APR"><code class="docutils literal notranslate"><span class="pre">MonthChoices.APR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.choices.MonthChoices.AUG"><code class="docutils literal notranslate"><span class="pre">MonthChoices.AUG</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.choices.MonthChoices.DEC"><code class="docutils literal notranslate"><span class="pre">MonthChoices.DEC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.choices.MonthChoices.FEB"><code class="docutils literal notranslate"><span class="pre">MonthChoices.FEB</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.choices.MonthChoices.JAN"><code class="docutils literal notranslate"><span class="pre">MonthChoices.JAN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.choices.MonthChoices.JUL"><code class="docutils literal notranslate"><span class="pre">MonthChoices.JUL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.choices.MonthChoices.JUN"><code class="docutils literal notranslate"><span class="pre">MonthChoices.JUN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.choices.MonthChoices.MAR"><code class="docutils literal notranslate"><span class="pre">MonthChoices.MAR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.choices.MonthChoices.MAY"><code class="docutils literal notranslate"><span class="pre">MonthChoices.MAY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.choices.MonthChoices.NOV"><code class="docutils literal notranslate"><span class="pre">MonthChoices.NOV</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.choices.MonthChoices.OCT"><code class="docutils literal notranslate"><span class="pre">MonthChoices.OCT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.choices.MonthChoices.SEP"><code class="docutils literal notranslate"><span class="pre">MonthChoices.SEP</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="literature.html#module-literature.conf">literature.conf module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="literature.html#literature.conf.LiteratureConf"><code class="docutils literal notranslate"><span class="pre">LiteratureConf</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.conf.LiteratureConf.ADAPTORS"><code class="docutils literal notranslate"><span class="pre">LiteratureConf.ADAPTORS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.conf.LiteratureConf.AUTHOR_TRUNCATE_AFTER"><code class="docutils literal notranslate"><span class="pre">LiteratureConf.AUTHOR_TRUNCATE_AFTER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.conf.LiteratureConf.AUTOLABEL"><code class="docutils literal notranslate"><span class="pre">LiteratureConf.AUTOLABEL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.conf.LiteratureConf.DEFAULT_STYLE"><code class="docutils literal notranslate"><span class="pre">LiteratureConf.DEFAULT_STYLE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.conf.LiteratureConf.HYPERLINK"><code class="docutils literal notranslate"><span class="pre">LiteratureConf.HYPERLINK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.conf.LiteratureConf.INACTIVE_AFTER"><code class="docutils literal notranslate"><span class="pre">LiteratureConf.INACTIVE_AFTER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.conf.LiteratureConf.MODELS"><code class="docutils literal notranslate"><span class="pre">LiteratureConf.MODELS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.conf.LiteratureConf.Meta"><code class="docutils literal notranslate"><span class="pre">LiteratureConf.Meta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.conf.LiteratureConf.PDF_RENAMER"><code class="docutils literal notranslate"><span class="pre">LiteratureConf.PDF_RENAMER</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="literature.html#module-literature.models">literature.models module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="literature.html#literature.models.Author"><code class="docutils literal notranslate"><span class="pre">Author</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Author.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Author.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Author.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Author.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Author.ORCID"><code class="docutils literal notranslate"><span class="pre">Author.ORCID</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Author.autocomplete_search_fields"><code class="docutils literal notranslate"><span class="pre">Author.autocomplete_search_fields()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Author.created"><code class="docutils literal notranslate"><span class="pre">Author.created</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Author.family"><code class="docutils literal notranslate"><span class="pre">Author.family</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Author.family_g"><code class="docutils literal notranslate"><span class="pre">Author.family_g()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Author.family_given"><code class="docutils literal notranslate"><span class="pre">Author.family_given()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Author.g_family"><code class="docutils literal notranslate"><span class="pre">Author.g_family()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Author.get_absolute_url"><code class="docutils literal notranslate"><span class="pre">Author.get_absolute_url()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Author.get_next_by_created"><code class="docutils literal notranslate"><span class="pre">Author.get_next_by_created()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Author.get_next_by_modified"><code class="docutils literal notranslate"><span class="pre">Author.get_next_by_modified()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Author.get_previous_by_created"><code class="docutils literal notranslate"><span class="pre">Author.get_previous_by_created()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Author.get_previous_by_modified"><code class="docutils literal notranslate"><span class="pre">Author.get_previous_by_modified()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Author.given"><code class="docutils literal notranslate"><span class="pre">Author.given</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Author.given_family"><code class="docutils literal notranslate"><span class="pre">Author.given_family()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Author.id"><code class="docutils literal notranslate"><span class="pre">Author.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Author.literature"><code class="docutils literal notranslate"><span class="pre">Author.literature</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Author.modified"><code class="docutils literal notranslate"><span class="pre">Author.modified</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Author.objects"><code class="docutils literal notranslate"><span class="pre">Author.objects</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Author.position"><code class="docutils literal notranslate"><span class="pre">Author.position</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="literature.html#literature.models.Collection"><code class="docutils literal notranslate"><span class="pre">Collection</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Collection.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Collection.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Collection.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Collection.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Collection.created"><code class="docutils literal notranslate"><span class="pre">Collection.created</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Collection.description"><code class="docutils literal notranslate"><span class="pre">Collection.description</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Collection.get_next_by_created"><code class="docutils literal notranslate"><span class="pre">Collection.get_next_by_created()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Collection.get_next_by_modified"><code class="docutils literal notranslate"><span class="pre">Collection.get_next_by_modified()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Collection.get_previous_by_created"><code class="docutils literal notranslate"><span class="pre">Collection.get_previous_by_created()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Collection.get_previous_by_modified"><code class="docutils literal notranslate"><span class="pre">Collection.get_previous_by_modified()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Collection.id"><code class="docutils literal notranslate"><span class="pre">Collection.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Collection.literature"><code class="docutils literal notranslate"><span class="pre">Collection.literature</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Collection.modified"><code class="docutils literal notranslate"><span class="pre">Collection.modified</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Collection.name"><code class="docutils literal notranslate"><span class="pre">Collection.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Collection.objects"><code class="docutils literal notranslate"><span class="pre">Collection.objects</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="literature.html#literature.models.Literature"><code class="docutils literal notranslate"><span class="pre">Literature</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Literature.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">Literature.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.abstract"><code class="docutils literal notranslate"><span class="pre">Literature.abstract</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.author_str"><code class="docutils literal notranslate"><span class="pre">Literature.author_str</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.authors"><code class="docutils literal notranslate"><span class="pre">Literature.authors</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.autocomplete_search_fields"><code class="docutils literal notranslate"><span class="pre">Literature.autocomplete_search_fields()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.collections"><code class="docutils literal notranslate"><span class="pre">Literature.collections</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.comment"><code class="docutils literal notranslate"><span class="pre">Literature.comment</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.container_title"><code class="docutils literal notranslate"><span class="pre">Literature.container_title</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.created"><code class="docutils literal notranslate"><span class="pre">Literature.created</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.doi"><code class="docutils literal notranslate"><span class="pre">Literature.doi</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.get_month_display"><code class="docutils literal notranslate"><span class="pre">Literature.get_month_display()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.get_next_by_created"><code class="docutils literal notranslate"><span class="pre">Literature.get_next_by_created()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.get_next_by_modified"><code class="docutils literal notranslate"><span class="pre">Literature.get_next_by_modified()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.get_next_by_published"><code class="docutils literal notranslate"><span class="pre">Literature.get_next_by_published()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.get_previous_by_created"><code class="docutils literal notranslate"><span class="pre">Literature.get_previous_by_created()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.get_previous_by_modified"><code class="docutils literal notranslate"><span class="pre">Literature.get_previous_by_modified()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.get_previous_by_published"><code class="docutils literal notranslate"><span class="pre">Literature.get_previous_by_published()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.id"><code class="docutils literal notranslate"><span class="pre">Literature.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.institution"><code class="docutils literal notranslate"><span class="pre">Literature.institution</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.isbn"><code class="docutils literal notranslate"><span class="pre">Literature.isbn</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.issn"><code class="docutils literal notranslate"><span class="pre">Literature.issn</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.issue"><code class="docutils literal notranslate"><span class="pre">Literature.issue</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.keywords"><code class="docutils literal notranslate"><span class="pre">Literature.keywords</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.label"><code class="docutils literal notranslate"><span class="pre">Literature.label</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.language"><code class="docutils literal notranslate"><span class="pre">Literature.language</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.last_synced"><code class="docutils literal notranslate"><span class="pre">Literature.last_synced</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.literatureauthor_set"><code class="docutils literal notranslate"><span class="pre">Literature.literatureauthor_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.modified"><code class="docutils literal notranslate"><span class="pre">Literature.modified</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.month"><code class="docutils literal notranslate"><span class="pre">Literature.month</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.objects"><code class="docutils literal notranslate"><span class="pre">Literature.objects</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.pages"><code class="docutils literal notranslate"><span class="pre">Literature.pages</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.pdf"><code class="docutils literal notranslate"><span class="pre">Literature.pdf</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.published"><code class="docutils literal notranslate"><span class="pre">Literature.published</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.publisher"><code class="docutils literal notranslate"><span class="pre">Literature.publisher</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.refresh_from_db"><code class="docutils literal notranslate"><span class="pre">Literature.refresh_from_db()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.save"><code class="docutils literal notranslate"><span class="pre">Literature.save()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.save_base"><code class="docutils literal notranslate"><span class="pre">Literature.save_base()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.source"><code class="docutils literal notranslate"><span class="pre">Literature.source</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.supplementary"><code class="docutils literal notranslate"><span class="pre">Literature.supplementary</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.tagged_items"><code class="docutils literal notranslate"><span class="pre">Literature.tagged_items</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.title"><code class="docutils literal notranslate"><span class="pre">Literature.title</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.tracker"><code class="docutils literal notranslate"><span class="pre">Literature.tracker</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.type"><code class="docutils literal notranslate"><span class="pre">Literature.type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.url"><code class="docutils literal notranslate"><span class="pre">Literature.url</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.volume"><code class="docutils literal notranslate"><span class="pre">Literature.volume</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.Literature.year"><code class="docutils literal notranslate"><span class="pre">Literature.year</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="literature.html#literature.models.LiteratureAuthor"><code class="docutils literal notranslate"><span class="pre">LiteratureAuthor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.LiteratureAuthor.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">LiteratureAuthor.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.LiteratureAuthor.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">LiteratureAuthor.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.LiteratureAuthor.author"><code class="docutils literal notranslate"><span class="pre">LiteratureAuthor.author</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.LiteratureAuthor.author_id"><code class="docutils literal notranslate"><span class="pre">LiteratureAuthor.author_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.LiteratureAuthor.id"><code class="docutils literal notranslate"><span class="pre">LiteratureAuthor.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.LiteratureAuthor.literature"><code class="docutils literal notranslate"><span class="pre">LiteratureAuthor.literature</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.LiteratureAuthor.literature_id"><code class="docutils literal notranslate"><span class="pre">LiteratureAuthor.literature_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.LiteratureAuthor.objects"><code class="docutils literal notranslate"><span class="pre">LiteratureAuthor.objects</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.LiteratureAuthor.position"><code class="docutils literal notranslate"><span class="pre">LiteratureAuthor.position</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="literature.html#literature.models.SupplementaryMaterial"><code class="docutils literal notranslate"><span class="pre">SupplementaryMaterial</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.SupplementaryMaterial.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">SupplementaryMaterial.DoesNotExist</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.SupplementaryMaterial.MultipleObjectsReturned"><code class="docutils literal notranslate"><span class="pre">SupplementaryMaterial.MultipleObjectsReturned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.SupplementaryMaterial.created"><code class="docutils literal notranslate"><span class="pre">SupplementaryMaterial.created</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.SupplementaryMaterial.file"><code class="docutils literal notranslate"><span class="pre">SupplementaryMaterial.file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.SupplementaryMaterial.get_next_by_created"><code class="docutils literal notranslate"><span class="pre">SupplementaryMaterial.get_next_by_created()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.SupplementaryMaterial.get_next_by_modified"><code class="docutils literal notranslate"><span class="pre">SupplementaryMaterial.get_next_by_modified()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.SupplementaryMaterial.get_previous_by_created"><code class="docutils literal notranslate"><span class="pre">SupplementaryMaterial.get_previous_by_created()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.SupplementaryMaterial.get_previous_by_modified"><code class="docutils literal notranslate"><span class="pre">SupplementaryMaterial.get_previous_by_modified()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.SupplementaryMaterial.id"><code class="docutils literal notranslate"><span class="pre">SupplementaryMaterial.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.SupplementaryMaterial.literature"><code class="docutils literal notranslate"><span class="pre">SupplementaryMaterial.literature</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.SupplementaryMaterial.literature_id"><code class="docutils literal notranslate"><span class="pre">SupplementaryMaterial.literature_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.SupplementaryMaterial.modified"><code class="docutils literal notranslate"><span class="pre">SupplementaryMaterial.modified</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.models.SupplementaryMaterial.objects"><code class="docutils literal notranslate"><span class="pre">SupplementaryMaterial.objects</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="literature.html#literature-querysets-module">literature.querysets module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="literature.html#literature-tests-module">literature.tests module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="literature.html#module-literature.utils">literature.utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="literature.html#literature.utils.DataDict"><code class="docutils literal notranslate"><span class="pre">DataDict</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="literature.html#literature.utils.clean_doi"><code class="docutils literal notranslate"><span class="pre">clean_doi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="literature.html#literature.utils.get_current_year"><code class="docutils literal notranslate"><span class="pre">get_current_year()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="literature.html#literature.utils.pdf_file_renamer"><code class="docutils literal notranslate"><span class="pre">pdf_file_renamer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="literature.html#literature.utils.simple_autolabeler"><code class="docutils literal notranslate"><span class="pre">simple_autolabeler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="literature.html#literature.utils.simple_file_renamer"><code class="docutils literal notranslate"><span class="pre">simple_file_renamer()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="literature.html#module-literature.views">literature.views module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="literature.html#literature.views.literature_list"><code class="docutils literal notranslate"><span class="pre">literature_list()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="literature.html#module-literature.widgets">literature.widgets module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="literature.html#literature.widgets.AdminPDFWidget"><code class="docutils literal notranslate"><span class="pre">AdminPDFWidget</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.widgets.AdminPDFWidget.media"><code class="docutils literal notranslate"><span class="pre">AdminPDFWidget.media</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="literature.html#literature.widgets.AdminPDFWidget.template_name"><code class="docutils literal notranslate"><span class="pre">AdminPDFWidget.template_name</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="literature.html#module-literature">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023, Sam Jennings.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
