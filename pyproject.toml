@@ -158,6 +158,7 @@ source = ["literature"]
 [tool.deptry]
 extend_exclude = [
     "tasks.py",
+    "docs/"
 ]
 
 # exclude_lines = raise NotImplementedError
