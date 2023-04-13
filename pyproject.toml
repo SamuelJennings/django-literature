@@ -56,13 +56,11 @@ sphinxext-opengraph = "^0.8.1"
 sphinx-book-theme = "^1.0.0"
 myst-parser = "^0.19.1"
 sphinx-autobuild = "^2021.3.14"
+toml = "^0.10.2"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
-# [tool.wheel]
-# universal = 1
 
 
 [tool.black]
@@ -70,8 +68,8 @@ line-length = 120
 target-version = ['py37']
 preview = true
 
-# [tool.isort]
-# profile = "black"
+[tool.isort]
+profile = "black"
 
 [tool.mypy]
 files = ["literature"]
@@ -95,7 +93,6 @@ target-version = "py37"
 line-length = 120
 fix = true
 exclude = ['docs/']
-
 select = [
     # flake8-2020
     "YTT",
@@ -142,7 +139,6 @@ ignore = [
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "tests.settings"
-# -- recommended but optional:
 python_files = ["test_*.py", "*_test.py", "testing/python/*.py"]
 
 [tool.coverage.report]

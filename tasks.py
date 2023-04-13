@@ -95,12 +95,10 @@ def docs(c):
     """
     Build the documentation and open it in the browser
     """
-    c.run("rm -f docs/django-literature.rst")
-    c.run("rm -f docs/modules.rst")
-    c.run("sphinx-apidoc -o docs/ literature")
-
+    # c.run("rm -f docs/django-literature.rst")
+    # c.run("rm -f docs/modules.rst")
+    c.run("sphinx-apidoc -o docs/ literature **/migrations/*")
     c.run("sphinx-build -E -b html docs docs/_build")
-    # open_browser(path="docs/_build/html/index.html")
 
 
 @task

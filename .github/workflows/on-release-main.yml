@@ -28,6 +28,12 @@ jobs:
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
           RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
 
+      - name: Build Changelog
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   deploy-docs:
     needs: publish
     runs-on: ubuntu-latest

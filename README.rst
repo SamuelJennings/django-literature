@@ -8,8 +8,8 @@ Django Literature
 .. image:: https://travis-ci.org/SSJenny90/django-literature.svg?branch=master
     :target: https://travis-ci.org/SSJenny90/django-literature
 
-.. image:: https://codecov.io/gh/SSJenny90/django-literature/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/SSJenny90/django-literature
+.. image:: https://codecov.io/gh/SSJenny90/django-literature/branch/main/graph/badge.svg?token=0Q18CLIKZE 
+ :target: https://codecov.io/gh/SSJenny90/django-literature
 
 A scientific literature management app for Django
 
