@@ -8,8 +8,6 @@ Subpackages
    :maxdepth: 4
 
    literature.adaptors
-   literature.migrations
-   literature.test_utils
 
 Submodules
 ----------
@@ -46,26 +44,34 @@ literature.conf module
    :undoc-members:
    :show-inheritance:
 
+literature.exceptions module
+----------------------------
+
+.. automodule:: literature.exceptions
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+literature.fields module
+------------------------
+
+.. automodule:: literature.fields
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+literature.managers module
+--------------------------
+
+.. automodule:: literature.managers
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 literature.models module
 ------------------------
 
 .. automodule:: literature.models
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-literature.querysets module
----------------------------
-
-.. automodule:: literature.querysets
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-literature.tests module
------------------------
-
-.. automodule:: literature.tests
    :members:
    :undoc-members:
    :show-inheritance:

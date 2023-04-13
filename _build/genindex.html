@@ -125,6 +125,13 @@
 <li class="toctree-l1"><a class="reference internal" href="readme.html">Django Literature</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="modules.html">literature</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="literature.html">literature package</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="literature.adaptors.html">literature.adaptors package</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
@@ -300,6 +307,7 @@ document.write(`
  | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
  | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
  | <a href="#Y"><strong>Y</strong></a>
  
 </div>
@@ -308,6 +316,8 @@ document.write(`
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="literature.html#literature.models.Literature.abstract">abstract (literature.models.Literature attribute)</a>
 </li>
+      <li><a href="literature.html#literature.exceptions.AdaptorError">AdaptorError</a>
+</li>
       <li><a href="literature.html#literature.conf.LiteratureConf.ADAPTORS">ADAPTORS (literature.conf.LiteratureConf attribute)</a>
 </li>
       <li><a href="literature.html#literature.widgets.AdminPDFWidget">AdminPDFWidget (class in literature.widgets)</a>
@@ -315,6 +325,8 @@ document.write(`
       <li><a href="literature.html#literature.choices.MonthChoices.APR">APR (literature.choices.MonthChoices attribute)</a>
 </li>
       <li><a href="literature.html#literature.admin.LiteratureAdmin.article">article() (literature.admin.LiteratureAdmin method)</a>
+</li>
+      <li><a href="literature.html#literature.managers.AuthorQuerySet.as_lead">as_lead() (literature.managers.AuthorQuerySet method)</a>
 </li>
       <li><a href="literature.html#literature.choices.MonthChoices.AUG">AUG (literature.choices.MonthChoices attribute)</a>
 </li>
@@ -345,6 +357,8 @@ document.write(`
       <li><a href="literature.adaptors.html#literature.adaptors.base.AuthorField">AuthorField (class in literature.adaptors.base)</a>
 </li>
       <li><a href="literature.html#literature.admin.AuthorInline">AuthorInline (class in literature.admin)</a>
+</li>
+      <li><a href="literature.html#literature.managers.AuthorQuerySet">AuthorQuerySet (class in literature.managers)</a>
 </li>
       <li><a href="literature.html#literature.models.Literature.authors">authors (literature.models.Literature attribute)</a>
 </li>
@@ -476,8 +490,6 @@ document.write(`
 </li>
       <li><a href="literature.html#literature.conf.LiteratureConf.DEFAULT_STYLE">DEFAULT_STYLE (literature.conf.LiteratureConf attribute)</a>
 </li>
-      <li><a href="literature.migrations.html#literature.migrations.0001_initial.Migration.dependencies">dependencies (literature.migrations.0001_initial.Migration attribute)</a>
-</li>
       <li><a href="literature.html#literature.models.Collection.description">description (literature.models.Collection attribute)</a>
 </li>
       <li><a href="literature.html#literature.models.Literature.doi">doi (literature.models.Literature attribute)</a>
@@ -566,6 +578,8 @@ document.write(`
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="literature.html#literature.models.Literature.get_next_by_published">get_next_by_published() (literature.models.Literature method)</a>
 </li>
+      <li><a href="literature.html#literature.managers.LiteratureQuerySet.get_or_resolve">get_or_resolve() (literature.managers.LiteratureQuerySet method)</a>
+</li>
       <li><a href="literature.html#literature.models.Author.get_previous_by_created">get_previous_by_created() (literature.models.Author method)</a>
 
       <ul>
@@ -626,11 +640,11 @@ document.write(`
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="literature.migrations.html#literature.migrations.0001_initial.Migration.initial">initial (literature.migrations.0001_initial.Migration attribute)</a>
-</li>
       <li><a href="literature.html#literature.admin.LiteratureAdmin.inlines">inlines (literature.admin.LiteratureAdmin attribute)</a>
 </li>
       <li><a href="literature.html#literature.models.Literature.institution">institution (literature.models.Literature attribute)</a>
+</li>
+      <li><a href="literature.html#literature.managers.AuthorQuerySet.is_active">is_active() (literature.managers.AuthorQuerySet method)</a>
 </li>
       <li><a href="literature.adaptors.html#literature.adaptors.base.BaseAdaptor.is_remote">is_remote (literature.adaptors.base.BaseAdaptor property)</a>
 </li>
@@ -765,8 +779,6 @@ document.write(`
         <li><a href="literature.html#module-literature.apps">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     literature.choices
 
@@ -774,6 +786,8 @@ document.write(`
         <li><a href="literature.html#module-literature.choices">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     literature.conf
 
@@ -784,17 +798,24 @@ document.write(`
       <li><a href="literature.html#literature.models.Literature.DoesNotExist">Literature.DoesNotExist</a>
 </li>
       <li>
-    literature.migrations
+    literature.exceptions
 
       <ul>
-        <li><a href="literature.migrations.html#module-literature.migrations">module</a>
+        <li><a href="literature.html#module-literature.exceptions">module</a>
 </li>
       </ul></li>
       <li>
-    literature.migrations.0001_initial
+    literature.fields
 
       <ul>
-        <li><a href="literature.migrations.html#module-literature.migrations.0001_initial">module</a>
+        <li><a href="literature.html#module-literature.fields">module</a>
+</li>
+      </ul></li>
+      <li>
+    literature.managers
+
+      <ul>
+        <li><a href="literature.html#module-literature.managers">module</a>
 </li>
       </ul></li>
       <li>
@@ -853,6 +874,12 @@ document.write(`
 </li>
       <li><a href="literature.html#literature.apps.LiteratureConfig">LiteratureConfig (class in literature.apps)</a>
 </li>
+      <li><a href="literature.html#literature.fields.LiteratureFK">LiteratureFK (class in literature.fields)</a>
+</li>
+      <li><a href="literature.html#literature.fields.LiteratureM2M">LiteratureM2M (class in literature.fields)</a>
+</li>
+      <li><a href="literature.html#literature.managers.LiteratureQuerySet">LiteratureQuerySet (class in literature.managers)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -901,8 +928,6 @@ document.write(`
         <li><a href="literature.html#literature.widgets.AdminPDFWidget.media">(literature.widgets.AdminPDFWidget property)</a>
 </li>
       </ul></li>
-      <li><a href="literature.migrations.html#literature.migrations.0001_initial.Migration">Migration (class in literature.migrations.0001_initial)</a>
-</li>
       <li><a href="literature.adaptors.html#literature.adaptors.base.BaseAdaptor.Meta.model">model (literature.adaptors.base.BaseAdaptor.Meta attribute)</a>
 
       <ul>
@@ -913,8 +938,6 @@ document.write(`
       </ul></li>
       <li><a href="literature.html#literature.conf.LiteratureConf.MODELS">MODELS (literature.conf.LiteratureConf attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="literature.html#literature.models.Author.modified">modified (literature.models.Author attribute)</a>
 
       <ul>
@@ -925,6 +948,8 @@ document.write(`
         <li><a href="literature.html#literature.models.SupplementaryMaterial.modified">(literature.models.SupplementaryMaterial attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="literature.adaptors.html#literature.adaptors.base.BaseAdaptor.modify_authors">modify_authors() (literature.adaptors.base.BaseAdaptor method)</a>
 </li>
       <li>
@@ -953,9 +978,11 @@ document.write(`
 </li>
         <li><a href="literature.html#module-literature.conf">literature.conf</a>
 </li>
-        <li><a href="literature.migrations.html#module-literature.migrations">literature.migrations</a>
+        <li><a href="literature.html#module-literature.exceptions">literature.exceptions</a>
 </li>
-        <li><a href="literature.migrations.html#module-literature.migrations.0001_initial">literature.migrations.0001_initial</a>
+        <li><a href="literature.html#module-literature.fields">literature.fields</a>
+</li>
+        <li><a href="literature.html#module-literature.managers">literature.managers</a>
 </li>
         <li><a href="literature.html#module-literature.models">literature.models</a>
 </li>
@@ -1007,8 +1034,6 @@ document.write(`
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="literature.html#literature.choices.MonthChoices.OCT">OCT (literature.choices.MonthChoices attribute)</a>
-</li>
-      <li><a href="literature.migrations.html#literature.migrations.0001_initial.Migration.operations">operations (literature.migrations.0001_initial.Migration attribute)</a>
 </li>
       <li><a href="literature.html#literature.models.Author.ORCID">ORCID (literature.models.Author attribute)</a>
 </li>
@@ -1062,12 +1087,18 @@ document.write(`
 </li>
       <li><a href="literature.html#literature.apps.LiteratureConfig.ready">ready() (literature.apps.LiteratureConfig method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="literature.html#literature.models.Literature.refresh_from_db">refresh_from_db() (literature.models.Literature method)</a>
 </li>
-      <li><a href="literature.adaptors.html#literature.adaptors.base.BaseAdaptor.resolve_doi">resolve_doi() (literature.adaptors.base.BaseAdaptor method)</a>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="literature.html#literature.exceptions.RemoteAdaptorError">RemoteAdaptorError</a>
 </li>
+      <li><a href="literature.adaptors.html#literature.adaptors.base.BaseAdaptor.resolve_doi">resolve_doi() (literature.adaptors.base.BaseAdaptor method)</a>
+
+      <ul>
+        <li><a href="literature.html#literature.managers.LiteratureQuerySet.resolve_doi">(literature.managers.LiteratureQuerySet method)</a>
+</li>
+      </ul></li>
       <li><a href="literature.adaptors.html#literature.adaptors.ris.RISAdaptor">RISAdaptor (class in literature.adaptors.ris)</a>
 </li>
   </ul></td>
@@ -1143,6 +1174,18 @@ document.write(`
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="literature.html#literature.models.Literature.volume">volume (literature.models.Literature attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="literature.html#literature.managers.AuthorQuerySet.with_last_published">with_last_published() (literature.managers.AuthorQuerySet method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="literature.html#literature.managers.AuthorQuerySet.with_work_counts">with_work_counts() (literature.managers.AuthorQuerySet method)</a>
 </li>
   </ul></td>
 </tr></table>

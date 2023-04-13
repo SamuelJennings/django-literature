@@ -54,6 +54,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'literature';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="literature.adaptors package" href="literature.adaptors.html" />
+    <link rel="prev" title="literature" href="modules.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -130,10 +132,17 @@
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="readme.html">Django Literature</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="modules.html">literature</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">literature package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="literature.adaptors.html">literature.adaptors package</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
@@ -441,6 +450,31 @@ document.write(`
 </li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-literature.exceptions">literature.exceptions module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.exceptions.AdaptorError"><code class="docutils literal notranslate"><span class="pre">AdaptorError</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.exceptions.RemoteAdaptorError"><code class="docutils literal notranslate"><span class="pre">RemoteAdaptorError</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-literature.fields">literature.fields module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.fields.LiteratureFK"><code class="docutils literal notranslate"><span class="pre">LiteratureFK</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.fields.LiteratureM2M"><code class="docutils literal notranslate"><span class="pre">LiteratureM2M</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-literature.managers">literature.managers module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.managers.AuthorQuerySet"><code class="docutils literal notranslate"><span class="pre">AuthorQuerySet</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.managers.AuthorQuerySet.as_lead"><code class="docutils literal notranslate"><span class="pre">AuthorQuerySet.as_lead()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.managers.AuthorQuerySet.is_active"><code class="docutils literal notranslate"><span class="pre">AuthorQuerySet.is_active()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.managers.AuthorQuerySet.with_last_published"><code class="docutils literal notranslate"><span class="pre">AuthorQuerySet.with_last_published()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.managers.AuthorQuerySet.with_work_counts"><code class="docutils literal notranslate"><span class="pre">AuthorQuerySet.with_work_counts()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.managers.LiteratureQuerySet"><code class="docutils literal notranslate"><span class="pre">LiteratureQuerySet</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.managers.LiteratureQuerySet.get_or_resolve"><code class="docutils literal notranslate"><span class="pre">LiteratureQuerySet.get_or_resolve()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.managers.LiteratureQuerySet.resolve_doi"><code class="docutils literal notranslate"><span class="pre">LiteratureQuerySet.resolve_doi()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-literature.models">literature.models module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.models.Author"><code class="docutils literal notranslate"><span class="pre">Author</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.models.Author.DoesNotExist"><code class="docutils literal notranslate"><span class="pre">Author.DoesNotExist</span></code></a></li>
@@ -562,8 +596,6 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#literature-querysets-module">literature.querysets module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#literature-tests-module">literature.tests module</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-literature.utils">literature.utils module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.utils.DataDict"><code class="docutils literal notranslate"><span class="pre">DataDict</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.utils.clean_doi"><code class="docutils literal notranslate"><span class="pre">clean_doi()</span></code></a></li>
@@ -689,37 +721,6 @@ document.write(`
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="literature.adaptors.html#module-literature.adaptors">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="literature.migrations.html">literature.migrations package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="literature.migrations.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="literature.migrations.html#module-literature.migrations.0001_initial">literature.migrations.0001_initial module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="literature.migrations.html#literature.migrations.0001_initial.Migration"><code class="docutils literal notranslate"><span class="pre">Migration</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="literature.migrations.html#literature.migrations.0001_initial.Migration.dependencies"><code class="docutils literal notranslate"><span class="pre">Migration.dependencies</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="literature.migrations.html#literature.migrations.0001_initial.Migration.initial"><code class="docutils literal notranslate"><span class="pre">Migration.initial</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="literature.migrations.html#literature.migrations.0001_initial.Migration.operations"><code class="docutils literal notranslate"><span class="pre">Migration.operations</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="literature.migrations.html#literature-migrations-0002-alter-author-orcid-alter-author-family-and-more-module">literature.migrations.0002_alter_author_orcid_alter_author_family_and_more module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="literature.migrations.html#module-literature.migrations">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="literature.test_utils.html">literature.test_utils package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="literature.test_utils.html#subpackages">Subpackages</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="literature.test_utils.test_app.html">literature.test_utils.test_app package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="literature.test_utils.test_app.html#subpackages">Subpackages</a></li>
-<li class="toctree-l4"><a class="reference internal" href="literature.test_utils.test_app.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="literature.test_utils.test_app.html#literature-test-utils-test-app-admin-module">literature.test_utils.test_app.admin module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="literature.test_utils.test_app.html#literature-test-utils-test-app-apps-module">literature.test_utils.test_app.apps module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="literature.test_utils.test_app.html#literature-test-utils-test-app-models-module">literature.test_utils.test_app.models module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="literature.test_utils.test_app.html#module-contents">Module contents</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="literature.test_utils.html#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -1059,6 +1060,127 @@ the default models.</p>
 <dt class="sig sig-object py" id="literature.conf.LiteratureConf.PDF_RENAMER">
 <span class="sig-name descname"><span class="pre">PDF_RENAMER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'literature.utils.simple_file_renamer'</span></em><a class="headerlink" href="#literature.conf.LiteratureConf.PDF_RENAMER" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-literature.exceptions">
+<span id="literature-exceptions-module"></span><h2>literature.exceptions module<a class="headerlink" href="#module-literature.exceptions" title="Permalink to this heading">#</a></h2>
+<dl class="py exception">
+<dt class="sig sig-object py" id="literature.exceptions.AdaptorError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">literature.exceptions.</span></span><span class="sig-name descname"><span class="pre">AdaptorError</span></span><a class="reference internal" href="_modules/literature/exceptions.html#AdaptorError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#literature.exceptions.AdaptorError" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>The requested model field does not exist</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="literature.exceptions.RemoteAdaptorError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">literature.exceptions.</span></span><span class="sig-name descname"><span class="pre">RemoteAdaptorError</span></span><a class="reference internal" href="_modules/literature/exceptions.html#RemoteAdaptorError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#literature.exceptions.RemoteAdaptorError" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>The requested model field does not exist</p>
+</dd></dl>
+
+</section>
+<section id="module-literature.fields">
+<span id="literature-fields-module"></span><h2>literature.fields module<a class="headerlink" href="#module-literature.fields" title="Permalink to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="literature.fields.LiteratureFK">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">literature.fields.</span></span><span class="sig-name descname"><span class="pre">LiteratureFK</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/literature/fields.html#LiteratureFK"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#literature.fields.LiteratureFK" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></p>
+<p>A foreign key field to the <cite>literature.Literature</cite> model</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="literature.fields.LiteratureM2M">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">literature.fields.</span></span><span class="sig-name descname"><span class="pre">LiteratureM2M</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/literature/fields.html#LiteratureM2M"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#literature.fields.LiteratureM2M" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ManyToManyField</span></code></p>
+<p>A many-to-many field to the <cite>literature.Literature</cite> model</p>
+</dd></dl>
+
+</section>
+<section id="module-literature.managers">
+<span id="literature-managers-module"></span><h2>literature.managers module<a class="headerlink" href="#module-literature.managers" title="Permalink to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="literature.managers.AuthorQuerySet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">literature.managers.</span></span><span class="sig-name descname"><span class="pre">AuthorQuerySet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">using</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hints</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/literature/managers.html#AuthorQuerySet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#literature.managers.AuthorQuerySet" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="literature.managers.AuthorQuerySet.as_lead">
+<span class="sig-name descname"><span class="pre">as_lead</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/literature/managers.html#AuthorQuerySet.as_lead"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#literature.managers.AuthorQuerySet.as_lead" title="Permalink to this definition">#</a></dt>
+<dd><p>Convenience filter for retrieving only authors that
+are listed as the lead author on a publication.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="literature.managers.AuthorQuerySet.is_active">
+<span class="sig-name descname"><span class="pre">is_active</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/literature/managers.html#AuthorQuerySet.is_active"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#literature.managers.AuthorQuerySet.is_active" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="literature.managers.AuthorQuerySet.with_last_published">
+<span class="sig-name descname"><span class="pre">with_last_published</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/literature/managers.html#AuthorQuerySet.with_last_published"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#literature.managers.AuthorQuerySet.with_last_published" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="literature.managers.AuthorQuerySet.with_work_counts">
+<span class="sig-name descname"><span class="pre">with_work_counts</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/literature/managers.html#AuthorQuerySet.with_work_counts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#literature.managers.AuthorQuerySet.with_work_counts" title="Permalink to this definition">#</a></dt>
+<dd><p>Convenience filter for retrieving authors with annotated
+counts of works published as either lead or supporting author.</p>
+<p>These count attributes can be accessed on the queryset as
+<cite>as_lead</cite> or <cite>as_supporting</cite>. Further filtering/manipulation is
+possible on both fields afterwards.</p>
+<p class="rubric">Example</p>
+<p>Get authors that have published at least five works as
+lead author.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Author</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">with_work_counts</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">as_lead__gte</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Get authors that have published only once but have been a supporting
+author on at least three.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Author</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">with_work_counts</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">as_lead</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">as_supporting__gte</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="literature.managers.LiteratureQuerySet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">literature.managers.</span></span><span class="sig-name descname"><span class="pre">LiteratureQuerySet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">using</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hints</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/literature/managers.html#LiteratureQuerySet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#literature.managers.LiteratureQuerySet" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QuerySet</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="literature.managers.LiteratureQuerySet.get_or_resolve">
+<span class="sig-name descname"><span class="pre">get_or_resolve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/literature/managers.html#LiteratureQuerySet.get_or_resolve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#literature.managers.LiteratureQuerySet.get_or_resolve" title="Permalink to this definition">#</a></dt>
+<dd><p>Loops through all available remote adaptors and attempts to resolve the given DOI until succesful.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>doi</strong> (<em>_type_</em>) – _description_</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="literature.managers.LiteratureQuerySet.resolve_doi">
+<span class="sig-name descname"><span class="pre">resolve_doi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adaptor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/literature/managers.html#LiteratureQuerySet.resolve_doi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#literature.managers.LiteratureQuerySet.resolve_doi" title="Permalink to this definition">#</a></dt>
+<dd><p>Attempts to fetch a doi from a remote data source. Loops through the
+available remote adaptors until the doi is succesfully resolved. If the doi
+registrar (source) is known, you may supply the appropriate adaptor to prevent
+searching other registries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>doi</strong> (<em>_type_</em>) – _description_</p></li>
+<li><p><strong>adaptor</strong> (<em>_type_</em><em>, </em><em>optional</em>) – _description_. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>_description_</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>_type_</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -1786,12 +1908,6 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 </section>
-<section id="literature-querysets-module">
-<h2>literature.querysets module<a class="headerlink" href="#literature-querysets-module" title="Permalink to this heading">#</a></h2>
-</section>
-<section id="literature-tests-module">
-<h2>literature.tests module<a class="headerlink" href="#literature-tests-module" title="Permalink to this heading">#</a></h2>
-</section>
 <section id="module-literature.utils">
 <span id="literature-utils-module"></span><h2>literature.utils module<a class="headerlink" href="#module-literature.utils" title="Permalink to this heading">#</a></h2>
 <dl class="py class">
@@ -1898,6 +2014,24 @@ database.</p>
   
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="modules.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">literature</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="literature.adaptors.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">literature.adaptors package</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div></div>
   
 </div>
@@ -2006,6 +2140,31 @@ database.</p>
 </ul>
 </li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.conf.LiteratureConf.PDF_RENAMER"><code class="docutils literal notranslate"><span class="pre">LiteratureConf.PDF_RENAMER</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-literature.exceptions">literature.exceptions module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.exceptions.AdaptorError"><code class="docutils literal notranslate"><span class="pre">AdaptorError</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.exceptions.RemoteAdaptorError"><code class="docutils literal notranslate"><span class="pre">RemoteAdaptorError</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-literature.fields">literature.fields module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.fields.LiteratureFK"><code class="docutils literal notranslate"><span class="pre">LiteratureFK</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.fields.LiteratureM2M"><code class="docutils literal notranslate"><span class="pre">LiteratureM2M</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-literature.managers">literature.managers module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.managers.AuthorQuerySet"><code class="docutils literal notranslate"><span class="pre">AuthorQuerySet</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.managers.AuthorQuerySet.as_lead"><code class="docutils literal notranslate"><span class="pre">AuthorQuerySet.as_lead()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.managers.AuthorQuerySet.is_active"><code class="docutils literal notranslate"><span class="pre">AuthorQuerySet.is_active()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.managers.AuthorQuerySet.with_last_published"><code class="docutils literal notranslate"><span class="pre">AuthorQuerySet.with_last_published()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.managers.AuthorQuerySet.with_work_counts"><code class="docutils literal notranslate"><span class="pre">AuthorQuerySet.with_work_counts()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.managers.LiteratureQuerySet"><code class="docutils literal notranslate"><span class="pre">LiteratureQuerySet</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.managers.LiteratureQuerySet.get_or_resolve"><code class="docutils literal notranslate"><span class="pre">LiteratureQuerySet.get_or_resolve()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.managers.LiteratureQuerySet.resolve_doi"><code class="docutils literal notranslate"><span class="pre">LiteratureQuerySet.resolve_doi()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -2131,8 +2290,6 @@ database.</p>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#literature-querysets-module">literature.querysets module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#literature-tests-module">literature.tests module</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-literature.utils">literature.utils module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.utils.DataDict"><code class="docutils literal notranslate"><span class="pre">DataDict</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.utils.clean_doi"><code class="docutils literal notranslate"><span class="pre">clean_doi()</span></code></a></li>
