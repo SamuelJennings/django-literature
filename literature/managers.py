@@ -40,13 +40,13 @@ class AuthorQuerySet(QuerySet):
         are listed as the lead author on a publication."""
 
         return (
-            self.prefetch_related("works")
+            self.prefetch_related("literature")
             .annotate(as_lead=Count("position", filter=Q(position__position=1)))
             .filter(as_lead__gt=0)
         )
 
     def with_last_published(self):
-        return self.prefetch_related("works").annotate(last_published=Max("works__published"))
+        return self.prefetch_related("literature").annotate(last_published=Max("literature__published"))
 
     def is_active(self):
         cutoff = date.today() - relativedelta(years=settings.LITERATURE_INACTIVE_AFTER)
