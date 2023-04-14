@@ -166,3 +166,8 @@ def release(c, rule=""):
     # This command publishes the package, previously built with the build command, to the remote repository. It will automatically register the package before uploading if this is the first time it is submitted.
     # https://python-poetry.org/docs/cli/#publish
     c.run("poetry publish")
+
+
+@task
+def live_docs(c):
+    c.run("sphinx-autobuild -b html --host 0.0.0.0 --port 9000 --watch . -c . . _build/html")
