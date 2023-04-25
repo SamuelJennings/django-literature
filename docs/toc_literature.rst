@@ -1,22 +1,10 @@
-literature package
+Package API
 ==================
 
 .. automodule:: literature
    :members:
    :undoc-members:
    :show-inheritance:
-
-Subpackages
------------
-
-.. toctree::
-   :maxdepth: 2
-
-   literature.api
-   literature.templatetags
-
-Submodules
-----------
 
 .. toctree::
    :maxdepth: 2

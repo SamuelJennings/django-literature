@@ -79,9 +79,8 @@ def docs(c):
     """
     Build the documentation and open it in the browser
     """
-    # c.run("rm -f docs/django-literature.rst")
-    # c.run("rm -f docs/modules.rst")
-    c.run("sphinx-apidoc -o docs/ literature **/migrations/*")
+    c.run("sphinx-apidoc -M -T -o docs/ literature **/migrations/* -e --force -d 2")
+    c.run("sphinx-apidoc -M -T -o docs/ literature/api **/migrations/* -e --force -d 2")
     c.run("sphinx-build -E -b html docs docs/_build")
 
 

@@ -1,7 +1,9 @@
-literature
-==========
+Django Literature
+==================
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 0
 
-   literature
+   toc_literature
+   toc_api
+   toc_templatetags
