@@ -4,7 +4,7 @@ version = "0.1.2"
 description = "A scientific literature management tool for Django"
 authors = ["Sam Jennings <samuel.scott.jennings@gmail.com>"]
 license = "MIT"
-readme = "README.rst"
+readme = "README.md"
 packages = [{include = "literature"}]
 homepage = "https://github.com/SSJenny90/django-literature"
 keywords = ["django", "literature", "publications", "scientific", "research"]
