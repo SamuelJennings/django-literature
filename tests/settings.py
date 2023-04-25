@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     "taggit",
     "sortedm2m",
     "formset",
-    "django_better_admin_arrayfield",
     # "easy_thumbnails",
 ]
 

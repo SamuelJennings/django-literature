@@ -169,6 +169,9 @@ extend_exclude = [
     "tasks.py",
     "docs/"
 ]
+ignore_transitive = [
+    "toml",
+]
 
 
 [tool.tox]
