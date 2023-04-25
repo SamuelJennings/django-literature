@@ -26,7 +26,7 @@ jobs:
       - name: Build and publish
         run: |
           source .venv/bin/activate
-          invoke publish --rule $RELEASE_VERSION
+          poetry run invoke publish --rule $RELEASE_VERSION
         env:
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
           RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
