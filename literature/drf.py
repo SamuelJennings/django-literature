@@ -1,6 +1,10 @@
 ## simple_test/api_urls.py
 
 # from rest_framework import routers
+from __future__ import annotations
+
+from typing import Any
+
 from drf_auto_endpoint.endpoints import Endpoint
 from drf_auto_endpoint.router import router
 
@@ -9,7 +13,7 @@ from drf_auto_endpoint.router import router
 
 
 class DataTableMixin:
-    endpoint = {}
+    endpoint: dict[str, Any] = {}
 
     class Media:
         css = {"all": ("vendor/DataTables/datatables.min.css",)}

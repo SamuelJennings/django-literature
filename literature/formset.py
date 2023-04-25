@@ -1,3 +1,5 @@
+from typing import Any
+
 from django import forms
 from django.utils.translation import gettext as _
 from formset.collection import FormCollection
@@ -52,7 +54,7 @@ class PublisherForm(CSLMixin, Fieldset):
 
     class Meta:
         fields = ["publisher", "publisher-place", "original-publisher", "original-publisher-place"]
-        widgets = {}
+        widgets: dict[str, Any] = {}
 
 
 class CSLForm(CSLMixin, Fieldset):

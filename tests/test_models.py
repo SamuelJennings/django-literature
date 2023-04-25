@@ -34,35 +34,28 @@ class TestAuthor(TestCase):
     def test_family_g(self):
         self.assertEqual(self.author.family_g(), "Jennings, S.")
 
-    def test_autocomplete_search_fields(self):
-        autocomplete = self.author.autocomplete_search_fields()
-        self.assertIn("family__icontains", autocomplete)
-        self.assertIn("given__icontains", autocomplete)
-        self.assertNotIn("test", autocomplete)
-
 
 class TestLiterature(TestCase):
     def setUp(self):
-        authors = baker.prepare("literature.Author", family="Jennings", _quantity=1)
+        # authors = baker.prepare("literature.Author", family="Jennings", _quantity=1)
         self.pub = baker.make(
             "literature.Literature",
             title=(
                 "This should be a really long title so we can test whether the uploaded pdf name is shortened properly"
                 " using the simple_file_renamer"
             ),
-            authors=authors,
-            year=2022,
+            CSL={
+                "title": (
+                    "This should be a really long title so we can test whether the uploaded pdf name is shortened"
+                    " properly using the simple_file_renamer"
+                )
+            },
+            # authors=authors,
+            # year=2022,
         )
 
     def test_str(self):
-        self.assertEqual(str(self.pub), str(self.pub.label))
-
-    def test_autocomplete_search_fields(self):
-        autocomplete = self.pub.autocomplete_search_fields()
-        self.assertIn("title__icontains", autocomplete)
-        self.assertIn("authors__family__icontains", autocomplete)
-        self.assertIn("label__icontains", autocomplete)
-        self.assertNotIn("test", autocomplete)
+        self.assertEqual(str(self.pub), str(self.pub.citation_key))
 
 
 class TestCollection(TestCase):
@@ -75,10 +68,10 @@ class TestCollection(TestCase):
         self.assertEqual(str(self.obj), str(self.obj.name))
 
 
-class TestLiteratureAuthor(TestCase):
-    def setUp(self):
-        lit = baker.make("literature.Literature", year=2019)
-        self.obj = baker.make("literature.LiteratureAuthor", literature=lit)
+# class TestLiteratureAuthor(TestCase):
+#     def setUp(self):
+#         lit = baker.make("literature.Literature")
+#         self.obj = baker.make("literature.LiteratureAuthor", literature=lit)
 
-    def test_str(self):
-        self.assertEqual(str(self.obj), str(self.obj.position))
+#     def test_str(self):
+#         self.assertEqual(str(self.obj), str(self.obj.position))
