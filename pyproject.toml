@@ -184,9 +184,6 @@ envlist =
 
 [gh-actions]
 python =
-    3.8: py38
-    3.9: py39
-    3.10: py310
     3.11: py311
 
 [testenv]
@@ -198,8 +195,8 @@ commands =
     coverage run --source literature runtests.py
     mypy
 basepython =
-    py39: python3.9
-
+    py311: python3.11
+    
 setenv =
     PYTHONPATH = {toxinidir}:{toxinidir}/literature
 """
