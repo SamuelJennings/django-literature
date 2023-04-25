@@ -16,6 +16,8 @@
 */.ipynb_checkpoints/*
 .DS_Store
 _test*.py
+/node_modules
+test.html
 
 # Project files
 .ropeproject

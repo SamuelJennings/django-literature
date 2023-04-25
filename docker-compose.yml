@@ -3,6 +3,7 @@ version: '3'
 services:
   django: &django
     build:
+      dockerfile: ./docker/Dockerfile
       context: .
     image: django_literature
     container_name: django_literature

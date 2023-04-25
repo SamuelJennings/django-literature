@@ -29,17 +29,26 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework",
+    "corsheaders",
     "literature",
+    "drf_auto_endpoint",
     # if your app has other dependencies that need to be added to the site
     # they should be added here
     "taggit",
     "sortedm2m",
+    "formset",
+    "django_better_admin_arrayfield",
     # "easy_thumbnails",
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
+# ACCESS_CONTROL_ALLOW_ORIGIN = ["http://localhost:5500", "http://localhost:8000"] # for CORS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -112,8 +121,40 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
-STATIC_ROOT = "staticfiles"
+STATIC_ROOT = "static"
 STATIC_URL = "/static/"
 
 MEDIA_ROOT = "media"
 MEDIA_URL = "/media/"
+
+X_FRAME_OPTIONS = "SAMEORIGIN"
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+    }
+}
+
+# STATIC_URL = '/static/'
+# STATIC_ROOT = 'dist/static/'
+STATICFILES_DIRS = (
+    # os.path.join(BASE_DIR, 'static'),
+    # This defines a prefix so the url paths will become `/static/node_modules/...`
+    ("node_modules", os.path.join(BASE_DIR, "node_modules/")),
+)
+
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 25,
+    "DEFAULT_FILTER_BACKENDS": (
+        "django_filters.rest_framework.DjangoFilterBackend",
+        "rest_framework.filters.SearchFilter",
+        "rest_framework.filters.OrderingFilter",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticatedOrReadOnly",),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+    ),
+}

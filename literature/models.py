@@ -3,7 +3,6 @@ from datetime import date
 from django.core.validators import (
     FileExtensionValidator,
     MaxValueValidator,
-    MinValueValidator,
     RegexValidator,
 )
 from django.db import models
@@ -15,9 +14,9 @@ from model_utils.models import TimeStampedModel
 from sortedm2m.fields import SortedManyToManyField
 from taggit.managers import TaggableManager
 
-from .choices import MonthChoices
+from .choices import IdentifierTypes, TypeChoices
 from .managers import AuthorManager, LiteratureManager
-from .utils import get_current_year, pdf_file_renamer
+from .utils import pdf_file_renamer
 
 
 class LiteratureAuthor(models.Model):
@@ -92,12 +91,65 @@ class Author(TimeStampedModel):
         return f"{self.family}, {self.given[0]}."
 
 
+class Identifier(TimeStampedModel):
+    ID = models.CharField(max_length=512, verbose_name=_("Permanent Identifier"), primary_key=True)
+    literature = models.ForeignKey("literature.Literature", verbose_name=_("literature"), on_delete=models.CASCADE)
+    type = models.IntegerField(choices=IdentifierTypes.choices)  # noqa: A003
+
+    class Meta:
+        verbose_name = _("ID")
+        verbose_name_plural = _("IDs")
+        # ordering = ["citation_key"]
+        default_related_name = "identifiers"
+        unique_together = ["ID", "literature"]
+
+    def __str__(self):
+        return f"{self.get_type_display()} <{self.ID}>"
+
+
 class Literature(TimeStampedModel):
     """Model for storing literature data"""
 
     objects = LiteratureManager()
 
+    # ARTICLE TYPE
+    type = models.CharField(_("type"), choices=TypeChoices.choices, max_length=255)  # noqa: A003
+
+    # THE FOLLOWING FIELDS ARE DEFINED HERE AS THEY MAY BENEFIT FROM INDEXING
     abstract = models.TextField(_("abstract"), blank=True, null=True)
+    container_title = models.CharField(
+        _("container title"),
+        help_text=_(
+            "Title of the container holding the item (e.g. the book title for a book chapter, the journal title for a"
+            " journal article; the album title for a recording; the session title for multi-part presentation at a"
+            " conference)."
+        ),
+        max_length=512,
+        null=True,
+        blank=True,
+    )
+    keyword = TaggableManager(
+        verbose_name=_("key words"),
+        help_text=_("Keyword(s) or tag(s) attached to the item."),
+        blank=True,
+    )
+    citation_key = models.CharField(
+        _("citation key"),
+        help_text=_("A human readable identifier of the literature item (analogous to a BibTeX entrykey)."),
+        max_length=255,
+        blank=True,
+        null=True,
+        unique=True,
+    )
+    language = models.CharField(_("language"), max_length=2, blank=True, null=True)
+    title = models.TextField(
+        _("title"),
+        help_text=_("Primary title of the item."),
+        blank=True,
+        null=True,
+    )
+
+    # DJANGO LITERATURE SPECIFIC FIELDS
     authors = SortedManyToManyField(
         to="literature.Author",
         verbose_name=_("authors"),
@@ -106,84 +158,10 @@ class Literature(TimeStampedModel):
         sort_value_field_name="number",
         blank=True,
     )
-    author_str = models.TextField(
-        _("authors"),
-        null=True,
-        blank=True,
-        help_text=_(
-            'List of authors in the format "LastName, GivenName" separated by semi-colons. E.g Smith, John; Klose,'
-            " Sarah;"
-        ),
-    )
-    comment = models.TextField(
-        _("comment"),
-        help_text=_("General comments regarding the entry."),
-        blank=True,
-        null=True,
-    )
-    container_title = models.CharField(
-        _("container title"),
-        help_text=_("The journal, book or other container title of the entry."),
-        max_length=512,
-        null=True,
-        blank=True,
-    )
     collections = models.ManyToManyField(
         to="literature.collection",
         verbose_name=_("collection"),
         help_text=_("Add the entry to a collection."),
-        blank=True,
-    )
-    doi = models.CharField(max_length=255, verbose_name="DOI", blank=True, null=True, unique=True)
-    institution = models.CharField(
-        _("institution"),
-        max_length=255,
-        help_text=_("Name of the institution."),
-        blank=True,
-        null=True,
-    )
-    issn = models.CharField(
-        "ISSN",
-        max_length=255,
-        null=True,
-        blank=True,
-    )
-    isbn = models.CharField(
-        "ISBN",
-        max_length=255,
-        null=True,
-        blank=True,
-    )
-    issue = models.IntegerField(_("issue number"), blank=True, null=True)
-    keywords = TaggableManager(
-        verbose_name=_("key words"),
-        help_text=_("A list of comma-separated keywords."),
-        blank=True,
-    )
-    label = models.CharField(
-        _("label"),
-        help_text=_("A human readable identifier. Whitespace and hyphens will be converted to underscores."),
-        max_length=255,
-        blank=True,
-        # null=True,
-        unique=True,
-    )
-    language = models.CharField(_("language"), max_length=2, blank=True, null=True)
-    month = models.PositiveSmallIntegerField(
-        _("month"),
-        help_text=_("The month of publication."),
-        choices=MonthChoices.choices,
-        blank=True,
-        null=True,
-    )
-    pages = models.CharField(
-        _("pages"),
-        help_text=_(
-            "Either a single digit indicating the page number or two hyphen-separated digits representing a range."
-        ),
-        max_length=32,
-        validators=[RegexValidator("^(\\d+-{1,2}?\\d+)$")],
-        null=True,
         blank=True,
     )
     pdf = models.FileField(
@@ -196,41 +174,19 @@ class Literature(TimeStampedModel):
     published = models.DateField(
         _("date published"),
         max_length=255,
+        blank=True,
+        null=True,
         validators=[MaxValueValidator(date.today)],
     )
-    publisher = models.CharField(
-        _("publisher"),
-        help_text=_("Name of the publisher."),
+    comment = models.TextField(
+        _("comment"),
+        help_text=_("General comments regarding the entry."),
         blank=True,
         null=True,
-        max_length=255,
-    )
-    source = models.CharField(
-        _("source"),
-        help_text=_("The source of metadata for the entry."),
-        max_length=255,
-        default="Admin Upload",
-        blank=True,
-    )
-    title = models.CharField(
-        _("title"),
-        max_length=512,
-    )
-    type = models.CharField(_("entry type"), max_length=255)  # noqa: A003
-    url = models.URLField("URL", help_text=_("A link to the URL resource."), blank=True, null=True)
-    volume = models.IntegerField(_("volume"), blank=True, null=True)
-    year = models.PositiveSmallIntegerField(
-        _("year"),
-        help_text=_("The year of publication."),
-        validators=[MinValueValidator(1900), MaxValueValidator(get_current_year)],
     )
 
-    last_synced = models.DateTimeField(
-        _("last synced"),
-        help_text=_("Last time the entry was synced with an online resource."),
-        null=True,
-        blank=True,
-    )
+    # RAW CSL DATA FIELD
+    CSL = models.JSONField(_("Citation Style Language"), blank=True)
 
     # tracks whether changes have been made to any fields since the last save
     tracker = FieldTracker()
@@ -238,28 +194,55 @@ class Literature(TimeStampedModel):
     class Meta:
         verbose_name = _("literature")
         verbose_name_plural = _("literature")
-        ordering = ["label"]
+        ordering = ["citation_key"]
         default_related_name = "literature"
 
     def __str__(self):
-        return force_str(self.label)
+        return force_str(self.citation_key)
 
     def save(self, *args, **kwargs):
-        # not implemented
-        if self.tracker.has_changed("doi"):
-            self.objects.resolve(self.doi, self.source)
+        if self.tracker.has_changed("CSL"):
+            self.parse_csl()
 
-        if self.tracker.has_changed("year"):
-            self.published = date(year=self.year, month=self.month or 1, day=1)
-        return super().save(*args, **kwargs)
+        # if self.tracker.has_changed("year"):
+        # self.published = date(year=self.year, month=self.month or 1, day=1)
+
+        super().save(*args, **kwargs)
+        # if self.tracker.has_changed("CSL"):
+        self.update_identifiers()
+        return self
+
+    def parse_csl(self):
+        CSL = {k.replace("-", "_"): v for k, v in self.CSL.items()}
+        for field in [f.name for f in self._meta.fields]:
+            if field == "id":
+                continue
+            if CSL.get(field):
+                setattr(self, field, CSL[field])
+
+    def update_identifiers(self):
+        # update identifier fields
+        for field in IdentifierTypes.labels:
+            if self.CSL.get(field):
+                obj, new = Identifier.objects.get_or_create(
+                    ID=self.CSL.get(field), type=getattr(IdentifierTypes, field), literature=self
+                )
+                if new:
+                    print(f"Creating new {field}")
+                    obj.save()
 
     @staticmethod
     def autocomplete_search_fields():
         return (
             "title__icontains",
             "authors__family__icontains",
-            "label__icontains",
+            "citation_key__icontains",
         )
+
+    # def to_internal_value(self, data):
+    # data['container_title'] = data['container-title']
+    # data.pop('container-title', None)
+    # return data
 
 
 class Collection(TimeStampedModel):

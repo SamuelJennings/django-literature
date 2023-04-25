@@ -1,8 +1,15 @@
-from django.contrib import admin
-from django.utils.safestring import mark_safe
+from django.contrib import admin, messages
+from django.http import HttpResponseRedirect
+from django.template.defaultfilters import pluralize
+from django.template.response import TemplateResponse
+from django.urls import path, reverse
 from django.utils.translation import gettext as _
+from rest_framework.permissions import DjangoModelPermissions, IsAdminUser
 
-from .models import Author, Collection, Literature, SupplementaryMaterial
+from .csl_map import fields as csl_fields
+from .drf import DataTableMixin
+from .forms import BibFileUploadForm, OnlineSearchForm
+from .models import Author, Collection, Identifier, Literature, SupplementaryMaterial
 
 
 class SupplementaryInline(admin.TabularInline):
@@ -14,35 +21,10 @@ class AuthorInline(admin.TabularInline):
 
 
 @admin.register(Literature)
-class LiteratureAdmin(admin.ModelAdmin):
+class LiteratureAdmin(DataTableMixin, admin.ModelAdmin):
     """Django Admin setup for the `literature.Work` model."""
 
-    date_hierarchy = "published"
-    raw_id_fields = ("authors",)
-    autocomplete_lookup_fields = {"m2m": ["authors"]}
-    list_display_links = ("title",)
-
-    list_display = [
-        "pdf",
-        "article",
-        "label",
-        "title",
-        "container_title",
-        "volume",
-        "type",
-    ]
-
-    list_filter = ["type", "container_title", "language", "source"]
-    search_fields = ("doi", "title", "id", "label")
-    list_editable = [
-        "pdf",
-    ]
-    readonly_fields = [
-        "source",
-        "created",
-        "modified",
-        "last_synced",
-    ]
+    change_list_template = "literature/admin/change_list.html"
 
     inlines = [SupplementaryInline, AuthorInline]
     fieldsets = [
@@ -50,18 +32,13 @@ class LiteratureAdmin(admin.ModelAdmin):
             _("Basic"),
             {
                 "fields": [
-                    "label",
-                    # "pdf",
+                    "citation_key",
+                    "pdf",
                     "type",
                     "title",
-                    "year",
                     "language",
-                    "source",
                     "created",
                     "modified",
-                    "last_synced",
-                    # "authors",
-                    # "author_str",
                 ]
             },
         ),
@@ -69,26 +46,10 @@ class LiteratureAdmin(admin.ModelAdmin):
             _("Recommended"),
             {
                 "fields": [
-                    "doi",
-                    "url",
                     "container_title",
-                    "publisher",
-                    "institution",
                     "abstract",
-                    "month",
-                    "keywords",
-                ]
-            },
-        ),
-        (
-            _("General"),
-            {
-                "fields": [
-                    "issn",
-                    "isbn",
-                    "volume",
-                    "issue",
-                    "pages",
+                    "collections",
+                    # "keywords",
                 ]
             },
         ),
@@ -115,132 +76,121 @@ class LiteratureAdmin(admin.ModelAdmin):
         # ),
     ]
 
-    formfield_overrides = {
-        # models.FileField: {"widget": AdminPDFWidget},
+    endpoint = {
+        "fields": "__all__",
+        "page_size": 1000,
+        "permission_classes": [IsAdminUser, DjangoModelPermissions],
     }
 
-    class Media:
-        # css = {"all": ("crossref/css/filer_extra.min.css",)}
-        js = (
-            "https://kit.fontawesome.com/a08181010c.js",
-            # 'crossref/js/pdfInput.js',
+    def get_dt_fields(self):
+        new_dict = {}
+        for field, value in sorted(csl_fields.items()):
+            new_dict[field] = value | {"title": field.replace("_", " ").replace("-", " ")}
+
+        return new_dict
+
+    def _pdf(self, obj):
+        if obj.pdf:
+            return obj.pdf.url
+
+    def edit(self, obj):
+        return reverse(
+            "admin:{app_label}_{model_name}_change".format(
+                app_label=obj._meta.app_label, model_name=obj._meta.model_name
+            ),
+            args=[obj.id],
         )
 
-    def get_queryset(self, request):
-        return super().get_queryset(request).prefetch_related("authors")
+    def get_urls(self):
+        return [
+            path("search/", self.admin_site.admin_view(self.search_online), name="search"),
+            path("upload/", self.admin_site.admin_view(self.upload), name="upload"),
+            *super().get_urls(),
+        ]
 
-    # def get_urls(self):
-    #     return [
-    #         path("import-bibtex/", self.admin_site.admin_view(self.import_bibtex), name="import_bibtex"),
-    #         # path("add-doi/", self.admin_site.admin_view(self.get_doi_or_query_crossref), name="add_from_crossref"),
-    #         *super().get_urls(),
-    #     ]
+    def search_online(self, request, *args, **kwargs):
+        """Admin view that handles user-uploaded bibtex files
 
-    # def get_doi_or_query_crossref(self, request, *args, **kwargs):
-    #     if request.POST:
-    #         form = DOIForm(request.POST)
-    #         if form.is_valid():
-    #             self._get_data_from_crossref(request, form.cleaned_data["DOI"])
-    #         else:
-    #             if form.errors["DOI"][0] == "Work with this DOI already exists.":
-    #                 message = f"An item with that DOI already exists in the database: {form.data['DOI']}"
-    #             else:
-    #                 message = mark_safe("<br>".join(e for e in form.errors["DOI"]))
-    #             self.message_user(request, message, messages.INFO)
-    #     return HttpResponseRedirect("../")
+        Returns:
+            HttpResponseRedirect: redirects to model admins change_list
+        """
+        if request.method == "POST":
+            form = OnlineSearchForm(request.POST)
+            if form.is_valid():
+                bibliography = form.cleaned_data["CSL"]
 
-    # def _get_data_from_crossref(self, request, doi):
-    #     """Private function that handles retrieving information when a doi
-    #     is provided.
+                imported, updated = 0, 0
+                for item in bibliography:
+                    imported += 1
+                    Literature.objects.create(CSL=item)
+                self.message_user(
+                    request,
+                    level=messages.SUCCESS,
+                    message=(
+                        f"{imported} literature item{pluralize(imported)} {pluralize(imported,'was,were')} succesfully"
+                        f" imported and {updated} {pluralize(updated,'has,have')} been updated."
+                    ),
+                )
+                return HttpResponseRedirect("../")
 
-    #     Args:
-    #         request (HTTPRequest): The request object passed through the Django Admin class
-    #         doi (str): The doi to be queried
-
-    #     Returns:
-    #         instance: a saved Work instance or False
-    #     """
-    #     errors = []
-    #     try:
-    #         # first, check if the object already exists. If it does
-    #         # do nothing and either retrieve the object from the database,
-    #         # or query crossref for the info
-    #         instance, created = self.get_queryset(request).get_or_query_crossref(doi)
-    #     except HTTPError as e:
-    #         # Something wen't wrong during the request to crossref
-    #         errors.append(e)
-    #         # return None so the calling function knows something went wrong
-    #         return None
-
-    #     if created:
-    #         message = mark_safe(f"Succesfully added: {instance.bibliographic()}")
-    #         self.message_user(request, message, messages.SUCCESS)
-    #     else:
-    #         message = f"{instance.DOI} already exists in this database"
-    #         self.message_user(request, message, messages.INFO)
-
-    #     return instance
-
-    def import_errors(self, request, *args, **kwargs):
-        return
-
-    # @method_decorator(require_POST)
-    # def import_bibtex(self, request, *args, **kwargs):
-    #     """Admin view that handles user-uploaded bibtex files
-
-    #     Returns:
-    #         HttpResponseRedirect: redirects to model admins change_list
-    #     """
-    #     form = UploadForm(request.POST, request.FILES)
-    #     if form.is_valid():
-    #         importer = BibtexResource(form.cleaned_data["file"].file, request)
-    #         importer.process()
-    #         if importer.result.has_errors:
-    #             return render(
-    #                 request,
-    #                 "admin/crossref/import_results.html",
-    #                 context={"result": importer.result},
-    #             )
-    #         else:
-    #             report = importer.result.counts()
-    #             if report["crossref"] or report["bibtex"]:
-    #                 self.message_user(
-    #                     request,
-    #                     level=messages.SUCCESS,
-    #                     message=(
-    #                         f"Import finished with {report['crossref']} new"
-    #                         f" entr{pluralize(report['crossref'], 'y,ies')} from the CrossRef API and"
-    #                         f" {report['bibtex']} new entr{pluralize(report['bibtex'], 'y,ies')} parsed direct from the"
-    #                         " bibtex file"
-    #                     ),
-    #                 )
-    #             if report["skipped"]:
-    #                 self.message_user(
-    #                     request,
-    #                     level=messages.INFO,
-    #                     message=(
-    #                         f"{report['skipped']} existing entr{pluralize(report['skipped'], 'y,ies')} were skipped"
-    #                         " during the import process"
-    #                     ),
-    #                 )
-    #     else:
-    #         self.message_user(
-    #             request,
-    #             "The uploaded file could not be validated",
-    #             level=messages.ERROR,
-    #         )
-    #     return HttpResponseRedirect("../")
-
-    def article(self, obj):
-        if obj.doi:
-            return mark_safe(f'<a href="https://doi.org/{obj.doi}"><i class="fas fa-globe"></i></a>')  # noqa: S308
         else:
-            return ""
+            form = OnlineSearchForm(request.GET)
 
-    def file(self, obj):
-        if obj.pdf:
-            return mark_safe(f'<a href="{obj.pdf.url}"><i class="fas fa-file-pdf fa-2x"></i></a>')  # noqa: S308
-            return ""
+        # return TemplateResponse(request, 'admin/change_form.html', {form: form})
+        return TemplateResponse(
+            request,
+            "literature/admin/search.html",
+            {
+                "form": form,
+                "opts": self.opts,
+            },
+        )
+
+    def upload(self, request, *args, **kwargs):
+        """Admin view that handles user-uploaded bibtex files
+
+        Returns:
+            HttpResponseRedirect: redirects to model admins change_list
+        """
+        if request.method == "POST":
+            form = BibFileUploadForm(request.POST)
+            if form.is_valid():
+                bibliography = form.cleaned_data["CSL"]
+
+                imported, updated = 0, 0
+                for item in bibliography:
+                    imported += 1
+                    Literature.objects.create(CSL=item)
+                self.message_user(
+                    request,
+                    level=messages.SUCCESS,
+                    message=(
+                        f"{imported} literature item{pluralize(imported)} {pluralize(imported,'was,were')} succesfully"
+                        f" imported and {updated} {pluralize(updated,'has,have')} been updated."
+                    ),
+                )
+                return HttpResponseRedirect("../")
+
+        else:
+            form = BibFileUploadForm(request.GET)
+
+        # return TemplateResponse(request, 'admin/change_form.html', {form: form})
+        return TemplateResponse(
+            request,
+            "literature/admin/search.html",
+            {
+                "form": form,
+                "opts": self.opts,
+            },
+        )
+
+
+@admin.register(Identifier)
+class IdentifierAdmin(admin.ModelAdmin):
+    list_filter = ["type"]
+    search_fields = ["ID", "literature__title"]
+    # list_display = ['type', 'ID']
+    # list_display_links = ['ID']
 
 
 @admin.register(Collection)
@@ -251,4 +201,3 @@ class CollectionAdmin(admin.ModelAdmin):
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):
     list_display = ["family", "given", "ORCID", "created", "modified"]
-    pass
