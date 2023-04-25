@@ -283,76 +283,38 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <h1>Source code for literature.utils</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">UserDict</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 
 <span class="kn">from</span> <span class="nn">django.utils.module_loading</span> <span class="kn">import</span> <span class="n">import_string</span>
 
 <span class="kn">from</span> <span class="nn">literature.conf</span> <span class="kn">import</span> <span class="n">settings</span>
 
 
-<div class="viewcode-block" id="DataDict"><a class="viewcode-back" href="../../literature.html#literature.utils.DataDict">[docs]</a><span class="k">class</span> <span class="nc">DataDict</span><span class="p">(</span><span class="n">UserDict</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A custom python dict that takes a keymap</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        UserDict (_type_): _description_</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keymap</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">keymap</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">keymap</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">keymap</span> <span class="o">=</span> <span class="n">keymap</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">input_dict</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">keymap</span><span class="p">:</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
-            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">keymap</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">):</span>
-                <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">data</span></div>
-
-
 <div class="viewcode-block" id="clean_doi"><a class="viewcode-back" href="../../literature.html#literature.utils.clean_doi">[docs]</a><span class="k">def</span> <span class="nf">clean_doi</span><span class="p">(</span><span class="n">doi</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Uses `urllib.parse.urlparse` to extract a DOI from a string. Trailing slashes</span>
-<span class="sd">    are removed using the string.strip() method and the output is converted to</span>
-<span class="sd">    lowercase.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        doi (string): An unformated string containing a DOI.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        doi: A cleaned DOI string</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># NOTE: This only works for strings starting with http://. This will not</span>
-    <span class="c1"># correctly for strings like doi.org/... or www.doi,org/...</span>
-    <span class="c1"># swith to tldextract??</span>
-
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Clean a DOI string to remove any unnecessary characters.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">doi</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;doi.org/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span></div>
-    <span class="c1"># return urlparse(doi).path.strip(&quot;/&quot;).lower()</span>
 
 
-<div class="viewcode-block" id="simple_autolabeler"><a class="viewcode-back" href="../../literature.html#literature.utils.simple_autolabeler">[docs]</a><span class="k">def</span> <span class="nf">simple_autolabeler</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The strategy used to create unique labels for literature items in the</span>
-<span class="sd">    database.</span>
+<span class="c1"># def simple_autolabeler(obj):</span>
+<span class="c1">#     &quot;&quot;&quot;The strategy used to create unique labels for literature items in the</span>
+<span class="c1">#     database.</span>
 
-<span class="sd">    TODO: This has not been implemented yet</span>
+<span class="c1">#     TODO: This has not been implemented yet</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        obj (literature.models.Literature): A Literature instance.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">obj</span><span class="o">.</span><span class="n">authors</span><span class="o">.</span><span class="n">first</span><span class="p">()</span><span class="o">.</span><span class="n">family</span><span class="si">}{</span><span class="n">obj</span><span class="o">.</span><span class="n">year</span><span class="si">}</span><span class="s2">&quot;</span>
-    <span class="c1"># We don&#39;t want label clashes so find how many labels already</span>
-    <span class="c1"># in the database start with our new label then append the</span>
-    <span class="c1"># appropriate letter.</span>
-    <span class="n">letters</span> <span class="o">=</span> <span class="s2">&quot;abcdefghijklmopqrstuvwzy&quot;</span>
-    <span class="n">count</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">label__startswith</span><span class="o">=</span><span class="n">label</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="c1">#     Args:</span>
+<span class="c1">#         obj (literature.models.Literature): A Literature instance.</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     label = f&quot;{obj.authors.first().family}{obj.year}&quot;</span>
+<span class="c1">#     # We don&#39;t want label clashes so find how many labels already</span>
+<span class="c1">#     # in the database start with our new label then append the</span>
+<span class="c1">#     # appropriate letter.</span>
+<span class="c1">#     letters = &quot;abcdefghijklmopqrstuvwzy&quot;</span>
+<span class="c1">#     count = obj._meta.model.objects.filter(label__startswith=label).count()</span>
 
-    <span class="k">if</span> <span class="n">count</span><span class="p">:</span>
-        <span class="n">label</span> <span class="o">+=</span> <span class="n">letters</span><span class="p">[</span><span class="n">count</span><span class="p">]</span>
+<span class="c1">#     if count:</span>
+<span class="c1">#         label += letters[count]</span>
 
-    <span class="k">return</span> <span class="n">label</span></div>
+<span class="c1">#     return label</span>
 
 
 <div class="viewcode-block" id="simple_file_renamer"><a class="viewcode-back" href="../../literature.html#literature.utils.simple_file_renamer">[docs]</a><span class="k">def</span> <span class="nf">simple_file_renamer</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>

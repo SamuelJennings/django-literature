@@ -640,11 +640,9 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-literature.utils">literature.utils module</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.utils.DataDict"><code class="docutils literal notranslate"><span class="pre">DataDict</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.utils.clean_doi"><code class="docutils literal notranslate"><span class="pre">clean_doi()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.utils.get_current_year"><code class="docutils literal notranslate"><span class="pre">get_current_year()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.utils.pdf_file_renamer"><code class="docutils literal notranslate"><span class="pre">pdf_file_renamer()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.utils.simple_autolabeler"><code class="docutils literal notranslate"><span class="pre">simple_autolabeler()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.utils.simple_file_renamer"><code class="docutils literal notranslate"><span class="pre">simple_file_renamer()</span></code></a></li>
 </ul>
 </li>
@@ -825,7 +823,7 @@ document.write(`
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="literature.admin.LiteratureAdmin.endpoint">
-<span class="sig-name descname"><span class="pre">endpoint</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'fields':</span> <span class="pre">'__all__',</span> <span class="pre">'page_size':</span> <span class="pre">1000,</span> <span class="pre">'permission_classes':</span> <span class="pre">[&lt;class</span> <span class="pre">'rest_framework.permissions.IsAdminUser'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.permissions.DjangoModelPermissions'&gt;]}</span></em><a class="headerlink" href="#literature.admin.LiteratureAdmin.endpoint" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">endpoint</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'fields':</span> <span class="pre">'__all__',</span> <span class="pre">'page_size':</span> <span class="pre">1000,</span> <span class="pre">'permission_classes':</span> <span class="pre">[&lt;class</span> <span class="pre">'rest_framework.permissions.IsAdminUser'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.permissions.DjangoModelPermissions'&gt;]}</span></em><a class="headerlink" href="#literature.admin.LiteratureAdmin.endpoint" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -2151,35 +2149,10 @@ object the first time, the query is executed.</p>
 </section>
 <section id="module-literature.utils">
 <span id="literature-utils-module"></span><h2>literature.utils module<a class="headerlink" href="#module-literature.utils" title="Permalink to this heading">#</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="literature.utils.DataDict">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">literature.utils.</span></span><span class="sig-name descname"><span class="pre">DataDict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keymap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/literature/utils.html#DataDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#literature.utils.DataDict" title="Permalink to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">UserDict</span></code></p>
-<p>A custom python dict that takes a keymap</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>UserDict</strong> (<em>_type_</em>) – _description_</p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py function">
 <dt class="sig sig-object py" id="literature.utils.clean_doi">
 <span class="sig-prename descclassname"><span class="pre">literature.utils.</span></span><span class="sig-name descname"><span class="pre">clean_doi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/literature/utils.html#clean_doi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#literature.utils.clean_doi" title="Permalink to this definition">#</a></dt>
-<dd><p>Uses <cite>urllib.parse.urlparse</cite> to extract a DOI from a string. Trailing slashes
-are removed using the string.strip() method and the output is converted to
-lowercase.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>doi</strong> (<em>string</em>) – An unformated string containing a DOI.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A cleaned DOI string</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>doi</p>
-</dd>
-</dl>
+<dd><p>Clean a DOI string to remove any unnecessary characters.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -2191,19 +2164,6 @@ lowercase.</p>
 <dt class="sig sig-object py" id="literature.utils.pdf_file_renamer">
 <span class="sig-prename descclassname"><span class="pre">literature.utils.</span></span><span class="sig-name descname"><span class="pre">pdf_file_renamer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/literature/utils.html#pdf_file_renamer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#literature.utils.pdf_file_renamer" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="literature.utils.simple_autolabeler">
-<span class="sig-prename descclassname"><span class="pre">literature.utils.</span></span><span class="sig-name descname"><span class="pre">simple_autolabeler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/literature/utils.html#simple_autolabeler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#literature.utils.simple_autolabeler" title="Permalink to this definition">#</a></dt>
-<dd><p>The strategy used to create unique labels for literature items in the
-database.</p>
-<p>TODO: This has not been implemented yet</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>obj</strong> (<a class="reference internal" href="#literature.models.Literature" title="literature.models.Literature"><em>literature.models.Literature</em></a>) – A Literature instance.</p>
-</dd>
-</dl>
-</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="literature.utils.simple_file_renamer">
@@ -2744,11 +2704,9 @@ subwidgets.</p>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-literature.utils">literature.utils module</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.utils.DataDict"><code class="docutils literal notranslate"><span class="pre">DataDict</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.utils.clean_doi"><code class="docutils literal notranslate"><span class="pre">clean_doi()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.utils.get_current_year"><code class="docutils literal notranslate"><span class="pre">get_current_year()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.utils.pdf_file_renamer"><code class="docutils literal notranslate"><span class="pre">pdf_file_renamer()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.utils.simple_autolabeler"><code class="docutils literal notranslate"><span class="pre">simple_autolabeler()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#literature.utils.simple_file_renamer"><code class="docutils literal notranslate"><span class="pre">simple_file_renamer()</span></code></a></li>
 </ul>
 </li>
