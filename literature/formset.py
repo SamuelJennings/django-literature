@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Dict
 
 from django import forms
 from django.utils.translation import gettext as _
@@ -54,7 +54,7 @@ class PublisherForm(CSLMixin, Fieldset):
 
     class Meta:
         fields = ["publisher", "publisher-place", "original-publisher", "original-publisher-place"]
-        widgets: dict[str, Any] = {}
+        widgets: Dict[str, Any] = {}
 
 
 class CSLForm(CSLMixin, Fieldset):
