@@ -1,5 +1,4 @@
-name: release-main
-
+name: New Release
 on:
   push:
     tags:
@@ -7,9 +6,6 @@ on:
   release:
     types: [published]
     branches: [main]
-    
-  workflow_dispatch:
-
 
 jobs:
   publish:
@@ -29,7 +25,6 @@ jobs:
       - name: Build and publish
         run: |
           source .venv/bin/activate
-          echo $PYPI_TOKEN
           poetry config pypi-token.pypi $PYPI_TOKEN
           poetry run invoke publish --rule $RELEASE_VERSION
         env:
@@ -84,16 +79,3 @@ jobs:
   #       with:
   #         name: docker
   #         path: /tmp/docker.tar
-
-  # deploy-docs:
-  #   needs: publish
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Check out
-  #       uses: actions/checkout@v3
-
-  #     - name: Set up the environment
-  #       uses: ./.github/actions/setup-poetry-env
-
-  #     - name: Deploy documentation
-  #       run: poetry run mkdocs gh-deploy --force

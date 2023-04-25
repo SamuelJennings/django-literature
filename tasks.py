@@ -31,42 +31,17 @@ def check(c):
 
 
 @task
-def test(c):
+def test(c, tox=False):
     """
     Run the test suite
+
     """
-    print("🚀 Testing code: Running pytest")
-    c.run("poetry run pytest --cov --cov-config=pyproject.toml --cov-report=xml")
-
-
-@task
-def build(c):
-    clean(c)
-    print("🚀 Creating wheel file")
-    c.run("poetry build")
-
-
-# @task
-# def publish(c):
-#     # check to make sure there are no surprises
-#     print("🚀 Publishing: Dry run.")
-#     c.run("poetry publish --dry-run")
-
-#     # everything is in order so lets publish for real
-#     print("🚀 Publishing to PyPI")
-#     c.run("poetry publish")
-
-
-# @task
-# def build_and_publish(c, rule=""):
-#     # 1. Bump the current version using the specified rule. (https://python-poetry.org/docs/cli/#version)
-#     c.run(f"poetry version {rule}")
-
-#     # 2. Build the source and wheels archive (https://python-poetry.org/docs/cli/#build)
-#     build(c)
-
-#     # 3. Publish the package, using the build files we just created (https://python-poetry.org/docs/cli/#publish)
-#     c.run("poetry publish")
+    if tox:
+        print("🚀 Testing code: Running pytest with all tests")
+        c.run("tox")
+    else:
+        print("🚀 Testing code: Running pytest")
+        c.run("poetry run pytest --cov --cov-config=pyproject.toml --cov-report=xml")
 
 
 @task
@@ -108,14 +83,6 @@ def docs(c):
     # c.run("rm -f docs/modules.rst")
     c.run("sphinx-apidoc -o docs/ literature **/migrations/*")
     c.run("sphinx-build -E -b html docs docs/_build")
-
-
-@task
-def test_all(c):
-    """
-    Run tests on every python version with tox
-    """
-    c.run("tox")
 
 
 @task
