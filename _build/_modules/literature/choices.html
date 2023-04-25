@@ -8,7 +8,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>literature.choices</title>
+    <title>literature.choices &#8212; Django-Literature 0.1.1 documentation</title>
   
   
   
@@ -116,7 +116,7 @@
   
   
   
-    <p class="title logo__title">None</p>
+    <p class="title logo__title">Django-Literature 0.1.1 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -333,6 +333,53 @@ document.write(`
         <span class="n">_</span><span class="p">(</span><span class="s2">&quot;November&quot;</span><span class="p">),</span>
     <span class="p">)</span>
     <span class="n">DEC</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;December&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="IdentifierTypes"><a class="viewcode-back" href="../../literature.html#literature.choices.IdentifierTypes">[docs]</a><span class="k">class</span> <span class="nc">IdentifierTypes</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">IntegerChoices</span><span class="p">):</span>
+    <span class="n">DOI</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;DOI&quot;</span>
+    <span class="n">ISSN</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;ISSN&quot;</span>
+    <span class="n">ISBN</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;ISBN&quot;</span>
+    <span class="n">PMCID</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;PMCID&quot;</span>
+    <span class="n">PMID</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;PMID&quot;</span>
+    <span class="n">URL</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;URL&quot;</span></div>
+
+
+<div class="viewcode-block" id="TypeChoices"><a class="viewcode-back" href="../../literature.html#literature.choices.TypeChoices">[docs]</a><span class="k">class</span> <span class="nc">TypeChoices</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
+    <span class="n">article</span> <span class="o">=</span> <span class="s2">&quot;article&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;article&quot;</span><span class="p">)</span>
+    <span class="n">article_journal</span> <span class="o">=</span> <span class="s2">&quot;article-journal&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;journal article&quot;</span><span class="p">)</span>
+    <span class="n">article_magazine</span> <span class="o">=</span> <span class="s2">&quot;article-magazine&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;magazine article&quot;</span><span class="p">)</span>
+    <span class="n">article_newspaper</span> <span class="o">=</span> <span class="s2">&quot;article-newspaper&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;newspaper article&quot;</span><span class="p">)</span>
+    <span class="n">bill</span> <span class="o">=</span> <span class="s2">&quot;bill&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;bill&quot;</span><span class="p">)</span>
+    <span class="n">book</span> <span class="o">=</span> <span class="s2">&quot;book&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;book&quot;</span><span class="p">)</span>
+    <span class="n">broadcast</span> <span class="o">=</span> <span class="s2">&quot;broadcast&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;broadcast&quot;</span><span class="p">)</span>
+    <span class="n">chapter</span> <span class="o">=</span> <span class="s2">&quot;chapter&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;chapter&quot;</span><span class="p">)</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="s2">&quot;dataset&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;dataset&quot;</span><span class="p">)</span>
+    <span class="n">entry</span> <span class="o">=</span> <span class="s2">&quot;entry&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;entry&quot;</span><span class="p">)</span>
+    <span class="n">entry_dictionary</span> <span class="o">=</span> <span class="s2">&quot;entry-dictionary&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;entry (dictionary)&quot;</span><span class="p">)</span>
+    <span class="n">entry_encyclopedia</span> <span class="o">=</span> <span class="s2">&quot;entry-encyclopedia&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;entry (encyclopedia)&quot;</span><span class="p">)</span>
+    <span class="n">figure</span> <span class="o">=</span> <span class="s2">&quot;figure&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;figure&quot;</span><span class="p">)</span>
+    <span class="n">graphic</span> <span class="o">=</span> <span class="s2">&quot;graphic&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;graphic&quot;</span><span class="p">)</span>
+    <span class="n">interview</span> <span class="o">=</span> <span class="s2">&quot;interview&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;interview&quot;</span><span class="p">)</span>
+    <span class="n">legal_case</span> <span class="o">=</span> <span class="s2">&quot;legal_case&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;legal case&quot;</span><span class="p">)</span>
+    <span class="n">legislation</span> <span class="o">=</span> <span class="s2">&quot;legislation&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;legislation&quot;</span><span class="p">)</span>
+    <span class="n">manuscript</span> <span class="o">=</span> <span class="s2">&quot;manuscript&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;manuscript&quot;</span><span class="p">)</span>
+    <span class="nb">map</span> <span class="o">=</span> <span class="s2">&quot;map&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;map&quot;</span><span class="p">)</span>  <span class="c1"># noqa: A003</span>
+    <span class="n">motion_picture</span> <span class="o">=</span> <span class="s2">&quot;motion_picture&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;motion picture&quot;</span><span class="p">)</span>
+    <span class="n">musical_score</span> <span class="o">=</span> <span class="s2">&quot;musical_score&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;musical score&quot;</span><span class="p">)</span>
+    <span class="n">pamphlet</span> <span class="o">=</span> <span class="s2">&quot;pamphlet&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;pamphlet&quot;</span><span class="p">)</span>
+    <span class="n">paper_conference</span> <span class="o">=</span> <span class="s2">&quot;paper-conference&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;paper conference&quot;</span><span class="p">)</span>
+    <span class="n">patent</span> <span class="o">=</span> <span class="s2">&quot;patent&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;patent&quot;</span><span class="p">)</span>
+    <span class="n">personal_communication</span> <span class="o">=</span> <span class="s2">&quot;personal_communication&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;personal communication&quot;</span><span class="p">)</span>
+    <span class="n">post</span> <span class="o">=</span> <span class="s2">&quot;post&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;post&quot;</span><span class="p">)</span>
+    <span class="n">post_weblog</span> <span class="o">=</span> <span class="s2">&quot;post-weblog&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;blog post&quot;</span><span class="p">)</span>
+    <span class="n">report</span> <span class="o">=</span> <span class="s2">&quot;report&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;report&quot;</span><span class="p">)</span>
+    <span class="n">review</span> <span class="o">=</span> <span class="s2">&quot;review&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;review&quot;</span><span class="p">)</span>
+    <span class="n">review_book</span> <span class="o">=</span> <span class="s2">&quot;review-book&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;review book&quot;</span><span class="p">)</span>
+    <span class="n">song</span> <span class="o">=</span> <span class="s2">&quot;song&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;song&quot;</span><span class="p">)</span>
+    <span class="n">speech</span> <span class="o">=</span> <span class="s2">&quot;speech&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;speech&quot;</span><span class="p">)</span>
+    <span class="n">thesis</span> <span class="o">=</span> <span class="s2">&quot;thesis&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;thesis&quot;</span><span class="p">)</span>
+    <span class="n">treaty</span> <span class="o">=</span> <span class="s2">&quot;treaty&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;treaty&quot;</span><span class="p">)</span>
+    <span class="n">webpage</span> <span class="o">=</span> <span class="s2">&quot;webpage&quot;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s2">&quot;webpage&quot;</span><span class="p">)</span></div>
 </pre></div>
 
                 </article>

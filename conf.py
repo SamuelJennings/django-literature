@@ -31,6 +31,7 @@ django.setup()
 package_meta = toml.load("../pyproject.toml")["tool"]["poetry"]
 project = package_meta["name"].title()
 version = package_meta["version"]  # The short X.Y version.
+release = version
 authors = ["Sam Jennings"]
 copyright = f"{datetime.now().year}, {authors[0]}"
 
@@ -138,7 +139,7 @@ html_theme_options = {
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-html_title = None
+# html_title = None
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 html_short_title = None

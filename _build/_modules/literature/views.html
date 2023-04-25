@@ -8,7 +8,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>literature.views</title>
+    <title>literature.views &#8212; Django-Literature 0.1.1 documentation</title>
   
   
   
@@ -116,7 +116,7 @@
   
   
   
-    <p class="title logo__title">None</p>
+    <p class="title logo__title">Django-Literature 0.1.1 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -283,18 +283,103 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <h1>Source code for literature.views</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
 
-<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Literature</span>
+<span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span><span class="p">,</span> <span class="n">JsonResponse</span>
+<span class="kn">from</span> <span class="nn">django.utils.encoding</span> <span class="kn">import</span> <span class="n">force_str</span>
+<span class="kn">from</span> <span class="nn">django.views.generic</span> <span class="kn">import</span> <span class="n">DetailView</span><span class="p">,</span> <span class="n">ListView</span>
+<span class="kn">from</span> <span class="nn">formset.views</span> <span class="kn">import</span> <span class="n">FormCollectionView</span>
 
-<span class="c1"># Create your views here.</span>
+<span class="kn">from</span> <span class="nn">literature.models</span> <span class="kn">import</span> <span class="n">Author</span><span class="p">,</span> <span class="n">Literature</span>
+
+<span class="c1"># from literature.conf import</span>
+<span class="kn">from</span> <span class="nn">.formset</span> <span class="kn">import</span> <span class="n">LiteratureFormCollection</span>
 
 
-<div class="viewcode-block" id="literature_list"><a class="viewcode-back" href="../../literature.html#literature.views.literature_list">[docs]</a><span class="k">def</span> <span class="nf">literature_list</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;qs&quot;</span><span class="p">:</span> <span class="n">Literature</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;literature/literature_list.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">)</span></div>
+<div class="viewcode-block" id="CitationMixin"><a class="viewcode-back" href="../../literature.html#literature.views.CitationMixin">[docs]</a><span class="k">class</span> <span class="nc">CitationMixin</span><span class="p">:</span>
+    <span class="n">citation_style</span> <span class="o">=</span> <span class="s2">&quot;bootstrap&quot;</span>
+
+<div class="viewcode-block" id="CitationMixin.get_context_data"><a class="viewcode-back" href="../../literature.html#literature.views.CitationMixin.get_context_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">context</span><span class="p">[</span><span class="s2">&quot;citation_style&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">citation_style</span>
+        <span class="k">return</span> <span class="n">context</span></div></div>
+
+
+<div class="viewcode-block" id="LiteratureList"><a class="viewcode-back" href="../../literature.html#literature.views.LiteratureList">[docs]</a><span class="k">class</span> <span class="nc">LiteratureList</span><span class="p">(</span><span class="n">CitationMixin</span><span class="p">,</span> <span class="n">ListView</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Literature</span>
+
+<div class="viewcode-block" id="LiteratureList.get_queryset"><a class="viewcode-back" href="../../literature.html#literature.views.LiteratureList.get_queryset">[docs]</a>    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_queryset</span><span class="p">()</span><span class="o">.</span><span class="n">prefetch_related</span><span class="p">(</span><span class="s2">&quot;authors&quot;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="LiteratureDetail"><a class="viewcode-back" href="../../literature.html#literature.views.LiteratureDetail">[docs]</a><span class="k">class</span> <span class="nc">LiteratureDetail</span><span class="p">(</span><span class="n">FormCollectionView</span><span class="p">,</span> <span class="n">CitationMixin</span><span class="p">):</span>
+    <span class="c1"># model = SupplementaryMaterial</span>
+    <span class="c1"># form_class=LiteratureForm</span>
+    <span class="n">collection_class</span> <span class="o">=</span> <span class="n">LiteratureFormCollection</span>
+    <span class="n">extra_context</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s2">&quot;literature/literature_form.html&quot;</span>
+
+    <span class="c1"># def get_object(self, queryset=None):</span>
+    <span class="c1"># if self.extra_context[&#39;add&#39;] is False:</span>
+    <span class="c1"># return super().get_object(queryset)</span>
+
+<div class="viewcode-block" id="LiteratureDetail.form_valid"><a class="viewcode-back" href="../../literature.html#literature.views.LiteratureDetail.form_valid">[docs]</a>    <span class="k">def</span> <span class="nf">form_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">extra_data</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_extra_data</span><span class="p">())</span> <span class="ow">and</span> <span class="n">extra_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;delete&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+            <span class="n">success_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_success_url</span><span class="p">()</span>
+            <span class="n">response_data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;success_url&quot;</span><span class="p">:</span> <span class="n">force_str</span><span class="p">(</span><span class="n">success_url</span><span class="p">)}</span> <span class="k">if</span> <span class="n">success_url</span> <span class="k">else</span> <span class="p">{}</span>
+            <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">(</span><span class="n">response_data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">form_valid</span><span class="p">(</span><span class="n">form</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="AuthorList"><a class="viewcode-back" href="../../literature.html#literature.views.AuthorList">[docs]</a><span class="k">class</span> <span class="nc">AuthorList</span><span class="p">(</span><span class="n">ListView</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Author</span>
+
+<div class="viewcode-block" id="AuthorList.get_queryset"><a class="viewcode-back" href="../../literature.html#literature.views.AuthorList.get_queryset">[docs]</a>    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_queryset</span><span class="p">()</span><span class="o">.</span><span class="n">with_work_counts</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="AuthorDetail"><a class="viewcode-back" href="../../literature.html#literature.views.AuthorDetail">[docs]</a><span class="k">class</span> <span class="nc">AuthorDetail</span><span class="p">(</span><span class="n">CitationMixin</span><span class="p">,</span> <span class="n">DetailView</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Author</span>
+
+<div class="viewcode-block" id="AuthorDetail.get_context_data"><a class="viewcode-back" href="../../literature.html#literature.views.AuthorDetail.get_context_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">context</span><span class="p">[</span><span class="s2">&quot;literature_list&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">context</span><span class="p">[</span><span class="s2">&quot;author&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">literature</span><span class="o">.</span><span class="n">prefetch_related</span><span class="p">(</span><span class="s2">&quot;authors&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">context</span></div></div>
+
+
+<div class="viewcode-block" id="LiteratureForm"><a class="viewcode-back" href="../../literature.html#literature.views.LiteratureForm">[docs]</a><span class="k">class</span> <span class="nc">LiteratureForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+<div class="viewcode-block" id="LiteratureForm.Meta"><a class="viewcode-back" href="../../literature.html#literature.views.LiteratureForm.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Literature</span>
+        <span class="n">exclude</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;published&quot;</span><span class="p">,</span> <span class="s2">&quot;year&quot;</span><span class="p">]</span></div></div>
+
+    <span class="c1"># def __init__(self, data=None, *args, **kwargs):</span>
+    <span class="c1">#     # modify the incoming data to ensure that keys with hyphens are replaced with</span>
+    <span class="c1">#     data = {k.replace(&#39;-&#39;,&#39;_&#39;):v for k,v in data.items()}</span>
+    <span class="c1">#     super().__init__(data, *args, **kwargs)</span>
+
+
+<div class="viewcode-block" id="process_csl"><a class="viewcode-back" href="../../literature.html#literature.views.process_csl">[docs]</a><span class="k">def</span> <span class="nf">process_csl</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1"># formset = forms.formset_factory(LiteratureForm)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;here&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;POST&quot;</span><span class="p">:</span>
+        <span class="n">form_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">form_data</span><span class="p">:</span>
+            <span class="c1"># f = {k.replace(&#39;-&#39;,&#39;_&#39;):v for k,v in f.items()}</span>
+            <span class="c1"># pprint.pprint(f)</span>
+            <span class="n">form</span> <span class="o">=</span> <span class="n">LiteratureForm</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+                <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">errors</span><span class="p">)</span>
+            <span class="c1"># print(form)</span>
+        <span class="c1"># print(request.POST[&#39;data&#39;])</span>
+    <span class="c1"># Get the posted form</span>
+    <span class="c1">#   MyLoginForm = LoginForm(request.POST)</span>
+    <span class="c1"># html = &quot;&lt;html&gt;&lt;body&gt;It is now %s.&lt;/body&gt;&lt;/html&gt;&quot; % now</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s2">&quot;Hi&quot;</span><span class="p">)</span></div>
 </pre></div>
 
                 </article>

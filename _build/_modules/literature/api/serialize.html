@@ -8,7 +8,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>literature.adaptors.crossref</title>
+    <title>literature.api.serialize &#8212; Django-Literature 0.1.1 documentation</title>
   
   
   
@@ -42,7 +42,7 @@
     <script src="../../../_static/clipboard.min.js"></script>
     <script src="../../../_static/copybutton.js"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/literature/adaptors/crossref';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/literature/api/serialize';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -116,7 +116,7 @@
   
   
   
-    <p class="title logo__title">None</p>
+    <p class="title logo__title">Django-Literature 0.1.1 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -206,7 +206,7 @@
       
       
       
-      <li><a href="https://github.com/SSJenny90/django-literature/issues/new?title=Issue%20on%20page%20%2F_modules/literature/adaptors/crossref.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/SSJenny90/django-literature/issues/new?title=Issue%20on%20page%20%2F_modules/literature/api/serialize.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -282,73 +282,20 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <h1>Source code for literature.adaptors.crossref</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span>
+  <h1>Source code for literature.api.serialize</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">serializers</span>
 
-<span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
-<span class="kn">from</span> <span class="nn">django.forms.fields</span> <span class="kn">import</span> <span class="n">JSONField</span>
-
-<span class="kn">from</span> <span class="nn">literature.conf</span> <span class="kn">import</span> <span class="n">settings</span>
-
-<span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">BaseAdaptor</span>
+<span class="kn">from</span> <span class="nn">..models</span> <span class="kn">import</span> <span class="n">Literature</span>
 
 
-<div class="viewcode-block" id="ListConcatField"><a class="viewcode-back" href="../../../literature.adaptors.html#literature.adaptors.crossref.ListConcatField">[docs]</a><span class="k">class</span> <span class="nc">ListConcatField</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Accepts a json array input containing only strings and joins the</span>
-<span class="sd">    items together using the specified `join_with` parameters.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LiteratureSerializer"><a class="viewcode-back" href="../../../literature.api.html#literature.api.serialize.LiteratureSerializer">[docs]</a><span class="k">class</span> <span class="nc">LiteratureSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">ModelSerializer</span><span class="p">):</span>
+<div class="viewcode-block" id="LiteratureSerializer.Meta"><a class="viewcode-back" href="../../../literature.api.html#literature.api.serialize.LiteratureSerializer.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Literature</span>
+        <span class="n">exclude</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;container_title&quot;</span><span class="p">,</span> <span class="s2">&quot;citation_key&quot;</span><span class="p">,</span> <span class="s2">&quot;pdf&quot;</span><span class="p">,</span> <span class="s2">&quot;authors&quot;</span><span class="p">,</span> <span class="s2">&quot;collections&quot;</span><span class="p">,</span> <span class="s2">&quot;abstract&quot;</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="ListConcatField.to_python"><a class="viewcode-back" href="../../../literature.adaptors.html#literature.adaptors.crossref.ListConcatField.to_python">[docs]</a>    <span class="k">def</span> <span class="nf">to_python</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">to_python</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">value</span><span class="p">))</span></div></div>
-
-
-<div class="viewcode-block" id="Crossref"><a class="viewcode-back" href="../../../literature.adaptors.html#literature.adaptors.crossref.Crossref">[docs]</a><span class="k">class</span> <span class="nc">Crossref</span><span class="p">(</span><span class="n">BaseAdaptor</span><span class="p">):</span>
-    <span class="n">MAILTO</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">DEFAULT_FROM_EMAIL</span>
-    <span class="n">BASE_URL</span> <span class="o">=</span> <span class="s2">&quot;https://api.crossref.org/works/</span><span class="si">{doi}</span><span class="s2">&quot;</span>
-    <span class="n">EXTRACT_KEY</span> <span class="o">=</span> <span class="s2">&quot;message&quot;</span>
-
-    <span class="n">MAP</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;container_title&quot;</span><span class="p">:</span> <span class="s2">&quot;container-title&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;doi&quot;</span><span class="p">:</span> <span class="s2">&quot;DOI&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;URL&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;month&quot;</span><span class="p">:</span> <span class="s2">&quot;published.date-parts&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;year&quot;</span><span class="p">:</span> <span class="s2">&quot;published.date-parts&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;published&quot;</span><span class="p">:</span> <span class="s2">&quot;published.date-parts&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;authors&quot;</span><span class="p">:</span> <span class="s2">&quot;author&quot;</span><span class="p">,</span>
-    <span class="p">}</span>
-
-    <span class="c1"># for whatever reason, overriding the year form field in Meta.field_classes won&#39;t work</span>
-    <span class="n">year</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">JSONField</span><span class="p">()</span>
-    <span class="n">month</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">JSONField</span><span class="p">()</span>
-
-<div class="viewcode-block" id="Crossref.Meta"><a class="viewcode-back" href="../../../literature.adaptors.html#literature.adaptors.crossref.Crossref.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="n">BaseAdaptor</span><span class="o">.</span><span class="n">Meta</span><span class="p">):</span>
-        <span class="n">field_classes</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">ListConcatField</span><span class="p">,</span>
-            <span class="s2">&quot;subtitle&quot;</span><span class="p">:</span> <span class="n">ListConcatField</span><span class="p">,</span>
-            <span class="s2">&quot;container_title&quot;</span><span class="p">:</span> <span class="n">ListConcatField</span><span class="p">,</span>
-            <span class="s2">&quot;published&quot;</span><span class="p">:</span> <span class="n">JSONField</span><span class="p">,</span>
-        <span class="p">}</span></div>
-
-<div class="viewcode-block" id="Crossref.clean_year"><a class="viewcode-back" href="../../../literature.adaptors.html#literature.adaptors.crossref.Crossref.clean_year">[docs]</a>    <span class="k">def</span> <span class="nf">clean_year</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;year&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></div>
-
-<div class="viewcode-block" id="Crossref.clean_month"><a class="viewcode-back" href="../../../literature.adaptors.html#literature.adaptors.crossref.Crossref.clean_month">[docs]</a>    <span class="k">def</span> <span class="nf">clean_month</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;month&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span></div>
-
-<div class="viewcode-block" id="Crossref.clean_published"><a class="viewcode-back" href="../../../literature.adaptors.html#literature.adaptors.crossref.Crossref.clean_published">[docs]</a>    <span class="k">def</span> <span class="nf">clean_published</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;published&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">value</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
-
-        <span class="c1"># if no month or day data is present, fill with 1s</span>
-        <span class="n">date_parts</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">date_parts</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="n">date_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">date</span><span class="p">(</span><span class="o">*</span><span class="n">date_parts</span><span class="p">)</span></div></div>
+<div class="viewcode-block" id="LiteratureSerializer.to_representation"><a class="viewcode-back" href="../../../literature.api.html#literature.api.serialize.LiteratureSerializer.to_representation">[docs]</a>    <span class="k">def</span> <span class="nf">to_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">to_representation</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;CSL&quot;</span><span class="p">)</span> <span class="o">|</span> <span class="n">data</span></div></div>
 </pre></div>
 
                 </article>

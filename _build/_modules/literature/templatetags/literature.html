@@ -8,7 +8,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>literature.adaptors.datacite</title>
+    <title>literature.templatetags.literature &#8212; Django-Literature 0.1.1 documentation</title>
   
   
   
@@ -42,7 +42,7 @@
     <script src="../../../_static/clipboard.min.js"></script>
     <script src="../../../_static/copybutton.js"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/literature/adaptors/datacite';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/literature/templatetags/literature';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -116,7 +116,7 @@
   
   
   
-    <p class="title logo__title">None</p>
+    <p class="title logo__title">Django-Literature 0.1.1 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -206,7 +206,7 @@
       
       
       
-      <li><a href="https://github.com/SSJenny90/django-literature/issues/new?title=Issue%20on%20page%20%2F_modules/literature/adaptors/datacite.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/SSJenny90/django-literature/issues/new?title=Issue%20on%20page%20%2F_modules/literature/templatetags/literature.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -282,41 +282,26 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <h1>Source code for literature.adaptors.datacite</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span>
+  <h1>Source code for literature.templatetags.literature</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">template</span>
 
-<span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">BaseAdaptor</span><span class="p">,</span> <span class="n">DataDict</span>
+<span class="c1"># from django.conf import settings</span>
+<span class="kn">from</span> <span class="nn">django.template.loader</span> <span class="kn">import</span> <span class="n">render_to_string</span>
+
+<span class="kn">from</span> <span class="nn">literature.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+
+<span class="n">register</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">Library</span><span class="p">()</span>
 
 
-<div class="viewcode-block" id="Datacite"><a class="viewcode-back" href="../../../literature.adaptors.html#literature.adaptors.datacite.Datacite">[docs]</a><span class="k">class</span> <span class="nc">Datacite</span><span class="p">(</span><span class="n">BaseAdaptor</span><span class="p">):</span>
-    <span class="n">BASE_URL</span> <span class="o">=</span> <span class="s2">&quot;https://api.datacite.org/dois/</span><span class="si">{doi}</span><span class="s2">&quot;</span>
-    <span class="n">EXTRACT_KEY</span> <span class="o">=</span> <span class="s2">&quot;data.attributes&quot;</span>
-    <span class="n">AUTHOR_MAP</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;given&quot;</span><span class="p">:</span> <span class="s2">&quot;givenName&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;family&quot;</span><span class="p">:</span> <span class="s2">&quot;familyName&quot;</span><span class="p">,</span>
+<div class="viewcode-block" id="bibliography"><a class="viewcode-back" href="../../../literature.templatetags.html#literature.templatetags.literature.bibliography">[docs]</a><span class="nd">@register</span><span class="o">.</span><span class="n">simple_tag</span>
+<span class="k">def</span> <span class="nf">bibliography</span><span class="p">(</span><span class="n">bibliography</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Renders a bibligraphy in the given style&quot;&quot;&quot;</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;bibliography&quot;</span><span class="p">:</span> <span class="n">bibliography</span><span class="p">,</span>
+        <span class="s2">&quot;citation_style&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;literature/citation/</span><span class="si">{</span><span class="n">style</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">settings</span><span class="o">.</span><span class="n">DEFAULT_CITATION_STYLE</span><span class="w"> </span><span class="si">}</span><span class="s2">.html&quot;</span><span class="p">,</span>
     <span class="p">}</span>
-    <span class="n">MAP</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;container_title&quot;</span><span class="p">:</span> <span class="s2">&quot;container&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;year&quot;</span><span class="p">:</span> <span class="s2">&quot;published&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;authors&quot;</span><span class="p">:</span> <span class="s2">&quot;creators&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;types.resourceType&quot;</span><span class="p">,</span>
-    <span class="p">}</span>
-
-<div class="viewcode-block" id="Datacite.premodify_data"><a class="viewcode-back" href="../../../literature.adaptors.html#literature.adaptors.datacite.Datacite.premodify_data">[docs]</a>    <span class="k">def</span> <span class="nf">premodify_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">premodify_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;authors&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">DataDict</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">AUTHOR_MAP</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;authors&quot;</span><span class="p">]]</span>
-        <span class="k">return</span> <span class="n">data</span></div>
-
-<div class="viewcode-block" id="Datacite.clean_published"><a class="viewcode-back" href="../../../literature.adaptors.html#literature.adaptors.datacite.Datacite.clean_published">[docs]</a>    <span class="k">def</span> <span class="nf">clean_published</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;published&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">value</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
-
-        <span class="c1"># if no month or day data is present, fill with 1s</span>
-        <span class="n">date_parts</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">date_parts</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="n">date_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">date</span><span class="p">(</span><span class="o">*</span><span class="n">date_parts</span><span class="p">)</span></div></div>
+    <span class="nb">print</span><span class="p">(</span><span class="n">context</span><span class="p">[</span><span class="s2">&quot;citation_style&quot;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">render_to_string</span><span class="p">(</span><span class="s2">&quot;literature/bibliography.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></div>
 </pre></div>
 
                 </article>

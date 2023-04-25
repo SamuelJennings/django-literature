@@ -8,7 +8,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>literature.conf</title>
+    <title>literature.conf &#8212; Django-Literature 0.1.1 documentation</title>
   
   
   
@@ -116,7 +116,7 @@
   
   
   
-    <p class="title logo__title">None</p>
+    <p class="title logo__title">Django-Literature 0.1.1 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
@@ -293,19 +293,11 @@ document.write(`
 <div class="viewcode-block" id="LiteratureConf"><a class="viewcode-back" href="../../literature.html#literature.conf.LiteratureConf">[docs]</a><span class="k">class</span> <span class="nc">LiteratureConf</span><span class="p">(</span><span class="n">AppConf</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Settings for Django Literature&quot;&quot;&quot;</span>
 
-    <span class="n">MODELS</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Point the application to the working models. Required when extending</span>
-<span class="sd">    the default models.&quot;&quot;&quot;</span>
-
-    <span class="n">DEFAULT_STYLE</span> <span class="o">=</span> <span class="s2">&quot;harvard&quot;</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Default citation style. Must be included in the templates/crossref/styles</span>
+    <span class="n">DEFAULT_CITATION_STYLE</span> <span class="o">=</span> <span class="s2">&quot;plain_text&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Default citation style. Must be included in the templates/literautre/citation/</span>
 <span class="sd">     folder.&quot;&quot;&quot;</span>
 
-    <span class="n">AUTHOR_TRUNCATE_AFTER</span> <span class="o">=</span> <span class="mi">2</span>
-
     <span class="n">INACTIVE_AFTER</span> <span class="o">=</span> <span class="mi">5</span>
-
-    <span class="n">HYPERLINK</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="n">PDF_RENAMER</span> <span class="o">=</span> <span class="s2">&quot;literature.utils.simple_file_renamer&quot;</span>
 
