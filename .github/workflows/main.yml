@@ -5,12 +5,13 @@ on:
     branches:
       - main
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened, edited]
 
   workflow_dispatch:
 
 jobs:
   code-quality:
+    name: Code Quality
     runs-on: ubuntu-latest
     steps:
       - name: Check out
@@ -29,6 +30,7 @@ jobs:
 
   run-tests:
     runs-on: ubuntu-latest
+    name: Tests
     strategy:
       matrix:
         python-version: ['3.8', '3.9', '3.10', '3.11']
@@ -63,14 +65,24 @@ jobs:
         uses: codecov/codecov-action@v3
         if: ${{ matrix.python-version == '3.11' }}
 
-  # check-docs:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Check out
-  #       uses: actions/checkout@v3
+  check-docs:
+    name: Check Documentation  
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
 
-  #     - name: Set up the environment
-  #       uses: ./.github/actions/setup-poetry-env
+      # - name: Set up the environment
+      #   uses: ./.github/actions/setup-poetry-env
 
-  #     - name: Check if documentation can be built
-  #       run: poetry run invoke docs
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Load cached venv
+        uses: actions/cache@v3
+        with:
+          path: .tox
+          key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('poetry.lock') }}
+
+      - name: Check if documentation can be built
+        run: poetry run invoke docs

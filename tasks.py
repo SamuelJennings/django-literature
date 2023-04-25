@@ -3,6 +3,9 @@ from invoke import task
 
 @task
 def install(c):
+    """
+    Install the project dependencies
+    """
     print("🚀 Creating virtual environment using pyenv and poetry")
     c.run("poetry install")
     c.run("poetry run pre-commit install")
@@ -11,6 +14,9 @@ def install(c):
 
 @task
 def check(c):
+    """
+    Check the consistency of the project using various tools
+    """
     print("🚀 Checking Poetry lock file consistency with 'pyproject.toml': Running poetry lock --check")
     c.run("poetry lock --check")
 
@@ -26,6 +32,9 @@ def check(c):
 
 @task
 def test(c):
+    """
+    Run the test suite
+    """
     print("🚀 Testing code: Running pytest")
     c.run("poetry run pytest --cov --cov-config=pyproject.toml --cov-report=xml")
 
@@ -37,27 +46,27 @@ def build(c):
     c.run("poetry build")
 
 
-@task
-def publish(c):
-    # check to make sure there are no surprises
-    print("🚀 Publishing: Dry run.")
-    c.run("poetry publish --dry-run")
+# @task
+# def publish(c):
+#     # check to make sure there are no surprises
+#     print("🚀 Publishing: Dry run.")
+#     c.run("poetry publish --dry-run")
 
-    # everything is in order so lets publish for real
-    print("🚀 Publishing to PyPI")
-    c.run("poetry publish")
+#     # everything is in order so lets publish for real
+#     print("🚀 Publishing to PyPI")
+#     c.run("poetry publish")
 
 
-@task
-def build_and_publish(c, rule=""):
-    # 1. Bump the current version using the specified rule. (https://python-poetry.org/docs/cli/#version)
-    c.run(f"poetry version {rule}")
+# @task
+# def build_and_publish(c, rule=""):
+#     # 1. Bump the current version using the specified rule. (https://python-poetry.org/docs/cli/#version)
+#     c.run(f"poetry version {rule}")
 
-    # 2. Build the source and wheels archive (https://python-poetry.org/docs/cli/#build)
-    build(c)
+#     # 2. Build the source and wheels archive (https://python-poetry.org/docs/cli/#build)
+#     build(c)
 
-    # 3. Publish the package, using the build files we just created (https://python-poetry.org/docs/cli/#publish)
-    c.run("poetry publish")
+#     # 3. Publish the package, using the build files we just created (https://python-poetry.org/docs/cli/#publish)
+#     c.run("poetry publish")
 
 
 @task
@@ -118,56 +127,54 @@ def clean(c):
     clean_pyc(c)
 
 
-# @task(help={"bumpsize": 'Bump either for a "feature" or "breaking" change'})
-# def release(c, bumpsize=""):
-#     """
-#     Package and upload a release
-#     """
-#     clean(c)
-#     if bumpsize:
-#         bumpsize = "--" + bumpsize
-
-#     c.run("bumpversion {bump} --no-input".format(bump=bumpsize))
-
-#     import literature
-
-#     c.run("python setup.py sdist bdist_wheel")
-#     c.run("twine upload dist/*")
-
-#     c.run(
-#         'git tag -a {version} -m "New version: {version}"'.format(
-#             version=literature.__version__
-#         )
-#     )
-#     c.run("git push --tags")
-#     c.run("git push origin master")
-
-
 @task
-def release(c, rule=""):
-    clean(c)
+def publish(c, rule=""):
+    """
+    Publish a new version of the package to PyPI
+    """
 
-    #     c.run(
-    #         'git tag -a {version} -m "New version: {version}"'.format(
-    #             version=literature.__version__
-    #         )
-    #     )
-    #     c.run("git push --tags")
-    #     c.run("git push origin master")
-
-    # 1. bump the current version using the specified rule
+    # 1. Set the current version using the specified rule
     # see https://python-poetry.org/docs/cli/#version for rules on bumping version
-    c.run(f"poetry version {rule}")
+    if rule:
+        c.run(f"poetry version {rule}")
 
     # 2. Build the source and wheels archive
     # https://python-poetry.org/docs/cli/#build
+    print("🔧 Building: Creating wheel file.")
     c.run("poetry build")
+
+    # 3. Dry run first to make sure everything is working
+    print("🚀 Publishing: Dry run.")
+    c.run("poetry publish --dry-run")
 
     # This command publishes the package, previously built with the build command, to the remote repository. It will automatically register the package before uploading if this is the first time it is submitted.
     # https://python-poetry.org/docs/cli/#publish
+    print("📦 Publishing to PyPI")
     c.run("poetry publish")
 
 
 @task
+def tag(c, rule=""):
+    """
+    Create a new git tag and push it to the remote repository
+    """
+    if rule:
+        # bump the current version using the specified rule
+        c.run(f"poetry version {rule}")
+
+    # 1. Get the current version number as a variable
+    version_short = c.run("poetry version -s", hide=True).stdout.strip()
+    version = c.run("poetry version", hide=True).stdout.strip()
+
+    # 2. create a tag and push it to the remote repository
+    c.run(f'git tag -a v{version_short} -m "{version}"')
+    c.run("git push --tags")
+    c.run("git push origin main")
+
+
+@task
 def live_docs(c):
+    """
+    Build the documentation and open it in a live browser
+    """
     c.run("sphinx-autobuild -b html --host 0.0.0.0 --port 9000 --watch . -c . . _build/html")

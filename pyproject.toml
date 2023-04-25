@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-literature"
-version = "0.1.1"
+version = "0.1.2"
 description = "A scientific literature management tool for Django"
 authors = ["Sam Jennings <samuel.scott.jennings@gmail.com>"]
 license = "MIT"
