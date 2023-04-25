@@ -60,7 +60,7 @@ jobs:
           python -m pip install tox tox-gh-actions
 
       - name: Test with tox
-        run: poetry run tox
+        run: tox
 
       - name: Upload coverage reports to Codecov with GitHub Action on Python 3.11
         uses: codecov/codecov-action@v3

@@ -178,26 +178,21 @@ ignore_transitive = [
 legacy_tox_ini = """
 [tox]
 skipsdist = true
-envlist =
-    py{38,39,310,311}
-    ; py{38,39,310,311}-django{32,40}
+envlist = py38, py39, py310, py311
 
 [gh-actions]
 python =
+    3.8: py38
+    3.9: py39
+    3.10: py310
     3.11: py311
-
+    
 [testenv]
 passenv = PYTHON_VERSION
 allowlist_externals = poetry
 commands =
     poetry install -v
     pytest --doctest-modules tests --cov --cov-config=pyproject.toml --cov-report=xml
-    coverage run --source literature runtests.py
     mypy
-basepython =
-    py311: python3.11
-    
-setenv =
-    PYTHONPATH = {toxinidir}:{toxinidir}/literature
 """
 
