@@ -10,25 +10,19 @@ from formset.widgets import (
     Selectize,
 )
 
-# from django.forms import fields
 from .choices import TypeChoices
 from .csl_map import CSL_FIELDS, CSL_TYPES
-
-# def show_if(field):
-# return {"show-if": " || ".join([f".type == '{x}'" for x in CSLMap[field]])}
 
 
 class CSLMixin:
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.csl_fields = CSL_FIELDS
-        self.csl_types = CSL_TYPES
         self.update_fields()
         self.update_field_visibility()
 
     def update_fields(self):
         for field in self.Meta.fields:
-            attrs = self.csl_fields[field]
+            attrs = CSL_FIELDS[field]
             if attrs["type"] == "standard":
                 self.fields[field] = forms.CharField(
                     label=attrs["name"],
@@ -39,7 +33,7 @@ class CSLMixin:
                 self.fields[field].widget.attrs.update({"show-if": ""})
 
     def update_field_visibility(self):
-        for csl_type, fields in self.csl_types.items():
+        for csl_type, fields in CSL_TYPES.items():
             for field_name in fields:
                 if field_name in self.fields:
                     if not self.fields[field_name].widget.attrs["show-if"]:
@@ -70,9 +64,6 @@ class CSLForm(CSLMixin, Fieldset):
             # "published": DateInput,
             # "authors": DualSortableSelector,  # or DualSelector
         }
-
-    # def show_if(field):
-    #     return {"show-if": " || ".join([f".type == '{x}'" for x in CSLMap[field]])}
 
 
 class LiteratureFormCollection(FormCollection):

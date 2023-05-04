@@ -15,7 +15,7 @@ from sortedm2m.fields import SortedManyToManyField
 from taggit.managers import TaggableManager
 
 from .choices import IdentifierTypes, TypeChoices
-from .managers import AuthorManager, LiteratureManager
+from .managers import AuthorManager
 from .utils import pdf_file_renamer
 
 
@@ -109,8 +109,6 @@ class Identifier(TimeStampedModel):
 
 class Literature(TimeStampedModel):
     """Model for storing literature data"""
-
-    objects = LiteratureManager()
 
     # ARTICLE TYPE
     type = models.CharField(_("type"), choices=TypeChoices.choices, max_length=255)  # noqa: A003

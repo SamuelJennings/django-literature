@@ -68,7 +68,7 @@ ZOTERO_FIELD_MAP = {
 
 # pprint.pprint(typeMaps)
 
-"""The module level attributes here were generated from the csl-typeMap.xml file at github.com/citation-style-language/schema and tweaked to suit the needs of this application."""
+# """The module level attributes here were generated from the csl-typeMap.xml file at github.com/citation-style-language/schema and tweaked to suit the needs of this application."""
 
 CSL_TYPES = {
     "article": [

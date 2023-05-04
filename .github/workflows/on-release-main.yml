@@ -8,7 +8,7 @@ on:
     branches: [main]
 
 jobs:
-    publish:
+  publish:
     name: Publish on PyPI
     runs-on: ubuntu-latest
     permissions:
@@ -41,7 +41,6 @@ jobs:
         uses: mikepenz/release-changelog-builder-action@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
   # docker:
   #   needs: publish
   #   name: Build container

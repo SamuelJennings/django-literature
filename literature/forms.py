@@ -158,13 +158,3 @@ class LiteratureFormWithSupps(FormCollection):
     required = LiteratureRequired()
     extra = LiteratureExtra()
     supps = SuppMatCollection()
-
-
-# class AuthorForm(ModelForm):
-#     class Meta:
-#         model = Author
-#         fields = ['phone_number']
-
-# class LiteratureCollection(FormCollection):
-#     literature = LiteratureForm()
-#     authors = AuthorForm()
