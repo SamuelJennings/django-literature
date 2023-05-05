@@ -54,7 +54,7 @@ def docs(c):
 
 
 @task
-def tag(c, rule=""):
+def release(c, rule=""):
     """
     Create a new git tag and push it to the remote repository
     """
@@ -66,7 +66,10 @@ def tag(c, rule=""):
     version_short = c.run("poetry version -s", hide=True).stdout.strip()
     version = c.run("poetry version", hide=True).stdout.strip()
 
-    # 2. create a tag and push it to the remote repository
+    # 2. commit the changes to pyproject.toml
+    c.run(f'git commit pyproject.toml -m "bump to v{version}"')
+
+    # 3. create a tag and push it to the remote repository
     c.run(f'git tag -a v{version_short} -m "{version}"')
     c.run("git push --tags")
     c.run("git push origin main")
