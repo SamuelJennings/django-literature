@@ -67,7 +67,7 @@ media/
 /static/
 /*.sqlite3
 
-*/static/vendor/*
+# */static/vendor/*
 
 # Celery stuff
 celerybeat-schedule
