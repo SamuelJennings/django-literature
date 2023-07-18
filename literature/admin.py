@@ -78,6 +78,7 @@ class LiteratureAdmin(DataTableMixin, admin.ModelAdmin):
 
     endpoint = {
         "fields": "__all__",
+        "include_str": False,
         "page_size": 1000,
         "permission_classes": [IsAdminUser, DjangoModelPermissions],
     }

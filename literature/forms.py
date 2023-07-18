@@ -5,11 +5,7 @@ from formset.collection import FormCollection
 from formset.fieldset import FieldsetMixin
 from formset.renderers import bootstrap
 from formset.richtext.widgets import RichTextarea
-from formset.widgets import (
-    DateInput,
-    DualSortableSelector,
-    UploadedFileInput,
-)
+from formset.widgets import DateInput, DualSortableSelector, UploadedFileInput
 
 from .models import Literature, SupplementaryMaterial
 from .widgets import OnlineSearchWidget, PreviewWidget

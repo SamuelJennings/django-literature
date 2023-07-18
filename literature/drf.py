@@ -26,7 +26,7 @@ class DataTableMixin:
         return super().changelist_view(request, extra_context=extra_context)
 
     def register_endpoint(self):
-        return router.register(endpoint=Endpoint(model=self.model, **self.endpoint))
+        return router.register(endpoint=Endpoint(model=self.model, **self.endpoint), url="admin")
 
     def get_dt_fields(self):
         return []
