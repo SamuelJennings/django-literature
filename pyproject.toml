@@ -26,9 +26,9 @@ python-dateutil = "^2.8.2"
 django-sortedm2m = "^3.1.1"
 django-appconf = "^1.0.5"
 django = ">=3.2"
-django-formset = "^0.13.4"
 djangorestframework = "^3.14.0"
 drf-schema-adapter = "^3.0.6"
+django-formset = "^1.0"
 
 
 [tool.poetry.group.dev.dependencies]

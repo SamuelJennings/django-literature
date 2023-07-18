@@ -618,14 +618,14 @@ Django = ">=3.2"
 
 [[package]]
 name = "django-formset"
-version = "0.13.4"
+version = "1.0"
 description = "Prevalidate Django Forms in the browser"
 category = "main"
 optional = false
 python-versions = "*"
 files = [
-    {file = "django-formset-0.13.4.tar.gz", hash = "sha256:7aa98a2df39b7b3e10917a83f3c33a876c4bb7accf7adec3d4bdc0a040924bc8"},
-    {file = "django_formset-0.13.4-py3-none-any.whl", hash = "sha256:76806f153d7a5da8d305b9ec070d93a21e57e5e957992acfa4e80ebd589d9307"},
+    {file = "django-formset-1.0.tar.gz", hash = "sha256:a60211e602a41545dc819aa1e46283fdc24d4c8b67f5be6af0c37d5dc456129a"},
+    {file = "django_formset-1.0-py3-none-any.whl", hash = "sha256:cb8a8501b0878b00d07bd51248dbb9732fd11dd009aaed518fa3ac7287b3bf1e"},
 ]
 
 [package.dependencies]
@@ -2568,4 +2568,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8,<4.0"
-content-hash = "d2e315ac4a9b9ade2ee3df87f2c06a25adb867dcadc1e83aa00d793ef8e1b43b"
+content-hash = "89b771809dc7c93133a78f7c7bf0710fc90e9f9ed15f7a58d36edf25418fc4b2"
