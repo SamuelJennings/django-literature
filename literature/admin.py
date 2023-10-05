@@ -1,83 +1,63 @@
+from copy import deepcopy
+from typing import Any
+
+from django import forms
 from django.contrib import admin, messages
+from django.contrib.auth import get_user_model
+from django.db.models.query import QuerySet
+from django.forms import fields, models
 from django.http import HttpResponseRedirect
+from django.http.request import HttpRequest
 from django.template.defaultfilters import pluralize
 from django.template.response import TemplateResponse
 from django.urls import path, reverse
 from django.utils.translation import gettext as _
+from entangled.forms import EntangledFormMetaclass, EntangledModelForm
 from rest_framework.permissions import DjangoModelPermissions, IsAdminUser
 
-from .csl_map import fields as csl_fields
+from .conf import settings
+from .csl_map import CSL_FIELDS
 from .drf import DataTableMixin
-from .forms import BibFileUploadForm, OnlineSearchForm
-from .models import Author, Collection, Identifier, Literature, SupplementaryMaterial
+from .forms import BibFileUploadForm, LiteratureForm, OnlineSearchForm
+from .models import Collection, Literature, SupplementaryMaterial
 
 
 class SupplementaryInline(admin.TabularInline):
     model = SupplementaryMaterial
 
 
-class AuthorInline(admin.TabularInline):
-    model = Author.literature.through
-
-
 @admin.register(Literature)
-class LiteratureAdmin(DataTableMixin, admin.ModelAdmin):
-    """Django Admin setup for the `literature.Work` model."""
+# class LiteratureAdmin(DataTableMixin, admin.ModelAdmin):
+class LiteratureAdmin(admin.ModelAdmin):
+    """Django Admin setup for the `literature.Literature` model."""
 
-    change_list_template = "literature/admin/change_list.html"
+    form = LiteratureForm
+    # change_list_template = "literature/admin/change_list.html"
 
-    inlines = [SupplementaryInline, AuthorInline]
+    inlines = [SupplementaryInline]
     fieldsets = [
         (
-            _("Basic"),
+            _("Citation"),
             {
                 "fields": [
-                    "citation_key",
-                    "pdf",
                     "type",
-                    "title",
-                    "language",
-                    "created",
-                    "modified",
+                    *LiteratureForm.Meta.entangled_fields["CSL"],
                 ]
             },
         ),
         (
-            _("Recommended"),
+            _("PDF"),
             {
                 "fields": [
-                    "container_title",
-                    "abstract",
-                    "collections",
-                    # "keywords",
+                    "pdf",
+                    # "CSL",
                 ]
             },
         ),
-        (
-            _("Comment"),
-            {
-                "fields": [
-                    "comment",
-                ]
-            },
-        ),
-        # (
-        #     _("Administrative"),
-        #     {
-        #         "fields": [
-        #             "language",
-        #             "source",
-        #             "comment",
-        #             "created",
-        #             "modified",
-        #             "last_synced",
-        #         ]
-        #     },
-        # ),
     ]
 
     endpoint = {
-        "fields": "__all__",
+        "fields": ["id", "title", "type", "container_title"],
         "include_str": False,
         "page_size": 1000,
         "permission_classes": [IsAdminUser, DjangoModelPermissions],
@@ -186,19 +166,6 @@ class LiteratureAdmin(DataTableMixin, admin.ModelAdmin):
         )
 
 
-@admin.register(Identifier)
-class IdentifierAdmin(admin.ModelAdmin):
-    list_filter = ["type"]
-    search_fields = ["ID", "literature__title"]
-    # list_display = ['type', 'ID']
-    # list_display_links = ['ID']
-
-
 @admin.register(Collection)
 class CollectionAdmin(admin.ModelAdmin):
     pass
-
-
-@admin.register(Author)
-class AuthorAdmin(admin.ModelAdmin):
-    list_display = ["family", "given", "ORCID", "created", "modified"]

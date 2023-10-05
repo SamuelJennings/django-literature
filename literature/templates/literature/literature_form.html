@@ -28,10 +28,10 @@
   {% comment %} {{ form_collection }} {% endcomment %}
   {% comment %} {% render_form form "bootstrap" field_classes="mb-2" %}  {% endcomment %}
  {% if add %}
-   <button type="button" class='btn btn-success' click="submit({add: true}) -> proceed">{% trans "Add" %}</button>
+   <button type="button" class='btn btn-success' df-click="submit({add: true}) -> proceed">{% trans "Add" %}</button>
  {% else %}
-   <button type="button" class='btn btn-primary'click="submit({update: true}) -> proceed">{% trans "Update" %}</button>
-   <button type="button" class='btn btn-danger' click="submit({delete: true}) -> proceed">{% trans "Delete" %}</button>
+   <button type="button" class='btn btn-primary' df-click="submit({update: true}) -> proceed">{% trans "Update" %}</button>
+   <button type="button" class='btn btn-danger' df-click="submit({delete: true}) -> proceed">{% trans "Delete" %}</button>
  {% endif %}
 
   

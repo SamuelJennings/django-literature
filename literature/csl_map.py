@@ -1,4 +1,5 @@
 # import xml.etree.ElementTree as ET
+from django import forms
 from django.utils.translation import gettext as _
 
 ZOTERO_FIELD_MAP = {
@@ -103,7 +104,6 @@ CSL_TYPES = {
         "issue",
         "page",
         "issued",
-        "collection-title",
         "collection-title",
         "seriesText",
         "journalAbbreviation",
@@ -681,7 +681,7 @@ CSL_TYPES = {
     ],
 }
 
-CSL_FIELDS = fields = {
+CSL_FIELDS = {
     "DOI": {
         "description": _("Digital Object Identifier (e.g. “10.1128/AEM.02591-07”)"),
         "name": "DOI",
@@ -1258,3 +1258,7 @@ CSL_FIELDS = fields = {
         "type": "standard",
     },
 }
+
+
+# a mapping between standard CSL field names and underscore seperated names used in this app
+LITERATURE_FIELD_MAP = {field.replace("-", "_"): field for field in CSL_FIELDS}

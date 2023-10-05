@@ -27,18 +27,18 @@ async function readFileContents(e) {
   toggleSpinner()
 }
 
-async function fetchCitation() {
+async function fetchCitation(e) {
   toggleSpinner();
 
   // get search term from text input
-  const $input = $("#id_identifier");
-  const $row = $input.closest(".form-row");
+  const $input = $(e.target);
+  const $row = $input.closest(".dj-form-errors");
   const $errors = $row.children('.errorlist');
 
   try {
     // ansynchronously find citation using citation.js
     const citation = await Cite.async($input.val())
-    
+
     // use the citation object to produce a preview and update data field
     processCitationObject(citation)
 
@@ -53,7 +53,7 @@ async function fetchCitation() {
     $row.addClass('errors');
     $errors.append("<li>The requested resource could not be found.</li>");
     $('form :input[type="submit"]').prop('disabled', true);
-    $("#citationPreview>.inner").empty()
+    $("#citationPreview>.inner").html(error)
     console.error(error);
   }
 
@@ -66,15 +66,15 @@ function processCitationObject(citation) {
     citation.format('bibliography', {
       format: 'html',
       template: 'apa',
-      lang: "{{ lang_code }}"
     })
   )
 
   // update the hidden text area input with the csl-json string
-  $("#id_CSL").val(citation.format('data'))
-
+  // $("#id_CSL").val(citation.format('data'))
+  $('input[name="CSL"]').val(citation.format('data'))
   // enable save button
   $('form :input[type="submit"]').prop('disabled', false);
 }
 
-$("#id_file").on("change", readFileContents);
+// $("#id_file").on("change", readFileContents);
+

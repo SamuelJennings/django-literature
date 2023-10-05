@@ -18,10 +18,9 @@ class LiteratureConf(AppConf):
 
     AUTOLABEL = "literature.utils.simple_autolabeler"
 
-    ADAPTORS = [
-        "literature.adaptors.crossref.Crossref",
-        "literature.adaptors.datacite.Datacite",
-    ]
+    CITATION_JS_SOURCE = "https://cdnjs.cloudflare.com/ajax/libs/citation-js/0.7.1/citation.min.js"
+
+    ADMIN_NODE_SELECTOR = ".form-row"
 
     class Meta:
         """Prefix for all Django Literature settings."""

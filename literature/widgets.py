@@ -1,5 +1,6 @@
 from django.forms.widgets import ChoiceWidget, MultiWidget, TextInput
 from django.utils import timezone
+from formset.widgets import UploadedFileInput
 
 from .choices import MonthChoices
 
@@ -26,3 +27,7 @@ class OnlineSearchWidget(TextInput):
 
 class PreviewWidget(TextInput):
     template_name = "literature/widgets/preview.html"
+
+
+class PDFFileInput(UploadedFileInput):
+    template_name = "literature/widgets/pdf_viewer.html"

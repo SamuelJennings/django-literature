@@ -1,16 +1,18 @@
 import json
 import pprint
 
+# from auto_datatables.views import AutoTableMixin
 from django import forms
 from django.http import HttpResponse, JsonResponse
 from django.utils.encoding import force_str
-from django.views.generic import DetailView, ListView
+from django.views.generic import TemplateView
 from formset.views import FormCollectionView
 
-from literature.models import Author, Literature
+from literature.models import Literature
 
 # from literature.conf import
 from .formset import LiteratureFormCollection
+from .tables import LiteratureTable
 
 
 class CitationMixin:
@@ -22,11 +24,9 @@ class CitationMixin:
         return context
 
 
-class LiteratureList(CitationMixin, ListView):
-    model = Literature
-
-    def get_queryset(self):
-        return super().get_queryset().prefetch_related("authors")
+class LiteratureList(TemplateView, CitationMixin):
+    table = LiteratureTable
+    template_name = "project/list.html"
 
 
 class LiteratureDetail(FormCollectionView, CitationMixin):
@@ -49,22 +49,6 @@ class LiteratureDetail(FormCollectionView, CitationMixin):
         return super().form_valid(form)
 
 
-class AuthorList(ListView):
-    model = Author
-
-    def get_queryset(self):
-        return super().get_queryset().with_work_counts()
-
-
-class AuthorDetail(CitationMixin, DetailView):
-    model = Author
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["literature_list"] = context["author"].literature.prefetch_related("authors")
-        return context
-
-
 class LiteratureForm(forms.ModelForm):
     class Meta:
         model = Literature
@@ -74,24 +58,3 @@ class LiteratureForm(forms.ModelForm):
     #     # modify the incoming data to ensure that keys with hyphens are replaced with
     #     data = {k.replace('-','_'):v for k,v in data.items()}
     #     super().__init__(data, *args, **kwargs)
-
-
-def process_csl(request):
-    # formset = forms.formset_factory(LiteratureForm)
-    print("here")
-    if request.method == "POST":
-        form_data = json.loads(request.POST["data"])
-        for f in form_data:
-            # f = {k.replace('-','_'):v for k,v in f.items()}
-            # pprint.pprint(f)
-            form = LiteratureForm(f)
-            if form.is_valid():
-                pprint.pprint(form.cleaned_data)
-            else:
-                print(form.errors)
-            # print(form)
-        # print(request.POST['data'])
-    # Get the posted form
-    #   MyLoginForm = LoginForm(request.POST)
-    # html = "<html><body>It is now %s.</body></html>" % now
-    return HttpResponse("Hi")
