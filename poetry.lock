@@ -595,6 +595,21 @@ files = [
 coverage = "*"
 
 [[package]]
+name = "django-entangled"
+version = "0.5.4"
+description = "Edit JSON field using Django Model Form"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-entangled-0.5.4.tar.gz", hash = "sha256:6cc787ee8c7bc8ac17abba4d59cded47bdd8da606628a3f6883b244a1f6c8605"},
+    {file = "django_entangled-0.5.4-py3-none-any.whl", hash = "sha256:5aa0e2bef5a64ddc06778847a3915d5b05563590afea444be0e524e0ec9c2c28"},
+]
+
+[package.dependencies]
+django = ">=2.1"
+
+[[package]]
 name = "django-filter"
 version = "23.2"
 description = "Django-filter is a reusable Django application for allowing users to filter querysets dynamically."
@@ -721,6 +736,37 @@ files = [
 [package.dependencies]
 django = ">=3.0"
 pytz = "*"
+
+[[package]]
+name = "djangorestframework-datatables"
+version = "0.7.0"
+description = "Seamless integration between Django REST framework and Datatables (https://datatables.net)"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "djangorestframework-datatables-0.7.0.tar.gz", hash = "sha256:64ccae255cbe03ae14793c55b900ce58894eb856816d6f9e16acea4a2197a6d9"},
+    {file = "djangorestframework_datatables-0.7.0-py2.py3-none-any.whl", hash = "sha256:1be615b811a5625546e93f4c331b868743925776b6c7ad6c77d22e1af6f49819"},
+]
+
+[package.dependencies]
+djangorestframework = ">=3.7.0"
+pytz = "*"
+
+[[package]]
+name = "djangorestframework-datatables-editor"
+version = "0.3.3"
+description = "Seamless integration between Django REST framework and Datatables (https://datatables.net) with supporting Datatables editor"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "djangorestframework-datatables-editor-0.3.3.tar.gz", hash = "sha256:735b66a574694fcf958a58a364fd070c18866c3ac845f96490ac648858415465"},
+    {file = "djangorestframework_datatables_editor-0.3.3-py2.py3-none-any.whl", hash = "sha256:9c688a553e4d0c78324969b695ecd7cfcb8903edd57c2d462f9eb17966daa7e0"},
+]
+
+[package.dependencies]
+djangorestframework = ">=3.9.1"
 
 [[package]]
 name = "docutils"
@@ -2585,4 +2631,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8,<4.0"
-content-hash = "89b771809dc7c93133a78f7c7bf0710fc90e9f9ed15f7a58d36edf25418fc4b2"
+content-hash = "709c94537b07c137063071f419dee18677feec44735a714e2d0363a78d8d7f1a"

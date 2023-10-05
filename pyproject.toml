@@ -29,6 +29,9 @@ django = ">=3.2"
 djangorestframework = "^3.14.0"
 drf-schema-adapter = "^3.0.6"
 django-formset = "^1.0"
+django-entangled = "^0.5.4"
+djangorestframework-datatables = "^0.7.0"
+djangorestframework-datatables-editor = "^0.3.3"
 
 
 [tool.poetry.group.dev.dependencies]
