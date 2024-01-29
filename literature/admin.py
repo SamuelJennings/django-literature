@@ -18,7 +18,7 @@ from rest_framework.permissions import DjangoModelPermissions, IsAdminUser
 from .conf import settings
 from .csl_map import CSL_FIELDS
 from .drf import DataTableMixin
-from .forms import BibFileUploadForm, LiteratureForm, OnlineSearchForm
+from .forms import BibFileUploadForm, LiteratureAdminForm, LiteratureForm, OnlineSearchForm
 from .models import Collection, Literature, SupplementaryMaterial
 
 
@@ -31,7 +31,7 @@ class SupplementaryInline(admin.TabularInline):
 class LiteratureAdmin(admin.ModelAdmin):
     """Django Admin setup for the `literature.Literature` model."""
 
-    form = LiteratureForm
+    form = LiteratureAdminForm
     # change_list_template = "literature/admin/change_list.html"
 
     inlines = [SupplementaryInline]
@@ -41,7 +41,7 @@ class LiteratureAdmin(admin.ModelAdmin):
             {
                 "fields": [
                     "type",
-                    *LiteratureForm.Meta.entangled_fields["CSL"],
+                    *LiteratureAdminForm.Meta.entangled_fields["CSL"],
                 ]
             },
         ),
