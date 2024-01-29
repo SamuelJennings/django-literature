@@ -76,7 +76,7 @@ class LiteratureExtra(FieldsetMixin, ModelForm):
         }
 
 
-class SuppMatForm(ModelForm):
+class SupplementaryFilesForm(ModelForm):
     class Meta:
         model = SupplementaryMaterial
         fields = ["file"]
@@ -85,14 +85,17 @@ class SuppMatForm(ModelForm):
         }
 
 
-class SuppMatCollection(FormCollection):
-    legend = _("Supplementary Material")
-    help_text = _("Upload supplementary material related to this publication.")
+class SupplementaryFilesCollection(FormCollection):
+    legend = _("Supplementary Files")
+    help_text = _(
+        "Upload additional files associated with this literature item. E.g. maps, tabular data, translated documents,"
+        " etc. "
+    )
     min_siblings = 0
     extra_siblings = 1
     default_renderer = bootstrap.FormRenderer()
 
-    supplementary_material = SuppMatForm()
+    supplementary_material = SupplementaryFilesForm()
 
     def model_to_dict(self, literature):
         opts = self.declared_holders["supps"]._meta
@@ -114,6 +117,24 @@ class SuppMatCollection(FormCollection):
                     form.save()
 
 
+class PDFOnlyForm(FieldsetMixin, forms.ModelForm):
+    legend = _("Primary Document")
+
+    class Meta:
+        model = Literature
+        fields = ["pdf"]
+        widgets = {
+            "pdf": UploadedFileInput(),
+        }
+
+
+class LiteratureFileCollection(FormCollection):
+    """A form collection that wants only the pdf and supplementary files."""
+
+    pdf = PDFOnlyForm()
+    supps = SupplementaryFilesCollection()
+
+
 class LiteratureForm(FormCollection):
     default_renderer = bootstrap.FormRenderer()
     required = LiteratureRequired()
@@ -127,7 +148,7 @@ class LiteratureFormWithSupps(FormCollection):
     default_renderer = bootstrap.FormRenderer()
     required = LiteratureRequired()
     extra = LiteratureExtra()
-    supps = SuppMatCollection()
+    supps = SupplementaryFilesCollection()
 
 
 class PublisherForm(CSLMixin, Fieldset):

@@ -2,11 +2,12 @@ from django import forms
 from django.forms.models import ModelForm, construct_instance, model_to_dict
 from django.utils.translation import gettext as _
 from entangled.forms import EntangledModelForm
+from formset.widgets import UploadedFileInput
 
 from literature.conf import settings
 
 from .csl_map import CSL_FIELDS, LITERATURE_FIELD_MAP
-from .models import Literature, SupplementaryMaterial
+from .models import Literature
 from .widgets import OnlineSearchWidget, PDFFileInput, PreviewWidget
 
 csl_fields = [f.replace("-", "_") for f in CSL_FIELDS.keys()]
@@ -571,14 +572,14 @@ class LiteratureForm(CSLForm, EntangledModelForm):
         entangled_fields = {"CSL": csl_fields}
         untangled_fields = [
             "type",
-            "pdf",
+            # "pdf",
         ]
         parent_selector = settings.LITERATURE_ADMIN_NODE_SELECTOR
         parent_selector_override = {}
 
         widgets = {
             "type": forms.Select(choices=Literature.TypeChoices.choices, attrs={"onchange": "updateForm(event);"}),
-            "pdf": forms.ClearableFileInput(),
+            # "pdf": UploadedFileInput(),
         }
 
     def __init__(self, *arg, **kwargs):
@@ -600,14 +601,20 @@ class LiteratureForm(CSLForm, EntangledModelForm):
         super().full_clean(*args, **kwargs)
 
         # map for fields back to the correct hyphen-separated format
-        CSL_DATA = self.cleaned_data["CSL"]
-        for field in LITERATURE_FIELD_MAP:
-            if field in CSL_DATA:
-                print(f"changing {field} to {LITERATURE_FIELD_MAP[field]} ")
-                CSL_DATA[LITERATURE_FIELD_MAP[field]] = CSL_DATA.pop(field)
-
-        import pprint
-
-        pprint.pprint(self.cleaned_data)
+        if hasattr(self, "cleaned_data"):
+            CSL_DATA = self.cleaned_data.get("CSL", {})
+            for field in LITERATURE_FIELD_MAP:
+                if not CSL_DATA[field]:
+                    del CSL_DATA[field]
+                if field in CSL_DATA:
+                    CSL_DATA[LITERATURE_FIELD_MAP[field]] = CSL_DATA.pop(field)
 
         # self.cleaned_data.pop("CSL", None)
+
+
+class LiteratureAdminForm(LiteratureForm):
+    class Meta(LiteratureForm.Meta):
+        widgets = {
+            "type": forms.Select(choices=Literature.TypeChoices.choices, attrs={"onchange": "updateForm(event);"}),
+            "pdf": forms.ClearableFileInput(),
+        }
