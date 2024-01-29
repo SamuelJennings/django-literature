@@ -8,4 +8,4 @@ class LiteratureViewSet(viewsets.ReadOnlyModelViewSet):
     """API endpoint that allows literature to be viewed or edited."""
 
     serializer_class = LiteratureSerializer
-    queryset = Literature.objects.all()
+    queryset = Literature.objects.values("CSL")

@@ -12,4 +12,3 @@ class LiteratureSerializer(serializers.ModelSerializer):
     def to_representation(self, data):
         data = super().to_representation(data)
         return data.pop("CSL")
-        # return data.pop("CSL") | data
