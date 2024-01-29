@@ -8,6 +8,15 @@ from literature.conf import settings
 register = template.Library()
 
 
+@register.filter
+def CSL(obj, key):
+    d = obj.CSL
+    for k in key.split("."):
+        d = d[k]
+
+    return d
+
+
 @register.simple_tag
 def bibliography(bibliography, style=None):
     """Renders a bibligraphy in the given style"""
