@@ -1,29 +1,35 @@
 from datetime import date
 
-from django.core.validators import (
-    FileExtensionValidator,
-    MaxValueValidator,
-    RegexValidator,
-)
+from django.core.validators import FileExtensionValidator, MaxValueValidator
 from django.db import models
-from django.urls import reverse
 from django.utils.encoding import force_str
 from django.utils.translation import gettext as _
-from model_utils import FieldTracker
-from model_utils.models import TimeStampedModel
-from sortedm2m.fields import SortedManyToManyField
 from taggit.managers import TaggableManager
 
-from .choices import IdentifierTypes, TypeChoices
+from .choices import TypeChoices
 from .utils import pdf_file_renamer
 
 
-class Literature(TimeStampedModel):
+class LiteratureBase(models.Model):
+    created = models.DateTimeField(_("created"), auto_now_add=True)
+    modified = models.DateTimeField(_("modified"), auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
+class Literature(LiteratureBase):
     """Model for storing literature data"""
 
     TypeChoices = TypeChoices
     # ARTICLE TYPE
-    type = models.CharField(_("type"), choices=TypeChoices.choices, max_length=255)  # noqa: A003
+    type = models.CharField(
+        _("type"),
+        choices=TypeChoices.choices,
+        max_length=len(
+            max(TypeChoices, key=len),
+        ),
+    )
 
     # THE FOLLOWING FIELDS ARE DEFINED HERE AS THEY MAY BENEFIT FROM INDEXING
     title = models.TextField(
@@ -75,9 +81,6 @@ class Literature(TimeStampedModel):
     # RAW CSL DATA FIELD
     CSL = models.JSONField(_("Citation Style Language"), blank=True)
 
-    # tracks whether changes have been made to any fields since the last save
-    tracker = FieldTracker()
-
     class Meta:
         verbose_name = _("literature")
         verbose_name_plural = _("literature")
@@ -85,7 +88,7 @@ class Literature(TimeStampedModel):
         default_related_name = "literature"
 
     def __str__(self):
-        return self.title or "<no title>"
+        return self.title or _("untitled")
 
     def _author_name(self, author):
         return f"{author.get('family', '')}, {author.get('given', '')}"
@@ -101,8 +104,8 @@ class Literature(TimeStampedModel):
         return ""
 
     def save(self, *args, **kwargs):
-        if self.tracker.has_changed("CSL"):
-            self.parse_csl()
+        # if self.tracker.has_changed("CSL"):
+        self.parse_csl()
         super().save(*args, **kwargs)
         # self.update_identifiers()
         return self
@@ -120,7 +123,7 @@ class Literature(TimeStampedModel):
         return ("title__icontains",)
 
 
-class Collection(TimeStampedModel):
+class Collection(LiteratureBase):
     """
     Model representing a collection of publications.
     """
@@ -137,7 +140,7 @@ class Collection(TimeStampedModel):
         return force_str(self.name)
 
 
-class SupplementaryMaterial(TimeStampedModel):
+class SupplementaryMaterial(LiteratureBase):
     literature = models.ForeignKey(
         to="literature.Literature",
         verbose_name=_("literature"),

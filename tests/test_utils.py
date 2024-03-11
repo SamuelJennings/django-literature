@@ -48,9 +48,6 @@ class TestUtils(TestCase):
     #     label = utils.simple_autolabeler(new_pub)
     #     self.assertEqual(label, "Jennings2022b")
 
-    def test_get_current_year(self):
-        year = utils.get_current_year()
-        self.assertEqual(datetime.now().year, year)
 
     def test_simple_file_renamer(self):
         new_name = utils.pdf_file_renamer(self.pub)

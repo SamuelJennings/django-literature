@@ -77,4 +77,3 @@ function processCitationObject(citation) {
 }
 
 // $("#id_file").on("change", readFileContents);
-

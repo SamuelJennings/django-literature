@@ -1,9 +1,6 @@
 from django import template
-
-# from django.conf import settings
+from django.conf import settings
 from django.template.loader import render_to_string
-
-from literature.conf import settings
 
 register = template.Library()
 
@@ -12,9 +9,8 @@ register = template.Library()
 def CSL(obj, key):
     d = obj.CSL
     for k in key.split("."):
-        d = d[k]
-
-    return d
+        d = d.get(k, {})
+    return d if d else ""
 
 
 @register.simple_tag

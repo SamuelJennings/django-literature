@@ -27,7 +27,7 @@
   <table id='result_list'>
     <thead>
       <tr>
-        <th data-default-content='<input type="checkbox" name="_selected_action" value="0" class="action-select">' 
+        <th data-default-content='<input type="checkbox" name="_selected_action" value="0" class="action-select">'
           data-visible="true"
           data-width='16px'
           data-orderable='false'
@@ -42,8 +42,8 @@
           <div class="text">{% trans "Edit" %}</div>
         </th>
         {% for field, vals in datatables_fields.items %}
-          <th data-default-content=" " 
-              data-data="CSL.{{ field }}" 
+          <th data-default-content=" "
+              data-data="CSL.{{ field }}"
               data-visible="false">
               <div class="text">{{ vals.title|title }}</div>
           </th>

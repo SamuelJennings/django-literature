@@ -17,8 +17,8 @@ $(function () {
       dataSrc: 'results'
     },
     columnDefs: [
-    { 
-      targets: 0, 
+    {
+      targets: 0,
       orderable: false,
       className: 'noVis noPrint'
     },
@@ -52,7 +52,7 @@ $(function () {
       {
         extend: 'collection',
         text: 'Export',
-        buttons: [ 
+        buttons: [
           {
             extend: 'csv',
             exportOptions: {
@@ -105,7 +105,7 @@ $(function () {
 //       {
 //         extend: 'collection',
 //         text: 'Export',
-//         buttons: [ 
+//         buttons: [
 //           {
 //             extend: 'csv',
 //             exportOptions: {
@@ -136,7 +136,7 @@ $(function () {
 //     },
 //     // 'colvisRestore',
 //     ],
-// }); 
+// });
 
   // table.buttons().container().appendTo( $('ul.object-tools') );
 

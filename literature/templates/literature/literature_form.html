@@ -2,15 +2,68 @@
 {% load render_form from formsetify %}
 {% load i18n %}
 
+{% block extra_head %}
+<style>
+  {% comment %} django-form-collection {
+    margin-bottom: 1.5rem;
+  } {% endcomment %}
+
+  django-form-collection > django-form-collection > legend {
+    font-size: large;
+  }
+
+  django-form-collection > fieldset > legend {
+    font-size: large;
+  }
+
+  label, legend {
+    text-transform: capitalize;
+  }
+  .form-text {
+    display: block;
+  }
+  .form-text::first-letter {
+    text-transform: uppercase;
+  }
+
+  .list-group {
+    text-transform: capitalize;
+  }
+</style>
+
+{% endblock %}
+
 {% block content %}
-<django-formset endpoint="{{ request.path }}" csrf-token="{{ csrf_token }}">
-  {{ form_collection }}
-  <button type="button" class="btn btn-success"  df-click="submit() -> proceed">{% trans "Save" %}</button>
-</django-formset>
- {% if add %}
-   <button type="button" class='btn btn-success' df-click="submit({add: true}) -> proceed">{% trans "Add" %}</button>
- {% else %}
-   <button type="button" class='btn btn-primary' df-click="submit({update: true}) -> proceed">{% trans "Update" %}</button>
-   <button type="button" class='btn btn-danger' df-click="submit({delete: true}) -> proceed">{% trans "Delete" %}</button>
- {% endif %}
+
+<div class='row mt-3'>
+
+  <div class='col-3'>
+    <div class='mb-3'>
+      <input class="form-control" type="text" placeholder="Find field" aria-label="Find field">
+    </div>
+    <div id="form-navigation" class='list-group list-group-flush sticky-top'>
+      {% for collection in form_collection %}{% if collection.legend %}
+        <a class='list-group-item list-group-item-action' href="#{{ collection.legend|slugify }}">{{ collection.legend}}</a>{% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  <div class='col-9'>
+    <h1>{% trans "New Entry" %}</h1>
+    <django-formset endpoint="{{ request.path }}" csrf-token="{{ csrf_token }}"  data-bs-spy="scroll" data-bs-target="#form-navigation" data-bs-smooth-scroll="true" tabindex="0">
+      {{ form_collection }}
+      <button type="button" class="btn btn-success"  df-click="submit() -> proceed">{% trans "Save" %}</button>
+    </django-formset>
+     {% if add %}
+       <button type="button" class='btn btn-success' df-click="submit({add: true}) -> proceed">{% trans "Add" %}</button>
+     {% else %}
+       <button type="button" class='btn btn-primary' df-click="submit({update: true}) -> proceed">{% trans "Update" %}</button>
+       <button type="button" class='btn btn-danger' df-click="submit({delete: true}) -> proceed">{% trans "Delete" %}</button>
+     {% endif %}
+
+  </div>
+
+
+</div>
+
+
 {% endblock content %}

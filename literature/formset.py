@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any
 
 from django import forms
 from django.forms.models import ModelForm, construct_instance, model_to_dict
@@ -15,8 +15,8 @@ from formset.widgets import (
 )
 
 from .choices import TypeChoices
-from .csl_map import CSL_FIELDS, CSL_TYPES
 from .models import Literature, SupplementaryMaterial
+from .utils import CSL_FIELDS, CSL_TYPES
 from .widgets import PDFFileInput
 
 
@@ -157,13 +157,11 @@ class PublisherForm(CSLMixin, Fieldset):
 
     class Meta:
         fields = ["publisher", "publisher-place", "original-publisher", "original-publisher-place"]
-        widgets: Dict[str, Any] = {}
+        widgets: dict[str, Any] = {}
 
 
 class CSLForm(CSLMixin, Fieldset):
-    type = forms.ChoiceField(  # noqa: A003
-        label=_("type"), choices=TypeChoices.choices, required=True, widget=Selectize
-    )
+    type = forms.ChoiceField(label=_("type"), choices=TypeChoices.choices, required=True, widget=Selectize)
 
     class Meta:
         fields = ["title", "abstract"]

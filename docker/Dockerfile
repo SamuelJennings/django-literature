@@ -23,7 +23,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
   build-essential && \
   # psycopg2 dependencies
   # libpq-dev && \
-  # install poetry for dependencies   
+  # install poetry for dependencies
   pip install "poetry==$POETRY_VERSION" && \
   # build requirements.txt file
   poetry export -o requirements.txt --with dev,docs
@@ -31,7 +31,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 
 # Create Python Dependency and Sub-Dependency Wheels.
 RUN pip wheel --wheel-dir /usr/src/app/wheels \
-  -r requirements.txt 
+  -r requirements.txt
 
 FROM base as final
 
