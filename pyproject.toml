@@ -29,6 +29,8 @@ django-entangled = "^0.5.4"
 djangorestframework-datatables = "^0.7.0"
 djangorestframework-datatables-editor = "^0.3.3"
 django = "^5.0.4"
+citeproc-py = "^0.6.0"
+django-partial-date = "^1.3.2"
 
 
 [tool.poetry.group.dev.dependencies]
