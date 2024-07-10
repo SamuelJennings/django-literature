@@ -1,0 +1,25 @@
+{% load i18n crispy_forms_tags %}
+<div class="modal fade"
+     id="quickSearchModal"
+     tabindex="-1"
+     aria-labelledby="quickSearchModal"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          {% include "icons/globe.svg" %}
+          <span class="align-text-top">{% trans "Fetch citation" %}</span>
+        </h5>
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"></button>
+      </div>
+      <div class="modal-body">{% crispy quick_search_form %}</div>
+      <div class="modal-footer">
+        <button type="submit" form="literatureSearchForm" class="btn btn-primary">{% trans "Confirm import" %}</button>
+      </div>
+    </div>
+  </div>
+</div>

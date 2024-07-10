@@ -1,55 +1,64 @@
-from datetime import datetime
+import json
 
-from django.test import TestCase
-from model_bakery import baker
+import pytest
 
-from literature import utils
+from literature.utils import csl_to_django_lit, django_lit_to_csl
 
+# normal dict
+d1 = {"key-1": "x", "key-2": "y"}
+d1_expected = {"key_1": "x", "key_2": "y"}
 
-class TestUtils(TestCase):
-    def setUp(self):
-        authors = baker.prepare("literature.Author", family="Jennings", _quantity=1)
-        self.pub = baker.make(
-            "literature.Literature",
-            title=(
-                "This should be a really long title so we can test whether the uploaded pdf name is shortened properly"
-                " using the simple_file_renamer"
-            ),
-            authors=authors,
-            CSL={
-                "title": (
-                    "This should be a really long title so we can test whether the uploaded pdf name is shortened"
-                    " properly using the simple_file_renamer"
-                )
-            }
-            # year=2022,
-        )
+# nested dict
+d2 = {"key-1": {"nested-key-1": "nested-value-1"}, "key-2": "value-2"}
+d2_expected = {"key_1": {"nested_key_1": "nested-value-1"}, "key_2": "value-2"}
 
-    def test_clean_doi(self):
-        doi = "10.1093/gji/ggz376"
-        clean = utils.clean_doi
-        self.assertEqual(doi, clean(doi))
-        self.assertEqual(doi, clean("doi.org/10.1093/gji/ggz376"))
-        self.assertEqual(doi, clean("https://doi.org/10.1093/gji/ggz376"))
-        self.assertEqual(doi, clean("http://doi.org/10.1093/gji/ggz376"))
-        self.assertEqual(doi, clean("www.doi.org/10.1093/gji/ggz376"))
+# list
+d3 = ["value-1", "value-2"]
+d3_expected = ["value-1", "value-2"]
 
-    # def test_simple_autolabeler(self):
-    #     label = utils.simple_autolabeler(self.pub)
-    #     self.assertEqual(label, "Jennings2022")
-    #     self.pub.citation_key = label
-    #     self.pub.save()
-    #     new_pub = baker.make(
-    #         "literature.Literature",
-    #         label="test",
-    #         authors=self.pub.authors.all(),
-    #         CSL={'title': 'This should be a really long title so we can test whether the uploaded pdf name is shortened properly using the simple_file_renamer'}
-    #     )
-    #     label = utils.simple_autolabeler(new_pub)
-    #     self.assertEqual(label, "Jennings2022b")
+# mixed data types
+d4 = {"key-1": ["value-1", "value-2"], "key-2": {"nested-key-1": "nested-value-1"}}
+d4_expected = {"key_1": ["value-1", "value-2"], "key_2": {"nested_key_1": "nested-value-1"}}
 
 
-    def test_simple_file_renamer(self):
-        new_name = utils.pdf_file_renamer(self.pub)
-        self.assertEqual(new_name, "literature/" + self.pub.title[:50].strip() + ".pdf")
-        self.assertEqual(len(new_name), 64)
+@pytest.mark.parametrize(
+    "input_dict, expected_output_dict",
+    [
+        (d1, d1_expected),
+        (d2, d2_expected),
+        (d3, d3_expected),
+        (d4, d4_expected),
+    ],
+)
+def test_csl_to_django_lit(input_dict, expected_output_dict):
+    assert csl_to_django_lit(input_dict) == expected_output_dict
+
+
+def test_csljson_to_dict():
+    with open("tests/data/publication-csl.json") as f:
+        csljson = json.load(f)
+
+    output = csl_to_django_lit(csljson[0])
+    assert "container_title" in output
+    assert "container-title" not in output
+
+    # # test nested lists
+    # author = output["author"][0]
+    # assert "authenticated_orcid" in author
+    # assert "authenticated-orcid" not in author
+
+    # test nested dicts
+    issued = output["issued"]
+    assert "date_parts" in issued
+    assert "date-parts" not in issued
+
+
+def test_django_lit_to_csl():
+    with open("tests/data/publication-csl.json") as f:
+        csljson = json.load(f)
+
+    output = csl_to_django_lit(csljson[0])
+
+    original = django_lit_to_csl(output)
+
+    assert original == csljson[0]

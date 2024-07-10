@@ -1,42 +1,39 @@
-from typing import Any
-
-from django.conf import settings
-from django.utils.module_loading import import_string
+from citeproc import CitationStylesStyle, formatter
+from citeproc.source.bibtex.bibtex import parse_name
+from django.template.loader import render_to_string
 from django.utils.translation import gettext as _
-from drf_auto_endpoint.endpoints import Endpoint
-from drf_auto_endpoint.router import router
+
+from literature.loaders import style_loader
 
 from .choices import CSL_ALWAYS_SHOW, CSL_SUGGESTED_PROPERTIES
+from .settings import get_setting
 
 CSL_TYPE_NOT_FOUND = 'Type "{csl_type}" not found in CSL_SUGGESTED_PROPERTIES'
 
 
-class DataTableMixin:
-    endpoint: dict[str, Any] = {}
+def icon(name):
+    return render_to_string(f"icons/{name}.svg")
 
-    class Media:
-        css = {"all": ("vendor/DataTables/datatables.min.css",)}
-        # js = (
-        #     "vendor/DataTables/datatables.min.js",
-        #     "literature/js/datatablesHyperlink.js",
-        #     "literature/js/admin/change_list.js",
 
-        # )
+def get_style(style_name, locale=None, validate=False):
+    style_name = style_name or get_setting("DEFAULT_STYLE")
+    return CitationStylesStyle(style_loader.get_style_path(style_name + ".csl").source, locale, validate)
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.register_endpoint()
 
-    def changelist_view(self, request, extra_context=None):
-        extra_context = extra_context or {}
-        extra_context["datatables_fields"] = self.get_dt_fields()
-        return super().changelist_view(request, extra_context=extra_context)
+def render_bibliography(items, style="", output="plain", locale=None, validate=False):
+    style = get_style(style, locale, validate)
+    style.root.formatter = getattr(formatter, output)
 
-    def register_endpoint(self):
-        return router.register(endpoint=Endpoint(model=self.model, **self.endpoint), url="admin")
+    try:
+        iter(items)
+    except TypeError:
+        items = [items]
 
-    def get_dt_fields(self):
-        return []
+    return style.render_bibliography(items)
+
+    # items = [str(s) for s in style.render_bibliography(items)]
+    # joiner = "<br>" if output == "html" else "\n"
+    # return joiner.join(items)
 
 
 def clean_doi(doi):
@@ -44,13 +41,12 @@ def clean_doi(doi):
     return doi.split("doi.org/")[-1].strip("/").lower()
 
 
-def simple_file_renamer(instance, fname):
-    return f"literature/{instance.title[:50].strip()}.pdf"
+def file_upload_path(instance, fname=None):
+    return f"literature/{instance.id}/{fname}"
 
 
-def pdf_file_renamer(instance, fname=None):
-    func = import_string(settings.LITERATURE_PDF_RENAMER)
-    return func(instance, fname)
+def suppfile_upload_path(instance, fname=None):
+    return f"literature/{instance.literature.id}/{fname}"
 
 
 def get_properties_for_type(csl_type):
@@ -94,66 +90,6 @@ def get_types_for_property(csl_prop):
         # print(f'property "{csl_prop}" not listed')
 
     return types
-
-
-# NOT SURE HOW USEFUL THESE THINGS ARE ANYMORE
-ZOTERO_FIELD_MAP = {
-    "DOI": "DOI",
-    "ISBN": "ISBN",
-    "ISSN": "ISSN",
-    "abstractNote": "abstract",
-    "accessDate": "accessed",
-    "applicationNumber": "call-number",
-    "archive": "archive",
-    "archiveLocation": "archive_location",
-    "artworkSize": "dimensions",
-    "callNumber": "call-number",
-    "code": "container-title",
-    "codeNumber": "volume",
-    "committee": "section",
-    "conferenceName": "event-title",
-    "court": "authority",
-    "date": "issued",
-    "edition": "edition",
-    "extra": "note",
-    "filingDate": "submitted",
-    "history": "references",
-    "issue": "issue",
-    "issuingAuthority": "authority",
-    "journalAbbreviation": "journalAbbreviation",
-    "language": "language",
-    "legalStatus": "status",
-    "legislativeBody": "authority",
-    "libraryCatalog": "source",
-    "medium": "medium",
-    "meetingName": "event-title",
-    "numPages": "number-of-pages",
-    "number": "number",
-    "numberOfVolumes": "number-of-volumes",
-    "pages": "page",
-    "place": "publisher-place",
-    "priorityNumbers": "issue",
-    "programmingLanguage": "genre",
-    "publicationTitle": "container-title",
-    "publisher": "publisher",
-    "references": "references",
-    "reporter": "container-title",
-    "rights": "license",
-    "runningTime": "dimensions",
-    "scale": "scale",
-    "section": "section",
-    "series": "collection-title",
-    "seriesNumber": "collection-number",
-    "seriesTitle": "collection-title",
-    "session": "chapter-number",
-    "shortTitle": "title-short",
-    "system": "medium",
-    "title": "title",
-    "type": "genre",
-    "url": "URL",
-    "versionNumber": "version",
-    "volume": "volume",
-}
 
 
 CSL_TYPES = {
@@ -1360,8 +1296,8 @@ CSL_FIELDS = {
     },
 }
 
-
 CSL_ATTRIBUTES = {}
+
 
 for key, val in CSL_TYPES.items():
     for attr in val:
@@ -1371,5 +1307,89 @@ for key, val in CSL_TYPES.items():
             CSL_ATTRIBUTES[attr].append(key)
 
 
-# a mapping between standard CSL field names and underscore seperated names used in this app
-LITERATURE_FIELD_MAP = {field.replace("-", "_"): field for field in CSL_FIELDS}
+DJANGO_LIT_TO_CSL = [
+    "archive_place",
+    "available_date",
+    "call_number",
+    "chapter_number",
+    "citation_key",
+    "collection_editor",
+    "collection_number",
+    "collection_title",
+    "container_author",
+    "container_title",
+    "container_title_short",
+    "editorial_director",
+    "event_date",
+    "event_place",
+    "event_title",
+    "executive_producer",
+    "first_reference_note_number",
+    "number_of_pages",
+    "number_of_volumes",
+    "original_author",
+    "original_date",
+    "original_publisher",
+    "original_publisher_place",
+    "original_title",
+    "page_first",
+    "part_title",
+    "publisher_place",
+    "reviewed_author",
+    "reviewed_genre",
+    "reviewed_title",
+    "script_writer",
+    "series_creator",
+    "title_short",
+    "volume_title",
+    "volume_title_short",
+    "year_suffix",
+    # names
+    "dropping_particle",
+    "non_dropping_particle",
+    "date_parts",
+]
+
+
+def csl_to_django_lit(d):
+    # recursively replace hyphens with underscores for keys in a CSL-json dict
+    if isinstance(d, dict):
+        new_dict = {}
+        for key, value in d.items():
+            new_key = key.replace("-", "_") if isinstance(key, str) else key
+            new_dict[new_key] = csl_to_django_lit(value)
+        return new_dict
+    elif isinstance(d, list):
+        return [csl_to_django_lit(item) for item in d]
+    else:
+        return d
+
+
+def django_lit_to_csl(d):
+    # recursively replace underscores with hyphens for keys in a CSL-json dict
+    if isinstance(d, dict):
+        new_dict = {}
+        for key, value in d.items():
+            if key in DJANGO_LIT_TO_CSL:
+                new_key = key.replace("_", "-") if isinstance(key, str) else key
+                new_dict[new_key] = django_lit_to_csl(value)
+            else:
+                new_dict[key] = django_lit_to_csl(value)
+        return new_dict
+    elif isinstance(d, list):
+        return [django_lit_to_csl(item) for item in d]
+    else:
+        return d
+
+
+def parse_author(author_str):
+    return dict(zip(("given", "non-dropping-particle", "family", "suffix"), parse_name(author_str)))
+    # csl_parts = {}
+    # for part, csl_label in [(first, 'given'),
+    #                         (von, 'non-dropping-particle'),
+    #                         (last, 'family'),
+    #                         (jr, 'suffix')]:
+    #     if part is not None:
+    #         csl_parts[csl_label] = parse_latex(part)
+    # name = Name(**csl_parts)
+    # return csl_authors

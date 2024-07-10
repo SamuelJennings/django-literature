@@ -1,667 +1,678 @@
 
-CSL_TYPES = {
-  "article": [
-      "title",
-      "abstract",
-      "genre",
-      "repository",
-      "archiveID",
-      "publisher-place",
-      "issued",
-      "collection-title",
-      "collection-number",
-      "DOI",
-      "citationKey",
-      "URL",
-      "accessed",
-      "archive",
-      "archive_location",
-      "title-short",
-      "language",
-      "source",
-      "call-number",
-      "license",
-      "note",
-      "creator",
-  ],
-  "article-journal": [
-      "title",
-      "abstract",
-      "container-title",
-      "volume",
-      "issue",
-      "page",
-      "issued",
-      "collection-title",
-      "seriesText",
-      "journalAbbreviation",
-      "language",
-      "DOI",
-      "ISSN",
-      "title-short",
-      "URL",
-      "accessed",
-      "archive",
-      "archive_location",
-      "source",
-      "call-number",
-      "license",
-      "note",
-      "creator",
-  ],
-  "article-magazine": [
-      "title",
-      "abstract",
-      "container-title",
-      "volume",
-      "issue",
-      "issued",
-      "page",
-      "language",
-      "ISSN",
-      "title-short",
-      "URL",
-      "accessed",
-      "archive",
-      "archive_location",
-      "source",
-      "call-number",
-      "license",
-      "note",
-      "creator",
-  ],
-  "article-newspaper": [
-      "title",
-      "abstract",
-      "container-title",
-      "publisher-place",
-      "edition",
-      "issued",
-      "section",
-      "page",
-      "language",
-      "title-short",
-      "ISSN",
-      "URL",
-      "accessed",
-      "archive",
-      "archive_location",
-      "source",
-      "call-number",
-      "license",
-      "note",
-      "creator",
-  ],
-  "bill": [
-      "title",
-      "abstract",
-      "billNumber",
-      "container-title",
-      "codeVolume",
-      "section",
-      "codePages",
-      "authority",
-      "chapter-number",
-      "references",
-      "issued",
-      "language",
-      "URL",
-      "accessed",
-      "title-short",
-      "license",
-      "note",
-      "creator",
-  ],
-  "book": [
-      "title",
-      "abstract",
-      "collection-title",
-      "collection-number",
-      "volume",
-      "number-of-volumes",
-      "edition",
-      "publisher-place",
-      "publisher",
-      "issued",
-      "number-of-pages",
-      "language",
-      "ISBN",
-      "title-short",
-      "URL",
-      "accessed",
-      "archive",
-      "archive_location",
-      "source",
-      "call-number",
-      "license",
-      "note",
-      "creator",
-  ],
-  "broadcast": [
-      "title",
-      "abstract",
-      "programTitle",
-      "episodeNumber",
-      "videoRecordingFormat",
-      "publisher-place",
-      "network",
-      "issued",
-      "dimensions",
-      "language",
-      "title-short",
-      "URL",
-      "accessed",
-      "archive",
-      "archive_location",
-      "source",
-      "call-number",
-      "license",
-      "note",
-      "creator",
-  ],
-  "chapter": [
-      "title",
-      "abstract",
-      "bookTitle",
-      "collection-title",
-      "collection-number",
-      "volume",
-      "number-of-volumes",
-      "edition",
-      "publisher-place",
-      "publisher",
-      "issued",
-      "page",
-      "language",
-      "ISBN",
-      "title-short",
-      "URL",
-      "accessed",
-      "archive",
-      "archive_location",
-      "source",
-      "call-number",
-      "license",
-      "note",
-      "creator",
-  ],
-  "document": [],
-  "entry-dictionary": [
-      "title",
-      "abstract",
-      "dictionaryTitle",
-      "collection-title",
-      "collection-number",
-      "volume",
-      "number-of-volumes",
-      "edition",
-      "publisher-place",
-      "publisher",
-      "issued",
-      "page",
-      "language",
-      "ISBN",
-      "title-short",
-      "URL",
-      "accessed",
-      "archive",
-      "archive_location",
-      "source",
-      "call-number",
-      "license",
-      "note",
-      "creator",
-  ],
-  "entry-encyclopedia": [
-      "title",
-      "abstract",
-      "encyclopediaTitle",
-      "collection-title",
-      "collection-number",
-      "volume",
-      "number-of-volumes",
-      "edition",
-      "publisher-place",
-      "publisher",
-      "issued",
-      "page",
-      "ISBN",
-      "title-short",
-      "URL",
-      "accessed",
-      "language",
-      "archive",
-      "archive_location",
-      "source",
-      "call-number",
-      "license",
-      "note",
-      "creator",
-  ],
-  "graphic": [
-      "title",
-      "abstract",
-      "artworkMedium",
-      "dimensions",
-      "issued",
-      "language",
-      "title-short",
-      "archive",
-      "archive_location",
-      "source",
-      "call-number",
-      "URL",
-      "accessed",
-      "license",
-      "note",
-      "creator",
-  ],
-  "hearing": [
-      "title",
-      "abstract",
-      "section",
-      "publisher-place",
-      "publisher",
-      "number-of-volumes",
-      "documentNumber",
-      "page",
-      "authority",
-      "chapter-number",
-      "references",
-      "issued",
-      "language",
-      "title-short",
-      "URL",
-      "accessed",
-      "license",
-      "note",
-      "creator",
-  ],
-  "interview": [
-      "title",
-      "abstract",
-      "issued",
-      "interviewMedium",
-      "language",
-      "title-short",
-      "URL",
-      "accessed",
-      "archive",
-      "archive_location",
-      "source",
-      "call-number",
-      "license",
-      "note",
-      "creator",
-  ],
-  "legal_case": [
-      "caseName",
-      "abstract",
-      "authority",
-      "dateDecided",
-      "docketNumber",
-      "container-title",
-      "reporterVolume",
-      "firstPage",
-      "references",
-      "language",
-      "title-short",
-      "URL",
-      "accessed",
-      "license",
-      "note",
-      "creator",
-  ],
-  "legislation": [
-      "nameOfAct",
-      "abstract",
-      "container-title",
-      "volume",
-      "publicLawNumber",
-      "dateEnacted",
-      "page",
-      "section",
-      "chapter-number",
-      "references",
-      "language",
-      "title-short",
-      "URL",
-      "accessed",
-      "license",
-      "note",
-      "creator",
-  ],
-  "manuscript": [
-      "title",
-      "abstract",
-      "manuscriptType",
-      "publisher-place",
-      "issued",
-      "number-of-pages",
-      "language",
-      "title-short",
-      "URL",
-      "accessed",
-      "archive",
-      "archive_location",
-      "source",
-      "call-number",
-      "license",
-      "note",
-      "creator",
-  ],
-  "map": [
-      "title",
-      "abstract",
-      "mapType",
-      "scale",
-      "collection-title",
-      "edition",
-      "publisher-place",
-      "publisher",
-      "issued",
-      "language",
-      "ISBN",
-      "title-short",
-      "URL",
-      "accessed",
-      "archive",
-      "archive_location",
-      "source",
-      "call-number",
-      "license",
-      "note",
-      "creator",
-  ],
-  "motion_picture": [
-      "title",
-      "abstract",
-      "videoRecordingFormat",
-      "collection-title",
-      "volume",
-      "number-of-volumes",
-      "publisher-place",
-      "studio",
-      "issued",
-      "dimensions",
-      "language",
-      "ISBN",
-      "title-short",
-      "URL",
-      "accessed",
-      "archive",
-      "archive_location",
-      "source",
-      "call-number",
-      "license",
-      "note",
-      "creator",
-  ],
-  "paper-conference": [
-      "title",
-      "abstract",
-      "issued",
-      "proceedingsTitle",
-      "event-title",
-      "publisher-place",
-      "publisher",
-      "volume",
-      "page",
-      "collection-title",
-      "language",
-      "DOI",
-      "ISBN",
-      "title-short",
-      "URL",
-      "accessed",
-      "archive",
-      "archive_location",
-      "source",
-      "call-number",
-      "license",
-      "note",
-      "creator",
-  ],
-  "patent": [
-      "title",
-      "abstract",
-      "publisher-place",
-      "country",
-      "assignee",
-      "authority",
-      "patentNumber",
-      "submitted",
-      "page",
-      "call-number",
-      "issue",
-      "issueDate",
-      "references",
-      "status",
-      "language",
-      "title-short",
-      "URL",
-      "accessed",
-      "license",
-      "note",
-      "creator",
-  ],
-  "personal_communication": [
-      "title",
-      "abstract",
-      "letterType",
-      "issued",
-      "language",
-      "title-short",
-      "URL",
-      "accessed",
-      "archive",
-      "archive_location",
-      "source",
-      "call-number",
-      "license",
-      "note",
-      "creator",
-  ],
-  "post": [
-      "title",
-      "abstract",
-      "forumTitle",
-      "postType",
-      "issued",
-      "language",
-      "title-short",
-      "URL",
-      "accessed",
-      "license",
-      "note",
-      "creator",
-  ],
-  "post-weblog": [
-      "title",
-      "abstract",
-      "blogTitle",
-      "websiteType",
-      "issued",
-      "URL",
-      "accessed",
-      "language",
-      "title-short",
-      "license",
-      "note",
-      "creator",
-  ],
-  "report": [
-      "title",
-      "abstract",
-      "reportNumber",
-      "reportType",
-      "collection-title",
-      "publisher-place",
-      "institution",
-      "issued",
-      "page",
-      "language",
-      "title-short",
-      "URL",
-      "accessed",
-      "archive",
-      "archive_location",
-      "source",
-      "call-number",
-      "license",
-      "note",
-      "creator",
-  ],
-  "software": [
-      "title",
-      "abstract",
-      "collection-title",
-      "version",
-      "issued",
-      "medium",
-      "publisher-place",
-      "company",
-      "genre",
-      "ISBN",
-      "title-short",
-      "URL",
-      "license",
-      "archive",
-      "archive_location",
-      "source",
-      "call-number",
-      "accessed",
-      "note",
-      "creator",
-  ],
-  "song": [
-      "title",
-      "abstract",
-      "audioRecordingFormat",
-      "collection-title",
-      "volume",
-      "number-of-volumes",
-      "publisher-place",
-      "label",
-      "issued",
-      "dimensions",
-      "language",
-      "ISBN",
-      "title-short",
-      "archive",
-      "archive_location",
-      "source",
-      "call-number",
-      "URL",
-      "accessed",
-      "license",
-      "note",
-      "creator",
-  ],
-  "speech": [
-      "title",
-      "abstract",
-      "presentationType",
-      "issued",
-      "publisher-place",
-      "event-title",
-      "URL",
-      "accessed",
-      "language",
-      "title-short",
-      "license",
-      "note",
-      "creator",
-  ],
-  "thesis": [
-      "title",
-      "abstract",
-      "thesisType",
-      "university",
-      "publisher-place",
-      "issued",
-      "number-of-pages",
-      "language",
-      "title-short",
-      "URL",
-      "accessed",
-      "archive",
-      "archive_location",
-      "source",
-      "call-number",
-      "license",
-      "note",
-      "creator",
-  ],
-  "webpage": [
-      "title",
-      "abstract",
-      "websiteTitle",
-      "websiteType",
-      "issued",
-      "title-short",
-      "URL",
-      "accessed",
-      "language",
-      "license",
-      "note",
-      "creator",
-  ],
+const CSL_ALWAYS_SHOW = [
+    "type",
+    "title",
+    "citation_key",
+    "show_suggested",
+    "keyword",
+    "note",
+    "custom",
+    "language",
+    "source",
+];
+
+
+const CSL_PROPS = [
+    "abstract",
+    "accessed",
+    "annote",
+    "archive",
+    "archive-place",
+    "archive_collection",
+    "archive_location",
+    "author",
+    "authority",
+    "available-date",
+    "call-number",
+    "categories",
+    "chair",
+    "chapter-number",
+    "citation-key",
+    "citation-label",
+    "citation-number",
+    "collection-editor",
+    "collection-number",
+    "collection-title",
+    "compiler",
+    "composer",
+    "container-author",
+    "container-title",
+    "container-title-short",
+    "contributor",
+    "curator",
+    "custom",
+    "dimensions",
+    "director",
+    "division",
+    "DOI",
+    "edition",
+    "editor",
+    "editorial-director",
+    "event",
+    "event-date",
+    "event-place",
+    "event-title",
+    "executive-producer",
+    "first-reference-note-number",
+    "genre",
+    "guest",
+    "host",
+    "id",
+    "illustrator",
+    "interviewer",
+    "ISBN",
+    "ISSN",
+    "issue",
+    "issued",
+    "journalAbbreviation",
+    "jurisdiction",
+    "keyword",
+    "language",
+    "locator",
+    "medium",
+    "narrator",
+    "note",
+    "number",
+    "number-of-pages",
+    "number-of-volumes",
+    "organizer",
+    "original-author",
+    "original-date",
+    "original-publisher",
+    "original-publisher-place",
+    "original-title",
+    "page",
+    "page-first",
+    "part",
+    "part-title",
+    "performer",
+    "PMCID",
+    "PMID",
+    "printing",
+    "producer",
+    "publisher",
+    "publisher-place",
+    "recipient",
+    "references",
+    "reviewed-author",
+    "reviewed-genre",
+    "reviewed-title",
+    "scale",
+    "script-writer",
+    "section",
+    "series-creator",
+    "shortTitle",
+    "source",
+    "status",
+    "submitted",
+    "supplement",
+    "title",
+    "title-short",
+    "translator",
+    "type",
+    "URL",
+    "version",
+    "volume",
+    "volume-title",
+    "volume-title-short",
+    "year-suffix"
+  ]
+  
+const CSL_TYPES = {
+    "article": [
+        "author",
+        "title",
+        "title-short",
+        "container", 
+        "container-title-short",
+        "issue",
+        "number",
+        "page",
+        "publisher-place",
+        "edition",
+        "issued",
+        "collection-number",
+        "collection-title",
+        "section",
+        "status",
+        "supplement-number",
+        "volume", 
+        "volume-title",
+    ],
+    "article-journal": [
+        "author",
+        "title",
+        "container",
+        "volume",
+        "page",
+        "issued",
+        "DOI",
+        "URL",
+    ],
+    "article-magazine": [
+        "author",
+        "title",
+        "container", 
+        "volume", 
+        "page",
+        "issued",
+        "DOI",
+        "URL",
+    ],
+    "article-newspaper": [
+        "author",
+        "title",
+        "container", 
+        "volume", 
+        "page",
+        "issued",
+        "DOI",
+        "URL",
+    ],
+    "bill": [
+        "title",
+        "jurisdiction",
+        "authority",
+        "URL",
+    ],
+    "book": [
+        "author",
+        "collection_editor",
+        "title",
+        "publisher",
+        "publisher-place",
+        "volume", 
+        "edition",
+        "issued",
+        "ISBN",
+        "DOI",
+        "URL",
+    ],
+    "broadcast": [
+        "title",
+        "event-date",
+        "medium",
+        "URL",
+    ],
+    "chapter": [
+        "author",
+        "title",
+        "container", 
+        "volume", 
+        "page",
+        "publisher",
+        "publisher-place",
+        "issued",
+        "ISBN",
+        "DOI",
+        "URL",
+    ],
+    "classic": [
+        "author",
+        "title",
+        "publisher",
+        "publisher-place",
+        "volume", 
+        "edition",
+        "issued",
+        "ISBN",
+        "URL",
+    ],
+    "collection": [
+        "editor",
+        "collection_editor",
+        "title",
+        "publisher",
+        "publisher-place",
+        "volume", 
+        "edition",
+        "issued",
+        "ISBN",
+        "URL",
+    ],
+    "dataset": [
+        "author",
+        "title",
+        "publisher",
+        "publisher-place",
+        "issued",
+        "URL",
+        "compiler",
+        "license",
+    ],
+    "document": [
+        "author",
+        "title",
+        "publisher",
+        "publisher-place",
+        "issued",
+        "ISBN",
+        "DOI",
+        "license",
+        "URL",
+    ],
+    "entry": [
+        "title",
+        "container", 
+        "publisher",
+        "publisher-place",
+        "issued",
+        "ISBN",
+        "DOI",
+        "URL",
+    ],
+    "entry-dictionary": [
+        "title",
+        "container", 
+        "publisher",
+        "publisher-place",
+        "issued",
+        "ISBN",
+        "DOI",
+        "URL",
+    ],
+    "entry-encyclopedia": [
+        "title",
+        "container", 
+        "publisher",
+        "publisher-place",
+        "issued",
+        "ISBN",
+        "DOI",
+        "URL",
+    ],
+    "event": [
+        // "title",
+        "event",
+        "chair",
+        "URL",
+    ],
+    "figure": [
+        "title",
+        "creator",
+        "dimensions",
+        "URL",
+    ],
+    "graphic": [
+        "title",
+        "creator",
+        "illustrator",
+        "dimensions",
+        "URL",
+    ],
+    "hearing": [
+        "title",
+        "event-date",
+        "jurisdiction",
+        "authority",
+        "URL",
+    ],
+    "interview": [
+        "interviewer",
+        "title",
+        "container", 
+        "volume", 
+        "page",
+        "issued",
+        "DOI",
+        "URL",
+    ],
+    "legal_case": [
+        "title",
+        "jurisdiction",
+        "authority",
+        "URL",
+    ],
+    "legislation": [
+        "title",
+        "jurisdiction",
+        "authority",
+        "URL",
+    ],
+    "manuscript": [
+        "author",
+        "title",
+        "publisher",
+        "publisher-place",
+        "issued",
+        "ISBN",
+        "DOI",
+        "URL",
+    ],
+    "map": [
+        "author",
+        "title",
+        "publisher",
+        "publisher-place",
+        "issued",
+        "scale",
+        "ISBN",
+        "DOI",
+        "URL",
+    ],
+    "motion_picture": [
+        "director",
+        "executive-producer",
+        "title",
+        "container", 
+        "guest",
+        "host",
+        "narrator",
+        "volume", 
+        "page",
+        "issued",
+        "medium",
+        "DOI",
+        "URL",
+    ],
+    "musical_score": [
+        "author",
+        "composer",
+        "title",
+        "publisher",
+        "publisher-place",
+        "volume", 
+        "edition",
+        "issued",
+        "ISBN",
+        "DOI",
+        "URL",
+    ],
+    "pamphlet": [
+        "author",
+        "title",
+        "publisher",
+        "publisher-place",
+        "volume", 
+        "edition",
+        "issued",
+        "ISBN",
+        "DOI",
+        "URL",
+    ],
+    "paper-conference": [
+        "author",
+        "title",
+        "container", 
+        "event-date",
+        "page",
+        "publisher",
+        "publisher-place",
+        "issued",
+        "DOI",
+        "URL",
+    ],
+    "patent": [
+        "title",
+        "authority",
+        "URL",
+    ],
+    "performance": [
+        "performer",
+        "title",
+        "event-date",
+        "medium",
+        "URL",
+    ],
+    "periodical": [
+        "editor",
+        "title",
+        "container", 
+        "volume", 
+        "page",
+        "issued",
+        "DOI",
+        "URL",
+    ],
+    "personal_communication": [
+        "author",
+        "title",
+        "URL",
+    ],
+    "post": [
+        "author",
+        "title",
+        "container", 
+        "volume", 
+        "page",
+        "issued",
+        "DOI",
+        "URL",
+    ],
+    "post-weblog": [
+        "author",
+        "title",
+        "container", 
+        "volume", 
+        "page",
+        "issued",
+        "DOI",
+        "URL",
+    ],
+    "regulation": [
+        "title",
+        "jurisdiction",
+        "authority",
+        "URL",
+    ],
+    "report": [
+        "author",
+        "title",
+        "institution",
+        "URL",
+    ],
+    "review": [
+        "author",
+        "title",
+        "reviewed-title",
+        "reviewed-genre",
+        "container", 
+        "volume", 
+        "page",
+        "issued",
+        "DOI",
+        "URL",
+    ],
+    "review-book": [
+        "author",
+        "title",
+        "container", 
+        "volume", 
+        "page",
+        "issued",
+        "DOI",
+        "URL",
+    ],
+    "software": [
+        "author",
+        "title",
+        "publisher",
+        "publisher-place",
+        "version",
+        "license",
+        "URL",
+    ],
+    "song": [
+        "author",
+        "title",
+        "container", 
+        "volume", 
+        "page",
+        "issued",
+        "DOI",
+        "URL",
+    ],
+    "speech": [
+        "author",
+        "title",
+        "event-date",
+        "medium",
+        "URL",
+    ],
+    "standard": [
+        "authority",
+        "title",
+        "URL",
+    ],
+    "thesis": [
+        "author",
+        "title",
+        "publisher",
+        "publisher-place",
+        "issued",
+        "ISBN",
+        "DOI",
+        "URL",
+    ],
+    "treaty": [
+        "title",
+        "jurisdiction",
+        "authority",
+        "URL",
+    ],
+    "webpage": [
+        "author",
+        "title",
+        "container", 
+        "page",
+        "issued",
+        "URL",
+    ],
 }
 
 
-function updateForm(e) {
-    var target = e.target;
+function showHideFields() {
+    var $refType = $("#id_type");
+    const $form = $("#literatureForm");
+    const show_suggested = $("#id_show_suggested").is(":checked");
+    var relevantFields = [];
 
-    // get relevant fields for this "type" value from CSL TYPES
-    var relevantFields = CSL_TYPES[target.value];
+    if (show_suggested) {
+        // Get relevant fields for the selected type from CSL_TYPES
+        relevantFields = CSL_TYPES[$refType.val()];
 
-    // replace hyphens in field names with underscores
-    relevantFields = relevantFields.map(function(field) {
-        return field.replace(/-/g, "_");
+
+        // Check if any item in CSL_PROPS starts with the relevant field name
+        relevantFields = relevantFields.concat(CSL_PROPS.filter(function(prop) {
+            return relevantFields.some(function(field) {
+                return prop.startsWith(field + "-");
+            });
+        }));
+
+        console.log(relevantFields);
+
+        // Replace hyphens in field names with underscores
+        relevantFields = relevantFields.map(function(field) {
+            return field.replace(/-/g, "_");
+        });
+
+    }
+
+    // Loop through div elements on the form and show/hide based on relevant field names
+    $($form.find("div")).each(function() {
+        var div = $(this);
+
+        // Check if div has an id
+        if (div.attr("id")) {
+            // Get div id
+            var divId = div.attr("id");
+
+            // Extract relevant field name from div id
+            var relevantFieldName = divId.replace("div_id_", "");
+
+            // If div id matches relevant field name or toggle is not checked, or field is in CSL_ALWAYS_SHOW, show div element
+            if (relevantFields.includes(relevantFieldName) || !show_suggested || CSL_ALWAYS_SHOW.includes(relevantFieldName)) {
+                div.show();
+            } else {
+                div.hide();
+            }
+        }
+    });
+}
+
+function showHideFieldsets() {
+
+    const $form = $("#literatureForm");
+
+    $form.find("fieldset").each(function() {
+        const $fieldset = $(this);
+        const $divsWithId = $fieldset.find('div[id]');
+
+        if ($divsWithId.length > 0 && $divsWithId.filter(':visible').length === 0) {
+            $fieldset.hide();
+        } else {
+            $fieldset.show();
+        }
     });
 
 
-    // loop through form inputs and hide/show based on allowed types without jquery
-    var formElements = target.form.elements;
-    for (var i = 0; i < formElements.length; i++) {
-        var el = formElements[i];
+    // Loop through fieldsets and hide if all divs inside are hidden
+    // $($form.find("fieldset")).each(function() {
+    //     var $fieldset = $(this);
+    //     var $divsWithId = $fieldset.find('div[id]');
 
-        // get parent selector based on data-CSL-parent
-        var targetParent = el.dataset.cslParent;
+    //     if ($divsWithId.length > 0) {
+    //         var allHidden = true;
+    //         $divsWithId.each(function() {
+    //             if ($(this).css('display') !== 'none') {
+    //                 allHidden = false;
+    //                 return false; // break the loop
+    //             }
+    //         });
 
-        // get parent element
-        var parent = el.closest(targetParent)
+    //         if (allHidden) {
+    //             $fieldset.hide();
+    //         }
+    //     }
+    // });
+}
 
-        // if "data-CSL" is set and a parent is found
-        if (el.dataset.csl && parent) {
+$(function() {
 
-            if (relevantFields.includes(el.name)) {
-                // display relevant field elements
-                parent.style.display = "block";
-            } else {
-                // hide non-relevant field elements
-                parent.style.display = "none";
-            }
-        }
-    }
+    showHideFields();
+    showHideFieldsets();
 
-
-    var orderedRelevantNodes = [];
-
-    for (var i=0; i < relevantFields.length; i++) {
-        var field = relevantFields[i];
-        var el = document.querySelector(`[name="${field}"]`);
-        if (!el) {
-            console.log(`Could not find element with name "${field}"`);
-            continue;
-        }
-        var parent = el.closest(el.dataset.cslParent);
-        orderedRelevantNodes.push(parent);
-    }
+    $("#id_show_suggested").on("change", function() {
+        showHideFields();
+        showHideFieldsets();
+    });
+    $("#id_type").on("change", function() {
+        showHideFields();
+        showHideFieldsets();
+    });
+});
 
 
-    target.closest(target.dataset.cslParent).after(...orderedRelevantNodes)
+// $(target.closest("form").find("input")).each(function() {
+//     var el = $(this);
+
+//     // Get input name
+//     var inputName = el.attr("name");
+
+//     // If input name is in relevant fields or toggle is not checked, display input element
+//     if (relevantFields.includes(inputName) || !$("#id_show_suggested").is(":checked")) {
+//         el.show();
+//     } else {
+//         el.hide();
+//     }
+// });
+
+
+// var orderedRelevantNodes = [];
+
+//     for (var i=0; i < relevantFields.length; i++) {
+//         var field = relevantFields[i];
+//         var el = document.querySelector(`[name="${field}"]`);
+//         if (!el) {
+//             console.log(`Could not find element with name "${field}"`);
+//             continue;
+//         }
+//         var parent = el.closest(el.dataset.cslParent);
+//         orderedRelevantNodes.push(parent);
+//     }
+
+
+//     target.closest(target.dataset.cslParent).after(...orderedRelevantNodes)
     // loop through relevant fields and append
 
 
@@ -697,11 +708,6 @@ function updateForm(e) {
     // }
 
 
-
-
-
-
-}
 
 
 // wait for the page to load

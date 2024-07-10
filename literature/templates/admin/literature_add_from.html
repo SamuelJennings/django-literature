@@ -1,0 +1,11 @@
+{# templates/admin/intermediate_form.html #}
+{% extends "admin/change_form.html" %}
+{% load i18n static %}
+{% block content %}
+  <h1>{% blocktrans %}Intermediate Form{% endblocktrans %}</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="button save">Submit</button>
+  </form>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "neapolitan/base_form.html" %}
+{% load crispy_forms_tags i18n static %}
+{% block form_content %}
+  <h1>{% trans "Import File" %}</h1>
+  <hr>
+  <form method="POST"
+        {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}
+        action="{% if object %}{{ update_view_url }}{% else %}{{ create_view_url }}{% endif %}">
+    {% csrf_token %}
+    {% crispy form %}
+  </form>
+  {% for id, errors in failed_entries %}
+    {{ id }}
+    <div class="alert alert-danger" role="alert">
+      {% for field, error_list in errors.items %}
+        {{ field }}
+        {% for error in error_list %}{{ error }}{% endfor %}
+      {% endfor %}
+    </div>
+  {% endfor %}
+{% endblock form_content %}

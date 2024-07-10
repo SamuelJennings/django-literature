@@ -1,52 +1,93 @@
+import citeproc.types
 from django.db import models
 from django.utils.translation import gettext as _
 
 CSL_TYPE_CHOICES = [
-    ("article", _("Article (Generic)")),
-    ("article-journal", _("Article (Journal)")),
-    ("article-magazine", _("Article (Magazine)")),
-    ("article-newspaper", _("Article (Newspaper)")),
-    ("bill", _("Legislative bill")),
-    ("book", _("Book")),
-    ("broadcast", _("Broadcast")),
-    ("chapter", _("Book chapter")),
-    ("classic", _("Classic work")),
-    ("collection", _("Collection of works")),
-    ("dataset", _("Dataset")),
-    ("document", _("Document (Generic)")),
-    ("entry", _("Entry (Generic)")),
-    ("entry-dictionary", _("Entry (Dictionary)")),
-    ("entry-encyclopedia", _("Entry (Encyclopedia)")),
-    ("event", _("Event")),
-    ("figure", _("Figure or illustration")),
-    ("graphic", _("Graphic work")),
-    ("hearing", _("Congressional hearing")),
-    ("interview", _("Interview")),
-    ("legal_case", _("Legal case")),
-    ("legislation", _("Legislation")),
-    ("manuscript", _("Manuscript")),
-    ("map", _("Map")),
-    ("motion_picture", _("Motion picture")),
-    ("musical_score", _("Musical score")),
-    ("pamphlet", _("Pamphlet")),
-    ("paper-conference", _("Conference paper")),
-    ("patent", _("Patent")),
-    ("performance", _("Live performance")),
-    ("periodical", _("Generic periodical")),
-    ("personal_communication", _("Personal communication")),
-    ("post", _("Blog post")),
-    ("post-weblog", _("Weblog post")),
-    ("regulation", _("Regulation")),
-    ("report", _("Report")),
-    ("review", _("Review")),
-    ("review-book", _("Book review")),
-    ("software", _("Software")),
-    ("song", _("Song")),
-    ("speech", _("Speech")),
-    ("standard", _("Standard")),
-    ("thesis", _("Thesis")),
-    ("treaty", _("Treaty")),
-    ("webpage", _("Webpage")),
+    (
+        _("Academic and Professional"),
+        [
+            ("paper-conference", _("Conference paper")),
+            ("dataset", _("Dataset")),
+            ("article-journal", _("Journal Article")),
+            ("report", _("Report")),
+            ("standard", _("Standard")),
+        ],
+    ),
+    (
+        _("Books and Written Works"),
+        [
+            ("book", _("Book")),
+            ("chapter", _("Book chapter")),
+            ("classic", _("Classic work")),
+            ("collection", _("Collection of works")),
+            ("manuscript", _("Manuscript")),
+            ("thesis", _("Thesis")),
+        ],
+    ),
+    (
+        _("Legislation and Legal"),
+        [
+            ("bill", _("Legislative bill")),
+            ("hearing", _("Congressional hearing")),
+            ("legal_case", _("Legal case")),
+            ("legislation", _("Legislation")),
+            ("patent", _("Patent")),
+            ("regulation", _("Regulation")),
+            ("treaty", _("Treaty")),
+        ],
+    ),
+    (
+        _("Media and Communication"),
+        [
+            ("broadcast", _("Broadcast")),
+            ("interview", _("Interview")),
+            ("article-magazine", _("Magazine Article")),
+            ("article-newspaper", _("Newspaper Article")),
+            ("speech", _("Speech")),
+        ],
+    ),
+    (
+        _("Visual and Creative"),
+        [
+            ("figure", _("Figure or illustration")),
+            ("graphic", _("Graphic work")),
+            ("map", _("Map")),
+            ("motion_picture", _("Motion picture")),
+            ("musical_score", _("Musical score")),
+            ("performance", _("Live performance")),
+            ("software", _("Software")),
+            ("song", _("Song")),
+        ],
+    ),
+    (
+        _("Periodicals and Reviews"),
+        [
+            ("periodical", _("Generic periodical")),
+            ("review", _("Review")),
+            ("review-book", _("Book review")),
+        ],
+    ),
+    (
+        _("Digital and Online Content"),
+        [
+            ("post", _("Blog post")),
+            ("post-weblog", _("Weblog post")),
+            ("webpage", _("Webpage")),
+        ],
+    ),
+    (
+        _("Miscellaneous"),
+        [
+            ("article", _("Generic Article")),
+            ("document", _("Generic Document")),
+            ("entry", _("Generic Entry")),
+            ("entry-dictionary", _("Dictionary Entry")),
+            ("entry-encyclopedia", _("Encyclopedia Entry")),
+            ("event", _("Event")),
+            ("pamphlet", _("Pamphlet")),
+            ("personal_communication", _("Personal communication")),
+        ],
+    ),
 ]
 
 # These fields are explicitly shown in the form when the given type is selected by the user.
@@ -61,7 +102,7 @@ CSL_SUGGESTED_PROPERTIES = {
         "issue",
         "number",
         "page",
-        "publisherpublisher-place",
+        "publisher-place",
         "edition",
         "issued",
         "collection-number",
@@ -497,87 +538,11 @@ CSL_ALWAYS_SHOW = [
 ]
 
 
-class MonthChoices(models.IntegerChoices):
-    JAN = (
-        1,
-        _("January"),
-    )
-    FEB = (
-        2,
-        _("February"),
-    )
-    MAR = (
-        3,
-        _("March"),
-    )
-    APR = (
-        4,
-        _("April"),
-    )
-    MAY = (
-        5,
-        _("May"),
-    )
-    JUN = (
-        6,
-        _("June"),
-    )
-    JUL = (
-        7,
-        _("July"),
-    )
-    AUG = (
-        8,
-        _("August"),
-    )
-    SEP = (
-        9,
-        _("September"),
-    )
-    OCT = (
-        10,
-        _("October"),
-    )
-    NOV = (
-        11,
-        _("November"),
-    )
-    DEC = 12, _("December")
+choices = {}
+for attr in dir(citeproc.types):
+    if not attr.startswith("__"):
+        val = getattr(citeproc.types, attr)
+        label = val.replace("-", " ").replace("_", " ")
+        choices[attr] = (val, _(label))
 
-
-class TypeChoices(models.TextChoices):
-    article = "article", _("article")
-    article_journal = "article-journal", _("journal article")
-    article_magazine = "article-magazine", _("magazine article")
-    article_newspaper = "article-newspaper", _("newspaper article")
-    bill = "bill", _("bill")
-    book = "book", _("book")
-    broadcast = "broadcast", _("broadcast")
-    chapter = "chapter", _("chapter")
-    dataset = "dataset", _("dataset")
-    entry = "entry", _("entry")
-    entry_dictionary = "entry-dictionary", _("entry (dictionary)")
-    entry_encyclopedia = "entry-encyclopedia", _("entry (encyclopedia)")
-    figure = "figure", _("figure")
-    graphic = "graphic", _("graphic")
-    interview = "interview", _("interview")
-    legal_case = "legal_case", _("legal case")
-    legislation = "legislation", _("legislation")
-    manuscript = "manuscript", _("manuscript")
-    map = "map", _("map")
-    motion_picture = "motion_picture", _("motion picture")
-    musical_score = "musical_score", _("musical score")
-    pamphlet = "pamphlet", _("pamphlet")
-    paper_conference = "paper-conference", _("paper conference")
-    patent = "patent", _("patent")
-    personal_communication = "personal_communication", _("personal communication")
-    post = "post", _("post")
-    post_weblog = "post-weblog", _("blog post")
-    report = "report", _("report")
-    review = "review", _("review")
-    review_book = "review-book", _("review book")
-    song = "song", _("song")
-    speech = "speech", _("speech")
-    thesis = "thesis", _("thesis")
-    treaty = "treaty", _("treaty")
-    webpage = "webpage", _("webpage")
+TypeChoices = models.TextChoices("TypeChoices", choices)

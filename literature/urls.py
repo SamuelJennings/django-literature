@@ -1,12 +1,30 @@
 from django.urls import path
-from django.views.generic import RedirectView
+from django.views.generic import CreateView
 
-from . import views
+from .forms import DateForm, LiteratureForm, NameForm
+from .views import DateView, ImportView, LiteratureView, NameView
+from .views_formset import LiteratureEditView
 
-app_name = "literature"
+# app_name = "literature"
 urlpatterns = [
-    path("", views.LiteratureList.as_view(), name="list"),
-    path("create/", views.LiteratureEditView.as_view(), name="create"),
-    path("<int:pk>/", RedirectView.as_view(pattern_name="literature:edit", permanent=False)),
-    path("<int:pk>/edit/", views.LiteratureEditView.as_view(extra_context="edit"), name="edit"),
+    path("import/", ImportView.as_view(), name="import"),
+    *LiteratureView.get_urls(),
+    path(
+        "literature/create/",
+        CreateView.as_view(form_class=LiteratureForm, template_name="neapolitan/object_form.html"),
+        name="literature-create",
+    ),
+    *NameView.get_urls(),
+    path(
+        "name/create/",
+        CreateView.as_view(form_class=NameForm, template_name="neapolitan/object_form.html"),
+        name="name-create",
+    ),
+    *DateView.get_urls(),
+    path(
+        "date/create/",
+        CreateView.as_view(form_class=DateForm, template_name="neapolitan/object_form.html"),
+        name="date-create",
+    ),
+    path("literature/<pk>/formset/", LiteratureEditView.as_view(), name="literature-edit"),
 ]

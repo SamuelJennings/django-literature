@@ -1093,6 +1093,7 @@
                 description="Version of the item (e.g. “2.0.9” for a software program)" />
             <var name="volume" type="number"
                 description="Volume number of the item (e.g. “2” when citing volume 2 of a book) or the container holding the item (e.g. “2” when citing a chapter from volume 2 of a book); Use volume-title for the title of the volume, if any" />
+            <!-- DATE FIELDS -->
             <var name="accessed" type="date" description="Date the item has been accessed" />
             <var name="available-date" type="date"
                 description="Date the item was initially available (e.g. the online publication date of a journal article before its formal publication date; the date a treaty was made available for signing)" />
@@ -1102,6 +1103,7 @@
             <var name="original-date" type="date" description="Issue date of the original version" />
             <var name="submitted" type="date"
                 description="Date the item (e.g. a manuscript) was submitted for publication" />
+            <!-- NAME FIELDS -->
             <var name="author" type="name" description="Author" />
             <var name="chair" type="name"
                 description="The person leading the session containing a presentation (e.g. the organizer of the container-title of a speech)" />

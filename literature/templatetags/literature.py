@@ -1,24 +1,29 @@
 from django import template
-from django.conf import settings
-from django.template.loader import render_to_string
+from django.db.models import QuerySet
+
+from literature.models import Literature
 
 register = template.Library()
 
 
-@register.filter
-def CSL(obj, key):
-    d = obj.CSL
-    for k in key.split("."):
-        d = d.get(k, {})
-    return d if d else ""
+def bibliography(objs: list | QuerySet, style=""):
+    """Renders a bibligraphy for a queryset of Literature objects."""
+    pass
 
 
 @register.simple_tag
-def bibliography(bibliography, style=None):
-    """Renders a bibligraphy in the given style"""
-    context = {
-        "bibliography": bibliography,
-        "citation_style": f"literature/citation/{style or settings.DEFAULT_CITATION_STYLE }.html",
-    }
-    print(context["citation_style"])
-    return render_to_string("literature/bibliography.html", context)
+def cite(*args):
+    """In-text citation analagous to LaTex cite command.
+
+    *args: any number of citation labels that match an object in the database
+    """
+
+    labels = list(args)
+
+    qs = Literature.objects.filter(label__in=labels)
+
+
+@register.simple_tag
+def citep(objs: list | QuerySet, style=""):
+    """Paranthetical citation analagous to LaTex citep command"""
+    pass

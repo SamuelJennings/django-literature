@@ -1,0 +1,21 @@
+{
+  "status": "done",
+  "assets": {
+    "js/literature.js": {
+      "name": "js/literature.js",
+      "path": "js\\literature.js",
+      "publicPath": "/static/bundles/js/literature.js"
+    },
+    "js/literature.js.LICENSE.txt": {
+      "name": "js/literature.js.LICENSE.txt",
+      "path": "js\\literature.js.LICENSE.txt",
+      "publicPath": "/static/bundles/js/literature.js.LICENSE.txt"
+    }
+  },
+  "chunks": {
+    "literature": [
+      "js/literature.js"
+    ]
+  },
+  "publicPath": "/static/bundles/"
+}

@@ -1,75 +1,100 @@
+from adminsortable2.admin import SortableAdminBase, SortableInlineAdminMixin
+from django import forms
 from django.contrib import admin
-from django.urls import reverse
+from django.shortcuts import redirect, render
+from django.urls import path
 from django.utils.translation import gettext as _
-from rest_framework.permissions import DjangoModelPermissions, IsAdminUser
 
-from .models import Collection, Literature, SupplementaryMaterial
+from .models import Collection, Literature, Name, SupplementaryMaterial
+
+
+class LiteratureAdminAddForm(forms.ModelForm):
+    DOI = forms.CharField(label=_("DOI"), required=False)
+
+    class Meta:
+        model = Literature
+        fields = ["DOI"]
 
 
 class SupplementaryInline(admin.TabularInline):
     model = SupplementaryMaterial
+    extra = 1
+
+
+class NameAdminInline(SortableInlineAdminMixin, admin.TabularInline):
+    verbose_name = _("Author")
+    verbose_name_plural = _("Authors")
+    model = Literature.author.through
+    extra = 1
+
+
+@admin.register(Name)
+class NameAdmin(admin.ModelAdmin):
+    list_display = ["family", "given", "suffix"]
+    search_fields = ["family", "name"]
 
 
 @admin.register(Literature)
-# class LiteratureAdmin(DataTableMixin, admin.ModelAdmin):
-class LiteratureAdmin(admin.ModelAdmin):
+class LiteratureAdmin(SortableAdminBase, admin.ModelAdmin):
     """Django Admin setup for the `literature.Literature` model."""
 
-    list_display = ["citation_key", "title", "container_title", "type"]
+    list_display = ["file_download_link", "title", "citation_key", "type"]
     list_filter = ["type"]
-    inlines = [SupplementaryInline]
+    list_display_links = ["title"]
+    inlines = [NameAdminInline, SupplementaryInline]
     fieldsets = [
         (
-            _("Citation"),
+            None,
             {
                 "fields": [
+                    "file",
                     "type",
-                    # *LiteratureAdminForm.Meta.entangled_fields["CSL"],
-                ]
-            },
-        ),
-        (
-            _("PDF"),
-            {
-                "fields": [
-                    "pdf",
-                    # "CSL",
                 ]
             },
         ),
     ]
 
-    endpoint = {
-        "fields": ["id", "title", "type", "container_title"],
-        "include_str": False,
-        "page_size": 1000,
-        "permission_classes": [IsAdminUser, DjangoModelPermissions],
-    }
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path(
+                "<path:object_id>/add-from/",
+                self.admin_site.admin_view(self.intermediate_form_view),
+                name="literature-add-from",
+            ),
+            # path("upload/", self.admin_site.admin_view(self.upload), name="upload"),
+        ]
+        return custom_urls + urls
 
-    # def get_dt_fields(self):
-    #     new_dict = {}
-    #     for field, value in sorted(csl_fields.items()):
-    #         new_dict[field] = value | {"title": field.replace("_", " ").replace("-", " ")}
+    def intermediate_form_view(self, request, object_id):
+        obj = self.get_object(request, object_id)
+        if request.method == "POST":
+            form = LiteratureAdminAddForm(request.POST)
+            if form.is_valid():
+                # Handle the form processing
+                extra_field_value = form.cleaned_data["extra_field"]
+                # Do something with the extra_field_value
+                self.message_user(request, f"Processed extra data: {extra_field_value}")
+                return redirect("admin:app_label_yourmodel_change", object_id)
+        else:
+            form = LiteratureAdminAddForm()
 
-    #     return new_dict
+        context = self.admin_site.each_context(request)
+        context["opts"] = self.model._meta
+        context["form"] = form
+        context["object"] = obj
+        return render(request, "admin/literature_add_from.html", context)
 
-    def _pdf(self, obj):
-        if obj.pdf:
-            return obj.pdf.url
-
-    def citation_key(self, obj):
-        return obj.CSL.get("id", "")
-
-    def edit(self, obj):
-        return reverse(
-            f"admin:{obj._meta.app_label}_{obj._meta.model_name}_change",
-            args=[obj.id],
-        )
+    def response_change(self, request, obj):
+        if not obj.pk:
+            print("Redirecting")
+            return redirect("admin:literature-add-from", obj.pk)
+        print("Not redirecting")
+        return super().response_change(request, obj)
 
     # def get_urls(self):
     #     return [
     #         path("search/", self.admin_site.admin_view(self.search_online), name="search"),
-    #         path("upload/", self.admin_site.admin_view(self.upload), name="upload"),
     #         *super().get_urls(),
     #     ]
 

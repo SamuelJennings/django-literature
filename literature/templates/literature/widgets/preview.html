@@ -1,8 +1,65 @@
-{% load static %}
-<div id='citationPreview' class="readonly" style='position: relative;'>
- <div class='inner'></div>
- <img id='loadingSymbol'
-       height=12 src="{% static 'literature/icons/three-dots.svg' %}"
-       style='opacity: 0; position:absolute; left:50%; top:50%; transform: translate(-50%, -50%);'
-       alt="loading symbol">
-</div>
+<!DOCTYPE html>
+<html lang="en">
+      <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Select2 with Drag and Drop</title>
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+                  rel="stylesheet" />
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"
+                  rel="stylesheet" />
+            <style>
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+      cursor: move;
+    }
+            </style>
+      </head>
+      <body>
+            <select id="mySelect" multiple="multiple" style="width: 300px;">
+                  <option value="1">Banana</option>
+                  <option value="2">Apple</option>
+                  <option value="3">Orange</option>
+                  <option value="4">Grape</option>
+                  <option value="5">Pineapple</option>
+            </select>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+            <script>
+    $(document).ready(function() {
+      // Initialize Select2
+      $('#mySelect').select2({
+        placeholder: 'Select fruits'
+      });
+
+      // Make selected items sortable
+      $('#mySelect').on('select2:select', function() {
+        makeSortable();
+      });
+
+      // Function to make the selected items sortable
+      function makeSortable() {
+        var $choices = $('.select2-selection__choice').parent();
+        $choices.sortable({
+          tolerance: 'pointer',
+          stop: function(event, ui) {
+            // Get the new order of selected items
+            var order = $(this).children('.select2-selection__choice').map(function() {
+              return $(this).data('data').id;
+            }).get();
+
+            // Update the Select2 selection
+            var $select = $('#mySelect');
+            $select.val(order).trigger('change');
+          }
+        }).disableSelection();
+      }
+
+      // Initialize sortable after the first item is selected
+      if ($('#mySelect').val().length > 0) {
+        makeSortable();
+      }
+    });
+            </script>
+      </body>
+</html>
