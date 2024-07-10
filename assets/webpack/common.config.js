@@ -73,7 +73,7 @@ module.exports = {
     modules: ['node_modules'],
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs'],
   },
-  externals: { 
+  externals: {
     jquery: 'jQuery',
    },
   // optimization: {

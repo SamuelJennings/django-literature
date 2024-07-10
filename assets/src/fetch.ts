@@ -3,7 +3,7 @@ import $ from 'jquery'
 
 $(function() {
   $("#id_search").on('change', async function (e) {
-    
+
     // fetch the upload file
     const searchText = $(this).val();
 

@@ -3,7 +3,7 @@ import $ from 'jquery'
 
 $(function() {
   $("#id_upload").on('change', async function (e) {
-    
+
     // fetch the upload file
     const file = (e.target as HTMLInputElement).files?.item(0);
 
