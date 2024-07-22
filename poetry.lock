@@ -622,6 +622,45 @@ files = [
 django = "*"
 
 [[package]]
+name = "django-classy-tags"
+version = "4.1.0"
+description = "Class based template tags for Django"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "django-classy-tags-4.1.0.tar.gz", hash = "sha256:c8d9d1aa2fa6e71c4d866df4dd11d23a69b8d25bbb750b2490a17b161774ee59"},
+    {file = "django_classy_tags-4.1.0-py3-none-any.whl", hash = "sha256:1c784cf1bac49c20a77b8f7d1541867c64076642a160a847ff449588d4e01e55"},
+]
+
+[package.dependencies]
+django = ">=3.2"
+
+[[package]]
+name = "django-cms"
+version = "4.1.1"
+description = "Lean enterprise content management powered by Django."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "django_cms-4.1.1-py2.py3-none-any.whl", hash = "sha256:506ea2c80f64252c567793fb8d3ba83a2c96446af44e8d6079faa61439c82761"},
+    {file = "django_cms-4.1.1.tar.gz", hash = "sha256:0bba097d7fb40fb40dd6dd5814ef7fa498f73c7eeaf609ef5331f344add07014"},
+]
+
+[package.dependencies]
+Django = ">=2.2"
+django-classy-tags = ">=0.7.2"
+django-formtools = ">=2.1"
+django-sekizai = ">=0.7"
+django-treebeard = ">=4.3"
+djangocms-admin-style = ">=1.2"
+packaging = "*"
+setuptools = "*"
+
+[package.extras]
+argon2 = ["argon2-cffi (>=19.1.0)"]
+bcrypt = ["bcrypt"]
+
+[[package]]
 name = "django-coverage-plugin"
 version = "3.1.0"
 description = "Django template coverage.py plugin"
@@ -705,6 +744,20 @@ files = [
 django = ">=4.0"
 
 [[package]]
+name = "django-formtools"
+version = "2.5.1"
+description = "A set of high-level abstractions for Django forms"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "django-formtools-2.5.1.tar.gz", hash = "sha256:47cb34552c6efca088863d693284d04fc36eaaf350eb21e1a1d935e0df523c93"},
+    {file = "django_formtools-2.5.1-py3-none-any.whl", hash = "sha256:bce9b64eda52cc1eef6961cc649cf75aacd1a707c2fff08d6c3efcbc8e7e761a"},
+]
+
+[package.dependencies]
+Django = ">=3.2"
+
+[[package]]
 name = "django-json-widget"
 version = "2.0.1"
 description = "Django json widget is an alternative widget that makes it easy to edit the jsonfield field of django."
@@ -742,6 +795,21 @@ files = [
 [package.dependencies]
 django = "*"
 six = "*"
+
+[[package]]
+name = "django-sekizai"
+version = "4.1.0"
+description = "Django Sekizai"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "django-sekizai-4.1.0.tar.gz", hash = "sha256:2aca36cbae0b5c0cefed9565416ec442335767fb3145bff11e58622fc653cdad"},
+    {file = "django_sekizai-4.1.0-py3-none-any.whl", hash = "sha256:aa12e66ba0335fbe726b7d74cf4e8716b89a0be99a1304a9b9e8b191229e2e4a"},
+]
+
+[package.dependencies]
+django = ">=3.2"
+django-classy-tags = ">=3.0"
 
 [[package]]
 name = "django-select2"
@@ -825,6 +893,48 @@ files = [
 
 [package.dependencies]
 Django = ">=3.2"
+
+[[package]]
+name = "django-treebeard"
+version = "4.7.1"
+description = "Efficient tree implementations for Django"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "django-treebeard-4.7.1.tar.gz", hash = "sha256:846e462904b437155f76e04907ba4e48480716855f88b898df4122bdcfbd6e98"},
+    {file = "django_treebeard-4.7.1-py3-none-any.whl", hash = "sha256:995c7120153ab999898fe3043bbdcd8a0fc77cc106eb94de7350e9d02c885135"},
+]
+
+[package.dependencies]
+Django = ">=3.2"
+
+[[package]]
+name = "djangocms-admin-style"
+version = "3.3.1"
+description = "Adds pretty CSS styles for the django CMS admin interface."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "djangocms-admin-style-3.3.1.tar.gz", hash = "sha256:da20de3831f1a1a74de33fe12bbd3865a0027a982878c02aa1d102b1c799d767"},
+    {file = "djangocms_admin_style-3.3.1-py3-none-any.whl", hash = "sha256:9b76aafda245205e0a88d57efd5097a96c1a7fcb78d7f3efa50955eb980079de"},
+]
+
+[package.dependencies]
+Django = "*"
+
+[[package]]
+name = "djangocms-attributes-field"
+version = "3.0.0"
+description = "Adds attributes to Django models."
+optional = false
+python-versions = "*"
+files = [
+    {file = "djangocms-attributes-field-3.0.0.tar.gz", hash = "sha256:70cbcb8e826b5a6bceba348119ddc01fa5910af4cb4002eb9895d311950b0d9a"},
+    {file = "djangocms_attributes_field-3.0.0-py3-none-any.whl", hash = "sha256:21a0e1642ffc3d9fbc9284b07024c4ca29f7fe9ffbd2c0aecd22585ff5275a86"},
+]
+
+[package.dependencies]
+django-cms = ">=3.7"
 
 [[package]]
 name = "djlint"
@@ -2503,6 +2613,21 @@ socks = ["PySocks (>=1.5.6,!=1.5.7)"]
 use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
+name = "setuptools"
+version = "70.3.0"
+description = "Easily download, build, install, upgrade, and uninstall Python packages"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "setuptools-70.3.0-py3-none-any.whl", hash = "sha256:fe384da74336c398e0d956d1cae0669bc02eed936cdb1d49b57de1990dc11ffc"},
+    {file = "setuptools-70.3.0.tar.gz", hash = "sha256:f171bab1dfbc86b132997f26a119f6056a57950d058587841a0082e8830f9dc5"},
+]
+
+[package.extras]
+doc = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "pygments-github-lexers (==0.0.5)", "pyproject-hooks (!=1.1)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-favicon", "sphinx-inline-tabs", "sphinx-lint", "sphinx-notfound-page (>=1,<2)", "sphinx-reredirects", "sphinxcontrib-towncrier"]
+test = ["build[virtualenv] (>=1.0.3)", "filelock (>=3.4.0)", "importlib-metadata", "ini2toml[lite] (>=0.14)", "jaraco.develop (>=7.21)", "jaraco.envs (>=2.2)", "jaraco.path (>=3.2.0)", "jaraco.test", "mypy (==1.10.0)", "packaging (>=23.2)", "pip (>=19.1)", "pyproject-hooks (!=1.1)", "pytest (>=6,!=8.1.*)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=2.2)", "pytest-home (>=0.5)", "pytest-mypy", "pytest-perf", "pytest-ruff (>=0.3.2)", "pytest-subprocess", "pytest-timeout", "pytest-xdist (>=3)", "tomli", "tomli-w (>=1.0.0)", "virtualenv (>=13.0.0)", "wheel"]
+
+[[package]]
 name = "six"
 version = "1.16.0"
 description = "Python 2 and 3 compatibility utilities"
@@ -3080,4 +3205,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<4.0"
-content-hash = "32639fc5aeb68f535458afe5979fc2e47ad29520c8cce20ed773e2ccf1ccfc88"
+content-hash = "cb8205bfbc82f07d4ff28e61003308c629c9f2e9a546a5450241b02f0f430cdd"

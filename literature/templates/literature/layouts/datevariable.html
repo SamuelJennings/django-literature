@@ -1,0 +1,52 @@
+{% load crispy_forms_field i18n %}
+<style>
+  .date-control {
+    cursor: pointer;
+  }
+</style>
+<div id="div_{{ field.auto_id }}"
+     class="mb-3{% if 'form-horizontal' in form_class %} row{% endif %}{% if wrapper_class %} {{ wrapper_class }}{% endif %}{% if field.css_classes %} {{ field.css_classes }}{% endif %}">
+  <label {% if field.id_for_label %}for="{{ field.id_for_label }}"{% endif %}
+         class="{% if 'form-horizontal' in form_class %}col-form-label pt-0{% else %}form-label{% endif %}{% if label_class %} {{ label_class }}{% endif %}{% if field.field.required %} requiredField{% endif %}">
+    {{ field.label }}
+    {% if field.field.required %}<span class="asteriskField">*</span>{% endif %}
+  </label>
+  <div class="input-group date-control"
+       data-bs-toggle="modal"
+       data-bs-target="#{{ field.auto_id }}_modal">
+    <span class="input-group-text">{% include "icons/calendar.svg" %}</span>
+    <div class="form-control">{% now "Y-m-d" %}</div>
+    <button class="btn btn-outline-danger" title="{% trans "Clear" %}">{% include "icons/close.svg" %}</button>
+  </div>
+  {% include 'bootstrap5/layout/help_text_and_errors.html' %}
+</div>
+<div id="{{ field.auto_id }}_modal" class="modal fade {{ modal.css_class }}" {{ modal.flat_attrs }}>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title {{ modal.title_class }}"
+            id="{{ modal.title_id }}-label">{{ field.label }}</h5>
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% comment %} <div class="form-text">
+          {% trans 'Dates are flexible and may be specified in a number of ways. To store a single date, only use the "begin" field' %}
+        </div> {% endcomment %}
+        {% if field_class %}<div class="{{ field_class }}">{% endif %}
+          {% if field.errors %}
+            {% crispy_field field 'class' 'form-control is-invalid' %}
+          {% else %}
+            {% crispy_field field 'class' 'form-control' %}
+          {% endif %}
+          {% if field_class %}</div>{% endif %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Close" %}</button>
+        <button type="button" class="btn btn-primary">{% trans "Save changes" %}</button>
+      </div>
+    </div>
+  </div>
+</div>

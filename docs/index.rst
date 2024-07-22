@@ -1,4 +1,4 @@
-Welcome to Django Literature's documentation!
+Welcome to Django LiteratureItem's documentation!
 =================================================================
 
 Contents:

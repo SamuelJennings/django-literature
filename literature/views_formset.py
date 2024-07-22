@@ -1,12 +1,12 @@
 from django.db import transaction
 from formset.views import EditCollectionView
 
-from literature.models import Literature
+from literature.models import LiteratureItem
 from tests.example.formsets import ObjectFormCollection
 
 
 class LiteratureEditView(EditCollectionView):
-    model = Literature
+    model = LiteratureItem
     collection_class = ObjectFormCollection
     template_name = "literature/literature_formset.html"
 

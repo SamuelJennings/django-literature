@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django_select2",
     "django_jsonform",
     "django_json_widget",
+    "djangocms_attributes_field",
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,35 @@
+{% load i18n %}
+<div class="mb-3">
+  <label for="" class="form-label">{% trans "Date" %}</label>
+  <div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon1">{% include "icons/calendar.svg" %}</span>
+    {% include widget.subwidgets.0.template_name with widget=widget.subwidgets.0 %}
+  </div>
+</div>
+<div class="mb-3">
+  <label for="" class="form-label">{% trans "Date end" %}</label>
+  <div class="input-group ">
+    <span class="input-group-text" id="basic-addon1">{% include "icons/calendar.svg" %}</span>
+    {% include widget.subwidgets.1.template_name with widget=widget.subwidgets.1 %}
+  </div>
+  <div class="form-text">{% trans "This is only required when referring to a date range" %}</div>
+</div>
+<div class="mb-3">
+  <label for="" class="form-label">{% trans "Season" %}</label>
+  {% include widget.subwidgets.2.template_name with widget=widget.subwidgets.2 %}
+  <div class="form-text">{% trans "E.g. spring, summer, winter, autumn" %}</div>
+</div>
+<div class="mb-3">
+  <label for="" class="form-label">{% trans "Literal" %}</label>
+  {% include widget.subwidgets.3.template_name with widget=widget.subwidgets.3 %}
+  <div class="form-text">{% trans "Literal form to be used directly in citations (e.g. circa 450 B.C.)" %}</div>
+</div>
+<div class="form-check mb-3">
+  {% comment %} {% include widget.subwidgets.4.template_name with widget=widget.subwidgets.4 %} {% endcomment %}
+  <input class="form-check-input"
+         type="checkbox"
+         value=""
+         id="flexCheckDefault">
+  <label class="form-check-label" for="flexCheckDefault">{% trans "Circa" %}</label>
+  <div class="form-text">{% trans "The specified date is not well constrained" %}</div>
+</div>

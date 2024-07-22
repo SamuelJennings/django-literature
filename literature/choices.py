@@ -546,3 +546,33 @@ for attr in dir(citeproc.types):
         choices[attr] = (val, _(label))
 
 TypeChoices = models.TextChoices("TypeChoices", choices)
+
+# https://docs.citationstyles.org/en/stable/specification.html#locators
+CSL_LOCATOR_CHOICES = [
+    ("appendix", _("Appendix")),
+    ("article-locator", _("Article locator")),
+    ("book", _("Book")),
+    ("canon", _("Canon")),
+    ("chapter", _("Chapter")),
+    ("column", _("Column")),
+    ("elocation", _("Elocation")),
+    ("equation", _("Equation")),
+    ("figure", _("Figure")),
+    ("folio", _("Folio")),
+    ("issue", _("Issue")),
+    ("line", _("Line")),
+    ("note", _("Note")),
+    ("opus", _("Opus")),
+    ("page", _("Page")),
+    ("paragraph", _("Paragraph")),
+    ("part", _("Part")),
+    ("rule", _("Rule")),
+    ("section", _("Section")),
+    ("sub-verbo", _("Sub-verbo")),
+    ("supplement", _("Supplement")),
+    ("table", _("Table")),
+    ("timestamp", _("Timestamp")),
+    ("title", _("Title")),
+    ("verse", _("Verse")),
+    ("volume", _("Volume")),
+]

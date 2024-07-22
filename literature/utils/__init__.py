@@ -5,8 +5,8 @@ from django.utils.translation import gettext as _
 
 from literature.loaders import style_loader
 
-from .choices import CSL_ALWAYS_SHOW, CSL_SUGGESTED_PROPERTIES
-from .settings import get_setting
+from ..choices import CSL_ALWAYS_SHOW, CSL_SUGGESTED_PROPERTIES
+from ..settings import get_setting
 
 CSL_TYPE_NOT_FOUND = 'Type "{csl_type}" not found in CSL_SUGGESTED_PROPERTIES'
 
@@ -1351,18 +1351,29 @@ DJANGO_LIT_TO_CSL = [
 ]
 
 
-def csl_to_django_lit(d):
+def csl_to_django_lit(d, recursive=True):
     # recursively replace hyphens with underscores for keys in a CSL-json dict
     if isinstance(d, dict):
         new_dict = {}
         for key, value in d.items():
             new_key = key.replace("-", "_") if isinstance(key, str) else key
-            new_dict[new_key] = csl_to_django_lit(value)
+            if recursive:
+                new_dict[new_key] = csl_to_django_lit(value)
+            else:
+                new_dict[new_key] = value
         return new_dict
     elif isinstance(d, list):
         return [csl_to_django_lit(item) for item in d]
     else:
         return d
+
+
+def csl_to_django_lit_flat(d):
+    new_dict = {}
+    for key, value in d.items():
+        new_key = key.replace("-", "_") if isinstance(key, str) else key
+        new_dict[new_key] = value
+    return new_dict
 
 
 def django_lit_to_csl(d):
@@ -1384,12 +1395,3 @@ def django_lit_to_csl(d):
 
 def parse_author(author_str):
     return dict(zip(("given", "non-dropping-particle", "family", "suffix"), parse_name(author_str)))
-    # csl_parts = {}
-    # for part, csl_label in [(first, 'given'),
-    #                         (von, 'non-dropping-particle'),
-    #                         (last, 'family'),
-    #                         (jr, 'suffix')]:
-    #     if part is not None:
-    #         csl_parts[csl_label] = parse_latex(part)
-    # name = Name(**csl_parts)
-    # return csl_authors

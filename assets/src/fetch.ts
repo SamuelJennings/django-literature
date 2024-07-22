@@ -1,6 +1,7 @@
 import { Cite } from '@citation-js/core'
 import $ from 'jquery'
 
+// document.addEventListener('DOMContentLoaded', () => {
 $(function() {
   $("#id_search").on('change', async function (e) {
 

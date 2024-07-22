@@ -4,6 +4,7 @@
     "webpack-bundle-tracker": "^3.1.0"
   },
   "dependencies": {
+    "@babel/preset-env": "^7.24.8",
     "@citation-js/plugin-csl": "^0.7.6",
     "autoprefixer": "^10.4.0",
     "babel-loader": "^9.1.2",

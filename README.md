@@ -1,4 +1,4 @@
-# Django Literature
+# Django LiteratureItem
 
 [![Github Build](https://github.com/SSJenny90/django-literature/actions/workflows/build.yml/badge.svg)](https://github.com/SSJenny90/django-literature/actions/workflows/build.yml)
 [![Github Docs](https://github.com/SSJenny90/django-literature/actions/workflows/docs.yml/badge.svg)](https://github.com/SSJenny90/django-literature/actions/workflows/docs.yml)
@@ -17,25 +17,25 @@ The full documentation is at https://ssjenny90.github.io/django-literature/
 About
 ---------
 
-Django Literature is designed to facilitate the management and organization of citable literature within your Django project by providing a set of tools and models that enable you to easily handle literature citations, references, and related metadata in your projects.
+Django LiteratureItem is designed to facilitate the management and organization of citable literature within your Django project by providing a set of tools and models that enable you to easily handle literature citations, references, and related metadata in your projects.
 
 Features
 -----------
 
-- **Literature Models**: The package offers pre-built Django models for literature references, authors, journals, and other relevant entities. These models allow developers to store and manage literature-related information in their applications' databases.
+- **LiteratureItem Models**: The package offers pre-built Django models for literature references, authors, journals, and other relevant entities. These models allow developers to store and manage literature-related information in their applications' databases.
 
-- **Integration**: Django Literature easily integrates with existing models in a Django project, enabling the association of literature references with other data objects, such as articles, blog posts, or research papers.
+- **Integration**: Django LiteratureItem easily integrates with existing models in a Django project, enabling the association of literature references with other data objects, such as articles, blog posts, or research papers.
 
-- **Efficient Querying**: Django Literature provides intuitive query methods that allow developers to retrieve literature references based on various criteria, such as author, title, journal, or publication year. This makes it easy to search and filter the literature database.
+- **Efficient Querying**: Django LiteratureItem provides intuitive query methods that allow developers to retrieve literature references based on various criteria, such as author, title, journal, or publication year. This makes it easy to search and filter the literature database.
 
 - **Citation Generation**: The package offers utilities to generate citations in various formats, such as APA, MLA, or Chicago style. This feature simplifies the process of programmatically generating citations for references within the Django application.
 
-- **Admin Interface**: Django Literature includes an admin interface that allows authorized users to manage literature references conveniently. The interface provides CRUD (Create, Read, Update, Delete) operations for literature objects and ensures data integrity.
+- **Admin Interface**: Django LiteratureItem includes an admin interface that allows authorized users to manage literature references conveniently. The interface provides CRUD (Create, Read, Update, Delete) operations for literature objects and ensures data integrity.
 
 Quickstart
 ----------
 
-Install Django Literature::
+Install Django LiteratureItem::
 
     pip install django-literature
 
@@ -48,7 +48,7 @@ Add it to your `INSTALLED_APPS`:
         ...
     )
 
-Add Django Literature's URL patterns:
+Add Django LiteratureItem's URL patterns:
 
     urlpatterns = [
         ...

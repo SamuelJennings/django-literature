@@ -9,7 +9,7 @@ const CSL_ALWAYS_SHOW = [
     "custom",
     "language",
     "source",
-];
+]
 
 
 const CSL_PROPS = [
@@ -116,7 +116,7 @@ const CSL_PROPS = [
     "volume-title",
     "volume-title-short",
     "year-suffix"
-  ]
+]
 
 const CSL_TYPES = {
     "article": [
@@ -542,68 +542,78 @@ const CSL_TYPES = {
 
 
 function showHideFields() {
-    var $refType = $("#id_type");
-    const $form = $("#literatureForm");
-    const show_suggested = $("#id_show_suggested").is(":checked");
-    var relevantFields = [];
+    var $refType = $("#id_type")
+    const $form = $("#literatureForm")
+    const show_suggested = $("#id_show_suggested").is(":checked")
+    var relevantFields = []
 
     if (show_suggested) {
         // Get relevant fields for the selected type from CSL_TYPES
-        relevantFields = CSL_TYPES[$refType.val()];
+        relevantFields = CSL_TYPES[$refType.val()]
 
 
         // Check if any item in CSL_PROPS starts with the relevant field name
-        relevantFields = relevantFields.concat(CSL_PROPS.filter(function(prop) {
-            return relevantFields.some(function(field) {
-                return prop.startsWith(field + "-");
-            });
-        }));
+        relevantFields = relevantFields.concat(CSL_PROPS.filter(function (prop) {
+            return relevantFields.some(function (field) {
+                return prop.startsWith(field + "-")
+            })
+        }))
 
-        console.log(relevantFields);
+        console.log(relevantFields)
 
         // Replace hyphens in field names with underscores
-        relevantFields = relevantFields.map(function(field) {
-            return field.replace(/-/g, "_");
-        });
+        relevantFields = relevantFields.map(function (field) {
+            return field.replace(/-/g, "_")
+        })
 
     }
 
     // Loop through div elements on the form and show/hide based on relevant field names
-    $($form.find("div")).each(function() {
-        var div = $(this);
+    $($form.find("div")).each(function () {
+        var div = $(this)
 
         // Check if div has an id
         if (div.attr("id")) {
             // Get div id
-            var divId = div.attr("id");
+            var divId = div.attr("id")
 
             // Extract relevant field name from div id
-            var relevantFieldName = divId.replace("div_id_", "");
+            var relevantFieldName = divId.replace("div_id_", "")
 
-            // If div id matches relevant field name or toggle is not checked, or field is in CSL_ALWAYS_SHOW, show div element
-            if (relevantFields.includes(relevantFieldName) || !show_suggested || CSL_ALWAYS_SHOW.includes(relevantFieldName)) {
-                div.show();
-            } else {
-                div.hide();
+            // If div id matches relevant field name
+            if (relevantFields.includes(relevantFieldName)) {
+                // If toggle is not checked, or field is in CSL_ALWAYS_SHOW, show div element
+                if (!show_suggested || CSL_ALWAYS_SHOW.includes(relevantFieldName)) {
+                    div.show()
+                } else {
+                    div.hide()
+                }
             }
+
+            // // If div id matches relevant field name or toggle is not checked, or field is in CSL_ALWAYS_SHOW, show div element
+            // if (relevantFields.includes(relevantFieldName) || (!show_suggested || CSL_ALWAYS_SHOW.includes(relevantFieldName))) {
+            //     div.show()
+            // } else {
+            //     div.hide()
+            // }
         }
-    });
+    })
 }
 
 function showHideFieldsets() {
 
-    const $form = $("#literatureForm");
+    const $form = $("#literatureForm")
 
-    $form.find("fieldset").each(function() {
-        const $fieldset = $(this);
-        const $divsWithId = $fieldset.find('div[id]');
+    $form.find("fieldset").each(function () {
+        const $fieldset = $(this)
+        const $divsWithId = $fieldset.find('div[id]')
 
         if ($divsWithId.length > 0 && $divsWithId.filter(':visible').length === 0) {
-            $fieldset.hide();
+            $fieldset.hide()
         } else {
-            $fieldset.show();
+            $fieldset.show()
         }
-    });
+    })
 
 
     // Loop through fieldsets and hide if all divs inside are hidden
@@ -627,20 +637,20 @@ function showHideFieldsets() {
     // });
 }
 
-$(function() {
+$(function () {
 
-    showHideFields();
-    showHideFieldsets();
+    showHideFields()
+    showHideFieldsets()
 
-    $("#id_show_suggested").on("change", function() {
-        showHideFields();
-        showHideFieldsets();
-    });
-    $("#id_type").on("change", function() {
-        showHideFields();
-        showHideFieldsets();
-    });
-});
+    $("#id_show_suggested").on("change", function () {
+        showHideFields()
+        showHideFieldsets()
+    })
+    $("#id_type").on("change", function () {
+        showHideFields()
+        showHideFieldsets()
+    })
+})
 
 
 // $(target.closest("form").find("input")).each(function() {
@@ -673,50 +683,50 @@ $(function() {
 
 
 //     target.closest(target.dataset.cslParent).after(...orderedRelevantNodes)
-    // loop through relevant fields and append
+// loop through relevant fields and append
 
 
-    // // reinsert fields into the dom based on the order in CSL_TYPES
-    // for (var i=0; i < reversedFields.length; i++) {
-    //     var el = document.querySelector(`[name="${reversedFields[i]}"]`);
-    //     var parent = el.closest(el.dataset.cslParent);
+// // reinsert fields into the dom based on the order in CSL_TYPES
+// for (var i=0; i < reversedFields.length; i++) {
+//     var el = document.querySelector(`[name="${reversedFields[i]}"]`);
+//     var parent = el.closest(el.dataset.cslParent);
 
-    //     // parent element of the "type" select
-    //     var targetParent = target.closest(".form-control");
+//     // parent element of the "type" select
+//     var targetParent = target.closest(".form-control");
 
-    //     // move parent to the first position beneath "target"
-    //     parent.insertBefore(parent, targetParent.nextSibling);
-
-
-    //     // parent.parentNode.appendChild(parent);
-    // }
+//     // move parent to the first position beneath "target"
+//     parent.insertBefore(parent, targetParent.nextSibling);
 
 
+//     // parent.parentNode.appendChild(parent);
+// }
 
-    // var fieldset = target.closest("fieldset");
-    // var children = fieldset.children;
 
-    // // loop through children and reorder based on relevant fields
-    // for (var i = 0; i < children.length; i++) {
-    //     var child = children[i];
-    //     var name = child.querySelector("input").name;
 
-    //     if (relevantFields.includes(name)) {
-    //         // display relevant field elements
-    //         fieldset.appendChild(child);
-    //     }
-    // }
+// var fieldset = target.closest("fieldset");
+// var children = fieldset.children;
+
+// // loop through children and reorder based on relevant fields
+// for (var i = 0; i < children.length; i++) {
+//     var child = children[i];
+//     var name = child.querySelector("input").name;
+
+//     if (relevantFields.includes(name)) {
+//         // display relevant field elements
+//         fieldset.appendChild(child);
+//     }
+// }
 
 
 
 
 // wait for the page to load
-document.addEventListener("DOMContentLoaded", function(event) {
-    var element = document.querySelector('select[name="type"]');
+document.addEventListener("DOMContentLoaded", function (event) {
+    var element = document.querySelector('select[name="type"]')
 
     // trigger onchange event for element on page load
-    var event = new Event('change');
+    var event = new Event('change')
 
     // trigger event
-    element.dispatchEvent(event);
-});
+    element.dispatchEvent(event)
+})

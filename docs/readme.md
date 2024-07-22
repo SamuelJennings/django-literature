@@ -1,4 +1,4 @@
-# Django Literature 
+# Django LiteratureItem 
 
 [![Github Build](https://github.com/SSJenny90/django-literature/actions/workflows/build.yml/badge.svg)](https://github.com/SSJenny90/django-literature/actions/workflows/build.yml)
 [![Github Docs](https://github.com/SSJenny90/django-literature/actions/workflows/docs.yml/badge.svg)](https://github.com/SSJenny90/django-literature/actions/workflows/docs.yml)
@@ -23,7 +23,7 @@ The full documentation is at https://ssjenny90.github.io/django-literature/
 Quickstart
 ----------
 
-Install Django Literature::
+Install Django LiteratureItem::
 
     pip install django-literature
 
@@ -36,7 +36,7 @@ Add it to your `INSTALLED_APPS`:
         ...
     )
 
-Add Django Literature's URL patterns:
+Add Django LiteratureItem's URL patterns:
 
     urlpatterns = [
         ...

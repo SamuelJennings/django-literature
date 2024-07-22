@@ -36,8 +36,8 @@ is open to whoever wants to implement it.
 Write Documentation
 ~~~~~~~~~~~~~~~~~~~
 
-Django Literature could always use more documentation, whether as part of the
-official Django Literature docs, in docstrings, or even on the web in blog posts,
+Django LiteratureItem could always use more documentation, whether as part of the
+official Django LiteratureItem docs, in docstrings, or even on the web in blog posts,
 articles, and such.
 
 Submit Feedback

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load neapolitan crispy_forms_tags i18n %}
+{% block extra_css %}
+    {{ quick_search_form.media.css }}
+    {% comment %} <script src="{% static "literature/js/select2-sortable2.js" %}"></script> {% endcomment %}
+{% endblock extra_css %}
+{% block content %}
+    <div class="d-flex align-items-center">
+        <h1 class="sm:flex-auto text-base font-semibold leading-6 text-gray-900">{{ object_verbose_name_plural|capfirst }}</h1>
+        <div class="ms-auto">
+            <button type="button"
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#quickSearchModal">
+                <span>{% include "icons/globe.svg" %}</span>
+                {% trans "Fetch" %}
+            </button>
+            <a class="btn btn-primary" href="{% url "import" %}">
+                {% include "icons/import.svg" %}
+                <span>{% trans "Import" %}</span>
+            </a>
+            <a class="btn btn-primary" href="{{ create_view_url }}">
+                {% include "icons/plus.svg" %}
+            {% trans "New" %}</a>
+        </div>
+    </div>
+    <hr>
+    <table class="table w-100">
+        <thead>
+            <tr>
+                <th>{% trans "Entry" %}</th>
+                <th>{% trans "Edit" %}</th>
+                <th>{% trans "Remove" %}</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+            {% for entry in object_list %}
+                <tr>
+                    <td>
+                        <div class="citation-js"
+                             data-input="{{ entry.as_json }}"
+                             data-output-format="bibliography"></div>
+                    </td>
+                    <td class="text-center">
+                        <a href="{% url "literature-update" pk=entry.pk %}">{% include "icons/pencil.svg" %}</a>
+                    </td>
+                    <td class="text-center">
+                        <a href="{% url "literature-delete" pk=entry.pk %}" class="text-danger">{% include "icons/close.svg" %}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% include "literature/search_modal.html" %}
+{% endblock %}
+{% block js %}
+    {{ quick_search_form.media.js }}
+    {% comment %} <script src="{% static "literature/js/select2-sortable2.js" %}"></script> {% endcomment %}
+{% endblock js %}

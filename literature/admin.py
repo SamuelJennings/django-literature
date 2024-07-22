@@ -1,18 +1,18 @@
-from adminsortable2.admin import SortableAdminBase, SortableInlineAdminMixin
+from adminsortable2.admin import SortableAdminBase
 from django import forms
 from django.contrib import admin
 from django.shortcuts import redirect, render
 from django.urls import path
 from django.utils.translation import gettext as _
 
-from .models import Collection, Literature, Name, SupplementaryMaterial
+from .models import Collection, LiteratureItem, SupplementaryMaterial
 
 
 class LiteratureAdminAddForm(forms.ModelForm):
     DOI = forms.CharField(label=_("DOI"), required=False)
 
     class Meta:
-        model = Literature
+        model = LiteratureItem
         fields = ["DOI"]
 
 
@@ -21,38 +21,28 @@ class SupplementaryInline(admin.TabularInline):
     extra = 1
 
 
-class NameAdminInline(SortableInlineAdminMixin, admin.TabularInline):
-    verbose_name = _("Author")
-    verbose_name_plural = _("Authors")
-    model = Literature.author.through
-    extra = 1
-
-
-@admin.register(Name)
-class NameAdmin(admin.ModelAdmin):
-    list_display = ["family", "given", "suffix"]
-    search_fields = ["family", "name"]
-
-
-@admin.register(Literature)
+@admin.register(LiteratureItem)
 class LiteratureAdmin(SortableAdminBase, admin.ModelAdmin):
-    """Django Admin setup for the `literature.Literature` model."""
+    """Django Admin setup for the `literature.LiteratureItem` model."""
 
-    list_display = ["file_download_link", "title", "citation_key", "type"]
+    # change_form_template = "admin/literature_change_form.html"
+    # form = LiteratureForm
+    list_display = ["file_download_link", "issued", "title", "key", "type"]
     list_filter = ["type"]
     list_display_links = ["title"]
-    inlines = [NameAdminInline, SupplementaryInline]
-    fieldsets = [
-        (
-            None,
-            {
-                "fields": [
-                    "file",
-                    "type",
-                ]
-            },
-        ),
-    ]
+    inlines = [SupplementaryInline]
+    # fieldsets = [
+    #     (
+    #         None,
+    #         {
+    #             "fields": [
+    #                 "file",
+    #                 "collections",
+    #                 "item",
+    #             ]
+    #         },
+    #     ),
+    # ]
 
     def get_urls(self):
         urls = super().get_urls()
@@ -112,7 +102,7 @@ class LiteratureAdmin(SortableAdminBase, admin.ModelAdmin):
     #             imported, updated = 0, 0
     #             for item in bibliography:
     #                 imported += 1
-    #                 Literature.objects.create(CSL=item)
+    #                 LiteratureItem.objects.create(CSL=item)
     #             self.message_user(
     #                 request,
     #                 level=messages.SUCCESS,
@@ -150,7 +140,7 @@ class LiteratureAdmin(SortableAdminBase, admin.ModelAdmin):
     #             imported, updated = 0, 0
     #             for item in bibliography:
     #                 imported += 1
-    #                 Literature.objects.create(CSL=item)
+    #                 LiteratureItem.objects.create(CSL=item)
     #             self.message_user(
     #                 request,
     #                 level=messages.SUCCESS,

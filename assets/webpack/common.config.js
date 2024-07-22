@@ -1,15 +1,15 @@
-const path = require('path');
-const BundleTracker = require('webpack-bundle-tracker');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require('path')
+const BundleTracker = require('webpack-bundle-tracker')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-const BaseDir = path.resolve(__dirname, '../../');
-const BundleDir = path.resolve(BaseDir, './literature/static/bundles/');
-const AssetsDir = path.resolve(__dirname, '../');
+const BaseDir = path.resolve(__dirname, '../../')
+const BundleDir = path.resolve(BaseDir, './literature/static/bundles/')
+const AssetsDir = path.resolve(__dirname, '../')
 
-console.log('Webpack common config:');
-console.log('Output Path:', BaseDir);
-console.log('Output Path:', BundleDir);
-console.log('Context Path:', AssetsDir);
+console.log('Webpack common config:')
+console.log('Output Path:', BaseDir)
+console.log('Output Path:', BundleDir)
+console.log('Context Path:', AssetsDir)
 
 module.exports = {
   target: 'web',
@@ -42,6 +42,9 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
+        options: {
+          presets: ['@babel/preset-env']
+        },
       },
       {
         test: /\.tsx?$/,
@@ -75,11 +78,11 @@ module.exports = {
   },
   externals: {
     jquery: 'jQuery',
-   },
+  },
   // optimization: {
   //   splitChunks: {
   //     chunks: 'all',
   //     maxSize: 244000,
   //   },
   // },
-};
+}

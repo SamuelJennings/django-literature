@@ -36,6 +36,7 @@ django-admin-sortable2 = "^2.2.1"
 django-extra-views = "^0.14.0"
 django-jsonform = "^2.22.0"
 django-json-widget = "^2.0.1"
+djangocms-attributes-field = "^3.0.0"
 
 
 [tool.poetry.group.dev.dependencies]

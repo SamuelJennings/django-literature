@@ -1,0 +1,15 @@
+<button type="button"
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#{{ field.name }}_modal">Edit</button>
+{% comment %} <div id="issued_modal" class="modal fade {{ modal.css_class }}" {{ modal.flat_attrs }}>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title {{ modal.title_class }}" id="{{ modal.title_id }}-label">Issued</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">{{ field }}</div>
+    </div>
+  </div>
+</div> {% endcomment %}

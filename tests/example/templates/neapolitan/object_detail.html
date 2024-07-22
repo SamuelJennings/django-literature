@@ -2,5 +2,8 @@
 {% load neapolitan %}
 {% block content %}
   <h1>{{ object }}</h1>
-  {% object_detail object view.fields %}
+  {% for prop, val in object.item.items %}
+    {% if val %}<p>{{ prop }}: {{ val }}</p>{% endif %}
+  {% endfor %}
+  {% comment %} {% object_detail object view.fields %} {% endcomment %}
 {% endblock %}

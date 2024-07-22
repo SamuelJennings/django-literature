@@ -1,0 +1,14 @@
+{% load i18n %}
+<div class="d-flex align-content-end attributes-pair mb-3">
+  <div class="flex-shrink-1 me-2">
+    <input type="text" class="attributes-key form-control" name="attributes_key[{{ field_name }}]" value="{{ key }}" {{ key_attrs }} placeholder="{% trans "Key" %}">
+  </div>
+  <div class="flex-grow-1 me-2">
+    <input type="text" class="attributes-value form-control" name="attributes_value[{{ field_name }}]" value="{{ value }}" {{ val_attrs }} placeholder="{% trans "Value" %}">
+  </div>
+  <div class="d-flex flex-column">
+    <button type="button"
+            class="btn btn-outline-danger delete-attributes-pair"
+            aria-label="Delete">{% include "icons/close.svg" %}</button>
+  </div>
+</div>
