@@ -14,8 +14,8 @@ from .choices import CSL_TYPE_CHOICES
 from .utils import file_upload_path, suppfile_upload_path
 from .utils.date import date_parts_to_iso, parse_date
 
-with open("tests/data/authors.json") as f:
-    author_schema = json.load(f)
+# with open("tests/data/authors.json") as f:
+#     author_schema = json.load(f)
 
 tmp_map = {
     "archive_place": "archive-place",
