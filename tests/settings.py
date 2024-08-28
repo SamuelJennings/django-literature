@@ -33,7 +33,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "literature",
-    "taggit",
     "example",
     "formset",
     "neapolitan",
@@ -44,7 +43,6 @@ INSTALLED_APPS = [
     "django_select2",
     "django_jsonform",
     "django_json_widget",
-    "djangocms_attributes_field",
 ]
 
 MIDDLEWARE = [

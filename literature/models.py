@@ -8,7 +8,6 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 from partial_date import PartialDate
 from partial_date.fields import PartialDateField
-from taggit.managers import TaggableManager
 
 from .choices import CSL_TYPE_CHOICES
 from .utils import file_upload_path, suppfile_upload_path
@@ -26,6 +25,17 @@ def generate_citation_key(instance):
     return f"{instance.title}"[:10]
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+
+    class Meta:
+        verbose_name = _("tag")
+        verbose_name_plural = _("tags")
+
+    def __str__(self):
+        return self.name
+
+
 class LiteratureItem(models.Model):
     CSL_TYPE_CHOICES = CSL_TYPE_CHOICES
     key = models.CharField(max_length=255, unique=True)
@@ -35,7 +45,8 @@ class LiteratureItem(models.Model):
     issued = PartialDateField(blank=True, null=True)
     item = models.JSONField(default=dict)
 
-    keyword = TaggableManager(
+    keyword = models.ManyToManyField(
+        Tag,
         verbose_name=_("key words"),
         help_text=_("Keyword(s) or tag(s) attached to the item."),
         blank=True,
@@ -56,8 +67,8 @@ class LiteratureItem(models.Model):
     )
 
     class Meta:
-        verbose_name = _("entry")
-        verbose_name_plural = _("entries")
+        verbose_name = _("literature item")
+        verbose_name_plural = _("literature items")
         ordering = ["created"]
 
     def save(self, *args, **kwargs):
