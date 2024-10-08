@@ -1,0 +1,40 @@
+{% extends "literature/base_form.html" %}
+{% load i18n easy_icons %}
+{% block form_content %}
+  <div class="mt-3">
+    <h1>Are you sure you want to delete following {{ object_verbose_name }}?</h1>
+    <p class="mt-4 citation-js placeholder-glow"
+       data-input="{{ object.as_json }}"
+       data-output-format="bibliography">
+      <span class="placeholder w-100"></span>
+      <span class="placeholder w-75"></span>
+    </p>
+    <form method="post">
+      {% csrf_token %}
+      {{ form }}
+      <button type="submit" class="btn btn-danger">{% trans "Confirm delete" %}</button>
+    </form>
+  </div>
+{% endblock form_content %}
+{% block js %}
+  {{ block.super }}
+  <script>
+// Your input data (e.g., a DOI or citation object)
+{% comment %} const data = new Cite('10.1109/5.771073'); {% endcomment %}
+  const customStyle = {
+    "type": "string",
+    "format": {
+      "suffix": "",
+      "prefix": ""
+    },
+    "templates": {
+      "citation": {
+        "default": "[author], [year]" // Your preferred format
+      }
+    }
+  };
+  
+const data = '{{ object.as_json|safe }}';
+{% comment %} const output = data.format('citation', { template: customStyle }); {% endcomment %}
+  </script>
+{% endblock js %}

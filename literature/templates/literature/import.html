@@ -1,21 +1,35 @@
-{% extends "neapolitan/base_form.html" %}
-{% load crispy_forms_tags i18n static %}
+{% extends "literature/base_form.html" %}
+{% load crispy_forms_tags i18n static literature %}
+{% block extra_head %}
+  {{ form.media.css }}
+{% endblock extra_head %}
 {% block form_content %}
   <h1>{% trans "Import File" %}</h1>
   <hr>
-  <form method="POST"
-        {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}
-        action="{% if object %}{{ update_view_url }}{% else %}{{ create_view_url }}{% endif %}">
-    {% csrf_token %}
-    {% crispy form %}
-  </form>
-  {% for id, errors in failed_entries %}
-    {{ id }}
-    <div class="alert alert-danger" role="alert">
-      {% for field, error_list in errors.items %}
-        {{ field }}
-        {% for error in error_list %}{{ error }}{% endfor %}
-      {% endfor %}
+  {% crispy form %}
+  {% for entry, errors in failed_entries %}
+    <div class="mb-2">
+      <b>Citation Key</b>: {{ entry|csl_field:"citation-key"|default_if_none:"-" }}
     </div>
+    <div class="citation-js" data-input="{{ entry|as_json }}"></div>
+    <table class="table">
+      <thead>
+        <th>{% trans "Field" %}</th>
+        <th>{% trans "Errors" %}</th>
+      </thead>
+      {% for field, error_list in errors.items %}
+        <tr>
+          <td>{{ field }}:</td>
+          <td>
+            <ul>
+              {% for error in error_list %}<li>{{ error }}</li>{% endfor %}
+            </ul>
+          </td>
+        </tr>
+      </table>
+    {% endfor %}
   {% endfor %}
 {% endblock form_content %}
+{% block js %}
+  {{ form.media.js }}
+{% endblock js %}

@@ -1,0 +1,33 @@
+{% load easy_icons %}
+{% if item.children %}
+  <li class="nav-item dropdown">
+    <a data-bs-toggle="dropdown"
+       class="nav-link {% if item.depth < 3 %}dropdown-toggle{% endif %}"
+       href="#"
+       role="button"
+       aria-expanded="false">
+      {% icon item.icon %}
+      <span class="d-none d-md-inline-block">{{ item.label|capfirst }}</span>
+      {% if item.depth > 2 %}&raquo;{% endif %}
+    </a>
+    <ul class="dropdown-menu {% if item.depth > 2 %}dropdown-submenu{% endif %}">
+      {% with item.children as menu %}
+        {% for item in menu %}
+          {% if item.visible %}
+            {% include "literature/menus/item.html" %}
+          {% endif %}
+        {% endfor %}
+      </ul>
+    {% endwith %}
+    {% comment %} {% include "literature/menus/root.html" with menu=item.children %} {% endcomment %}
+  </li>
+{% else %}
+  <li class="nav-item">
+    <a class="btn text-primary btn-sm {{ item.extra_classes }}"
+       id="{{ item.label|slugify }}-tab"
+       href="{{ item.url }}">
+      {% icon item.icon %}
+      <span class="d-none d-md-inline-block">{{ item.label|capfirst }}</span>
+    </a>
+  </li>
+{% endif %}

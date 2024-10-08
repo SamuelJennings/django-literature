@@ -1,0 +1,7 @@
+<ul class="nav hstack gap-2" id="pageMenu" role="tablist">
+  {% for item in menu %}
+    {% if item.visible %}
+      {% include "literature/menus/item.html" %}
+    {% endif %}
+  {% endfor %}
+</ul>

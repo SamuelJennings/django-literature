@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static i18n flex_menu %}
+{% block js %}
+  <script src={% static "bundles/js/literature.js" %}></script>
+{% endblock js %}
+{% block content %}
+  <nav class="sticky-top">
+    <div class="bg-primary-subtle border-primary border-bottom hstack p-1">
+      {% render_menu "LiteratureMenu" %}
+      <div class="ms-auto">
+        <form method="get" hx-select="#tableWrapper" hx-swap="outerHTML">
+          <div>
+            <label for="search-filter" class="form-label d-none">Search</label>
+            <input type="text"
+                   name="q"
+                   class="form-control"
+                   id="search-filter"
+                   placeholder="Search"
+                   style="width:280px">
+          </div>
+          <button type="submit" class="d-none">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+  {% block breadcrumbs %}
+    <nav class="bg-secondary-subtle container-fluid" aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0 py-1">
+        <li class="breadcrumb-item" aria-current="page">
+          <a href="{% url 'literature-list' %}">All items</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">{{ object }}</li>
+      </ol>
+    </nav>
+  {% endblock breadcrumbs %}
+{% endblock content %}
