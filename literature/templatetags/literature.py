@@ -1,3 +1,5 @@
+import json
+
 from django import template
 from django.db.models import QuerySet
 
@@ -25,3 +27,14 @@ def cite(*args):
 def citep(objs: list | QuerySet, style=""):
     """Paranthetical citation analagous to LaTex citep command"""
     pass
+
+
+@register.filter
+def csl_field(item, field):
+    """Renders a field from a CSL object."""
+    return item.get(field)
+
+
+@register.filter
+def as_json(item):
+    return json.dumps(item)
