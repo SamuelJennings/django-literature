@@ -24,14 +24,18 @@ def date_parts_to_iso(date_parts):
 def iso_to_date_parts(iso):
     if not iso:
         return None
-
-    return [int(part) for part in iso.split("-")]
+    try:
+        return [int(part) for part in iso.split("-")]
+    except ValueError:
+        raise ValueError(f"Encountered invalid date format: {iso}")
 
 
 def parse_raw_date(date_str):
     """Parse a raw date string into a CSL date-parts array."""
     # raw date string may be one or two partial isodate strings separated by a slash
     # e.g. "2020-01-01/2020-01-31" or "2020-01-01" or "2020-01" or "2020-01/2020-02"
+    if not date_str:
+        return []
     date_parts = date_str.split("/")
     return [iso_to_date_parts(date) for date in date_parts]
 

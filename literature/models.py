@@ -38,10 +38,10 @@ class Tag(models.Model):
 
 class LiteratureItem(models.Model):
     CSL_TYPE_CHOICES = CSL_TYPE_CHOICES
-    key = models.CharField(max_length=255, unique=True)
+    citation_key = models.CharField(_("key"), max_length=255, unique=True)
     type = models.CharField(_("type"), choices=CSL_TYPE_CHOICES, max_length=22)
 
-    title = models.CharField(max_length=255, db_index=True, blank=True, null=True)
+    title = models.CharField(max_length=1000, db_index=True, blank=True, null=True)
     issued = PartialDateField(blank=True, null=True)
     item = models.JSONField(default=dict)
 
@@ -76,7 +76,8 @@ class LiteratureItem(models.Model):
         self.title = self.item.get("title", "")
         self.issued = self.save_issued_date()
         # self.key = self.item.get("citation-key", "")
-        self.key = generate_citation_key(self)
+        if not self.citation_key:
+            self.citation_key = generate_citation_key(self)
         super().save(*args, **kwargs)
 
     def __str__(self):

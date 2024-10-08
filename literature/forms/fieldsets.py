@@ -280,11 +280,11 @@ class AdditionalInformation(forms.Form):
         widget=forms.Textarea(),
         help_text=_("Additional notes or comments about the work or citation."),
     )
-    keyword = forms.CharField(
-        label=_("Keyword"),
-        required=False,
-        help_text=_("Keywords or phrases that describe the content or subject matter of the work."),
-    )
+    # keyword = forms.CharField(
+    #     label=_("Keyword"),
+    #     required=False,
+    #     help_text=_("Keywords or phrases that describe the content or subject matter of the work."),
+    # )
     categories = forms.CharField(
         label=_("Categories"),
         required=False,

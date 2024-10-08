@@ -1,8 +1,8 @@
+from admin_extra_buttons.api import ExtraButtonsMixin, button
 from adminsortable2.admin import SortableAdminBase
 from django import forms
 from django.contrib import admin
 from django.shortcuts import redirect, render
-from django.urls import path
 from django.utils.translation import gettext as _
 
 from .models import Collection, LiteratureItem, SupplementaryMaterial
@@ -22,109 +22,71 @@ class SupplementaryInline(admin.TabularInline):
 
 
 @admin.register(LiteratureItem)
-class LiteratureAdmin(SortableAdminBase, admin.ModelAdmin):
+class LiteratureAdmin(ExtraButtonsMixin, SortableAdminBase, admin.ModelAdmin):
     """Django Admin setup for the `literature.LiteratureItem` model."""
 
     # change_form_template = "admin/literature_change_form.html"
     # form = LiteratureForm
-    list_display = ["file_download_link", "issued", "title", "key", "type"]
+    list_display = ["file_download_link", "issued", "title", "citation_key", "type"]
     list_filter = ["type"]
     list_display_links = ["title"]
     inlines = [SupplementaryInline]
-    # fieldsets = [
-    #     (
-    #         None,
-    #         {
-    #             "fields": [
-    #                 "file",
-    #                 "collections",
-    #                 "item",
-    #             ]
-    #         },
-    #     ),
-    # ]
 
-    def get_urls(self):
-        urls = super().get_urls()
-        custom_urls = [
-            path(
-                "<path:object_id>/add-from/",
-                self.admin_site.admin_view(self.intermediate_form_view),
-                name="literature-add-from",
-            ),
-            # path("upload/", self.admin_site.admin_view(self.upload), name="upload"),
-        ]
-        return custom_urls + urls
-
-    def intermediate_form_view(self, request, object_id):
-        obj = self.get_object(request, object_id)
+    @button(
+        html_attrs={"style": "background-color:var(--button-bg)"},
+        label=_("Fetch DOI"),
+        change_list=True,
+    )
+    def intermediate_form_view(self, request):
         if request.method == "POST":
             form = LiteratureAdminAddForm(request.POST)
             if form.is_valid():
-                # Handle the form processing
-                extra_field_value = form.cleaned_data["extra_field"]
-                # Do something with the extra_field_value
-                self.message_user(request, f"Processed extra data: {extra_field_value}")
-                return redirect("admin:app_label_yourmodel_change", object_id)
+                return redirect("admin:literature_literatureitem_changelist")
         else:
             form = LiteratureAdminAddForm()
 
         context = self.admin_site.each_context(request)
         context["opts"] = self.model._meta
         context["form"] = form
-        context["object"] = obj
         return render(request, "admin/literature_add_from.html", context)
 
-    def response_change(self, request, obj):
-        if not obj.pk:
-            print("Redirecting")
-            return redirect("admin:literature-add-from", obj.pk)
-        print("Not redirecting")
-        return super().response_change(request, obj)
+    def search_online(self, request, *args, **kwargs):
+        """Admin view that handles user-uploaded bibtex files
 
-    # def get_urls(self):
-    #     return [
-    #         path("search/", self.admin_site.admin_view(self.search_online), name="search"),
-    #         *super().get_urls(),
-    #     ]
+        Returns:
+            HttpResponseRedirect: redirects to model admins change_list
+        """
+        if request.method == "POST":
+            form = OnlineSearchForm(request.POST)
+            if form.is_valid():
+                bibliography = form.cleaned_data["CSL"]
 
-    # def search_online(self, request, *args, **kwargs):
-    #     """Admin view that handles user-uploaded bibtex files
+                imported, updated = 0, 0
+                for item in bibliography:
+                    imported += 1
+                    LiteratureItem.objects.create(CSL=item)
+                self.message_user(
+                    request,
+                    level=messages.SUCCESS,
+                    message=(
+                        f"{imported} literature item{pluralize(imported)} {pluralize(imported,'was,were')} succesfully"
+                        f" imported and {updated} {pluralize(updated,'has,have')} been updated."
+                    ),
+                )
+                return HttpResponseRedirect("../")
 
-    #     Returns:
-    #         HttpResponseRedirect: redirects to model admins change_list
-    #     """
-    #     if request.method == "POST":
-    #         form = OnlineSearchForm(request.POST)
-    #         if form.is_valid():
-    #             bibliography = form.cleaned_data["CSL"]
+        else:
+            form = OnlineSearchForm(request.GET)
 
-    #             imported, updated = 0, 0
-    #             for item in bibliography:
-    #                 imported += 1
-    #                 LiteratureItem.objects.create(CSL=item)
-    #             self.message_user(
-    #                 request,
-    #                 level=messages.SUCCESS,
-    #                 message=(
-    #                     f"{imported} literature item{pluralize(imported)} {pluralize(imported,'was,were')} succesfully"
-    #                     f" imported and {updated} {pluralize(updated,'has,have')} been updated."
-    #                 ),
-    #             )
-    #             return HttpResponseRedirect("../")
-
-    #     else:
-    #         form = OnlineSearchForm(request.GET)
-
-    #     # return TemplateResponse(request, 'admin/change_form.html', {form: form})
-    #     return TemplateResponse(
-    #         request,
-    #         "literature/admin/search.html",
-    #         {
-    #             "form": form,
-    #             "opts": self.opts,
-    #         },
-    #     )
+        # return TemplateResponse(request, 'admin/change_form.html', {form: form})
+        return TemplateResponse(
+            request,
+            "literature/admin/search.html",
+            {
+                "form": form,
+                "opts": self.opts,
+            },
+        )
 
     # def upload(self, request, *args, **kwargs):
     #     """Admin view that handles user-uploaded bibtex files

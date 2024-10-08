@@ -66,12 +66,15 @@ class BaseLiteratureForm(
         self.helper.form_id = "literatureForm"  # Set the form id
         self.helper.include_media = False
         self.helper.layout = Layout()
+
         for cls in BaseLiteratureForm.__bases__:
             if hasattr(cls, "layout"):
                 self.helper.layout.append(cls.layout)
 
         # self.helper.layout.append(Div(template="literature/widgets/csl_date.html"))
         self.helper.layout.append(BUTTON_HOLDER)
+        # for nam, field in self.fields.items():
+        #     field.disabled = True
 
     def clean(self) -> dict[str, Any]:
         # new = csl_to_django_lit(self.cleaned_data)
@@ -100,7 +103,7 @@ class LiteratureForm(BaseLiteratureForm):
     def __init__(self, *args, **kwargs):
         # if "data" in kwargs:
         # kwargs["data"] = csl_to_django_lit(kwargs["data"])
-        if "instance" in kwargs:
+        if kwargs.get("instance"):
             kwargs["initial"] = csl_to_django_lit_flat(kwargs["instance"].item)
         super().__init__(*args, **kwargs)
 
@@ -135,7 +138,7 @@ class SearchForm(forms.Form):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_id = "literatureSearchForm"  # Set the form id
-        self.helper.form_action = reverse("import")
+        self.helper.form_action = reverse("literature-import")
         self.helper.include_media = False
 
         self.helper.layout = Layout(

@@ -137,8 +137,8 @@ class DateVariableWidget(forms.MultiWidget):
             return [
                 date_parts_to_iso(parsed.get("begin")),
                 date_parts_to_iso(parsed.get("end")),
-                parsed.get("literal"),
                 parsed.get("season"),
+                parsed.get("literal"),
                 parsed.get("circa", False),
             ]
         else:
@@ -156,7 +156,7 @@ class DateVariableWidget(forms.MultiWidget):
         return [
             parsed.get("begin"),
             parsed.get("end"),
-            parsed.get("literal"),
             parsed.get("season"),
+            parsed.get("literal"),
             parsed.get("circa", False),
         ]
