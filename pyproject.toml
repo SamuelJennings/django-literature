@@ -35,6 +35,11 @@ django-admin-sortable2 = "^2.2.1"
 django-extra-views = "^0.14.0"
 django-jsonform = "^2.22.0"
 django-json-widget = "^2.0.1"
+django-easy-icons = {git = "https://github.com/SamuelJennings/django-easy-icons"}
+django-tables2 = "^2.7.0"
+django-admin-extra-buttons = "^1.5.8"
+django-extensions = "^3.2.3"
+django-flex-menus = {git = "https://github.com/SamuelJennings/django-flex-menus"}
 
 
 [tool.poetry.group.dev.dependencies]
