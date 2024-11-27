@@ -67,9 +67,9 @@ class LiteratureItem(models.Model):
     )
 
     class Meta:
-        verbose_name = _("literature item")
-        verbose_name_plural = _("literature items")
-        ordering = ["created"]
+        verbose_name = _("literature")
+        verbose_name_plural = _("literature")
+        ordering = ["-issued"]
 
     def save(self, *args, **kwargs):
         self.type = self.item.get("type", "article")
