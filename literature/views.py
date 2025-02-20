@@ -50,8 +50,8 @@ class LiteratureCreateView(CreateView):
 
 
 class LiteratureTable(tables.Table):
-    title = tables.columns.Column(linkify=True)
-    # edit = tables.columns.Column(empty_values=(), orderable=False)
+    title = tables.Column(linkify=True)
+    # edit = tables.Column(empty_values=(), orderable=False)
 
     class Meta:
         model = LiteratureItem
@@ -61,7 +61,7 @@ class LiteratureTable(tables.Table):
         return mark_safe(  # noqa: S308
             "<a class='text-success' href="
             + reverse_lazy("literature-detail", args=[record.pk])
-            + f'>{icon("pencil.svg")}</a>'
+            + f">{icon('pencil.svg')}</a>"
         )
 
 
