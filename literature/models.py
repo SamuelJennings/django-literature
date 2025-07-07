@@ -12,6 +12,7 @@ from partial_date.fields import PartialDateField
 from .choices import CSL_TYPE_CHOICES
 from .utils import file_upload_path, suppfile_upload_path
 from .utils.date import date_parts_to_iso, parse_date
+from .utils.generic import normalize_doi
 
 # with open("tests/data/authors.json") as f:
 #     author_schema = json.load(f)
@@ -86,6 +87,14 @@ class LiteratureItem(models.Model):
 
     def as_json(self):
         return json.dumps(self.item)
+
+    def get_doi(self):
+        """
+        Returns the DOI of the literature item if available.
+        """
+        if doi := self.item.get("DOI", None):
+            return normalize_doi(doi)
+        return None
 
     def save_issued_date(self):
         if issued := self.item.get("issued", None):
